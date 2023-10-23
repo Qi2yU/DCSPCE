@@ -10,6 +10,8 @@ Data Collecting System for Province Company Employment (a software engineering c
 + 下周四(23/10/26) 在教室进行周报
     + 使用 vue 把前端功能展示出来，同时完成数据库的基本设计
 
+### 近期工作重点 (到下次汇报前) 
++ 把需求文档写好，尽量有 UML 用例图
 
 
 ### 项目当前代办项
