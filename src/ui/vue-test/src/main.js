@@ -3,6 +3,12 @@ import App from './App.vue'
 import ElementUI from 'element-ui'
 import VueRouter from 'vue-router'
 import router from './router'
+import * as echarts from 'echarts';
+
+
+Vue.prototype.$echarts = echarts
+
+
 Vue.config.productionTip = false
 
 Vue.use(VueRouter)
