@@ -17,6 +17,11 @@ import Analy2 from '@/pages/analy-2'
 import Analy3 from '@/pages/analy-3'
 import Login from "@/pages/login"
 
+import Record from "@/pages-company/record"
+import Company from "@/pages-company/layout-company"
+import Upload from "@/pages-company/upload"
+import Query_com from "@/pages-company/query"
+import Notice from "@/pages-company/notice"
 Vue.use(Router)
 
 export default new Router({
@@ -27,6 +32,31 @@ export default new Router({
       name: 'login',
       component: Login
     },
+
+    {
+      path: '/company',
+      name: 'Company',
+      component: Company,
+      children: [{
+        path: 'record',
+        name: 'Record',
+        component: Record
+      }, {
+        path: 'upload',
+        name: 'Upload',
+        component: Upload
+      }, {
+        path: 'query',
+        name: 'Query_com',
+        component: Query_com
+      }, {
+        path: 'notice',
+        name: 'Notice',
+        component: Notice
+      }, ]
+    },
+  
+ 
 
     {
       path: '/layout',
