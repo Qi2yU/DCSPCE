@@ -12,6 +12,7 @@
   <div id="user">
     <h1>数据汇总</h1>
   </div>
+  
 </template>
 
 <script>
