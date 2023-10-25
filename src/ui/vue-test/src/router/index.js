@@ -15,6 +15,7 @@ import Query from '@/pages/query'
 import Analy1 from '@/pages/analy-1'
 import Analy2 from '@/pages/analy-2'
 import Analy3 from '@/pages/analy-3'
+import Login from '@/pages/login'
 
 Vue.use(Router)
 
@@ -22,10 +23,16 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'Login',
+      component: Login,
+    }
+    ,
+    {
+      path: '/layout',
       name: 'Layout',
       component: Layout,
       children: [{
-        path: '/',
+        path: 'center',
         name: 'Centre',
         component: Centre
       }, {
