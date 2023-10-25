@@ -97,20 +97,23 @@
     methods: {
       // 提交表单
       submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            // 表单验证成功
-            alert('submit')
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
+      this.$router.push("/layout").catch(error => error);
+      console.log("go to layout");
+      
+      // this.$refs[formName].validate((valid) => {
+      //   if (valid) {
+      //     // 表单验证成功
+      //     alert('submit')
+      //   } else {
+      //     console.log('error submit!!');
+      //     return false;
+      //   }
+      // });
       },
       // 重置表单
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }
+      }  
     },
   }
   </script>
