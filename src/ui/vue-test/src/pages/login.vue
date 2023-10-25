@@ -1,11 +1,11 @@
 <template>
     <div :xl="6" :lg="7" class="bg-login">
       <!--logo-->
-      <el-image :src="require('@/assets/logo.png')" class="logo"/>
+      <!-- <el-image :src="require('@/assets/logo.png')" class="logo"/> -->
       <!--标题-->
-      <el-row type="flex" class="row-bg row-two" justify="center" align="middle">
+      <el-row type="flex" class="row-bg row-two" justify="center" align="top">
         <el-col :span="6"></el-col>
-        <el-col :span="6">
+        <el-col :span="10">
           <!--标题-->
           <h1 class="title">省就业失业数据收集上报系统</h1>
         </el-col>
@@ -34,8 +34,22 @@
               <el-button type="primary" @click="submitForm('loginForm')">立即登陆</el-button>
               <el-button @click="resetForm('loginForm')">重置</el-button>
             </el-form-item>
+            
           </el-form>
         </el-col>
+      </el-row>
+      <!-- 目前进入不同系统的按钮 -->
+      <el-row type="flex" class="row-bg card" justify="center">
+        <el-col class="login-system">
+            <el-form label-width="10%" >
+                <el-form-item class="btn-ground">
+                <el-button type="primary" @click="submitForm('loginForm')">企业端</el-button>
+                <el-button type="primary" @click="submitForm('loginForm')">市端</el-button>
+                <el-button type="primary" @click="submitForm('loginForm')">省端</el-button>
+                </el-form-item>
+            </el-form>
+        </el-col>
+
       </el-row>
     </div>
   </template>
@@ -132,7 +146,7 @@
   .title {
     text-shadow: -3px 3px 1px #5f565e;
     text-align: center;
-    margin-top: 60%;
+    margin-top: 20%;
     color: #41b9a6;
     font-size: 40px;
   }
@@ -144,6 +158,15 @@
     border-radius: 10px;
     padding: 40px 40px 30px 15px;
     width: auto;
+  }
+
+  .login-system{
+    background-color: #ffffff;
+    opacity: 0.9;
+    box-shadow: 0 0 20px #ffffff;
+    border-radius: 10px;
+    padding: 40px 40px 30px 15px;
+    width: 500px;
   }
   </style>
   
