@@ -43,9 +43,9 @@
         <el-col class="login-system">
             <el-form label-width="10%" >
                 <el-form-item class="btn-ground">
-                <el-button type="primary" @click="submitForm('loginForm')">企业端</el-button>
-                <el-button type="primary" @click="submitForm('loginForm')">市端</el-button>
-                <el-button type="primary" @click="submitForm('loginForm')">省端</el-button>
+                <el-button type="primary" @click="goto_company('company')">企业端</el-button>
+                <el-button type="primary" @click="goto_city('layout')">市端</el-button>
+                <el-button type="primary" @click="goto_province('layout')">省端</el-button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -113,7 +113,19 @@
       // 重置表单
       resetForm(formName) {
         this.$refs[formName].resetFields();
-      }  
+      },
+      goto_city(){
+        this.$router.push("/layout").catch(error => error);
+        console.log("go to layout");
+      },
+      goto_province(){
+        this.$router.push("/layout").catch(error => error);
+        console.log("go to layout");
+      },
+      goto_company(){
+        this.$router.push("/company").catch(error => error);
+        console.log("go to company");
+      },
     },
   }
   </script>
