@@ -16,6 +16,11 @@ import Analy1 from '@/pages/analy-1'
 import Analy2 from '@/pages/analy-2'
 import Analy3 from '@/pages/analy-3'
 import Login from '@/pages/login'
+import DataExam from '@/pages/data_exam'
+import Committed from '@/pages/committed'
+import Uncommitted from '@/pages/uncommitted'
+import Detail from '@/pages/detail'
+import Queryres from '@/pages/query_res'
 
 import Record from "@/pages-company/record"
 import Company from "@/pages-company/layout-company"
@@ -91,6 +96,26 @@ export default new Router({
         path: 'analy3',
         name: 'Analy3',
         component: Analy3
+      }, {
+        path: 'dataexam',
+        name: 'DataExam',
+        component: DataExam
+      },{
+        path: 'committed',
+        name: 'Committed',
+        component: Committed
+      },{
+        path: 'uncommitted',
+        name: 'Uncommitted',
+        component: Uncommitted
+      },{
+        path: 'detail',
+        name: 'Detail',
+        component: Detail
+      },{
+        path: 'queryres',
+        name: 'Queryres',
+        component: Queryres
       }
        ]
     },
