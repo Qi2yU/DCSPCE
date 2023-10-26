@@ -133,7 +133,7 @@
     },
     methods:{
       Sum_fun(v1, v2, v3){
-          tableData_Gru = []
+          this.tableData_Gru = []
           console.log(v1,v2,v3)
           switch(v1){
             case('选项1'):this.choice_name = "企业性质"
