@@ -21,6 +21,9 @@ import Committed from '@/pages/committed'
 import Uncommitted from '@/pages/uncommitted'
 import Detail from '@/pages/detail'
 import Queryres from '@/pages/query_res'
+import Notice_pro from '@/pages/notice'
+import AddNotice from '@/pages/addNotice'
+import EditNotice from '@/pages/editNotice'
 
 import Record from "@/pages-company/record"
 import Company from "@/pages-company/layout-company"
@@ -28,6 +31,8 @@ import Upload from "@/pages-company/upload"
 import Query_result_com from "@/pages-company/query_result"
 import Query_com from "@/pages-company/query"
 import Notice from "@/pages-company/notice"
+import ReadNotice from "@/pages-company/readNotice"
+
 Vue.use(Router)
 
 export default new Router({
@@ -63,6 +68,10 @@ export default new Router({
         path: 'notice',
         name: 'Notice',
         component: Notice
+      }, {
+        path: 'readNotice',
+        name: 'ReadNotice',
+        component: ReadNotice
       }, ]
     },
   
@@ -116,6 +125,18 @@ export default new Router({
         path: 'queryres',
         name: 'Queryres',
         component: Queryres
+      },{
+        path: 'notice',
+        name: 'NOtice_pro',
+        component: Notice_pro
+      },{
+        path: 'addNotice',
+        name: 'AddNotice',
+        component: AddNotice
+      },{
+        path: 'editNotice',
+        name: 'EditNotice',
+        component: EditNotice
       }
        ]
     },

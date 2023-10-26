@@ -37,10 +37,15 @@
         <el-button
           type="primary"
           size="mini"
-          @click="handleLook(scope.$index, scope.row)">查看</el-button>
+          @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
       </template>
     </el-table-column>
   </el-table>
+  <div style="margin-top: 20px">
+    <el-button type="success" @click="jump_add()">新建</el-button>
+    <el-button @click="toggleSelection()">取消选择</el-button>
+    <el-button type="danger" @click="toggleSelection_deleteRow(tableData)">删除</el-button>
+  </div>
   </div>
 </template>
 
@@ -90,9 +95,33 @@
     },
 
   methods: {
-    handleLook($index, row){
-      this.$router.push("/company/readNotice");
-    }
+      jump_add(){
+        this.$router.push("/layout/addNotice");
+      },
+      handleEdit($index, row){
+        this.$router.push("/layout/editNotice");
+      },
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+
+      tableRowClassName ({ row, rowIndex }) {
+          row.rowIndex = rowIndex;
+      },
+      toggleSelection_deleteRow(rows) {
+        const idsToDelete = this.multipleSelection.map((row)=> row.id);
+        this.tableData = this.tableData.filter((row) => !idsToDelete.includes(row.id));
+        this.multipleSelection=[];
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      }
     }
   }
 </script>

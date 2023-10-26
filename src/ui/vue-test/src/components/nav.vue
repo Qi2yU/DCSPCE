@@ -64,6 +64,11 @@
                <el-menu-item index="4-3"  @click="goPage('analy-3')">取样分析</el-menu-item>
              </el-menu-item-group>
            </el-submenu>
+           
+           <el-menu-item index="5" @click="goPage('notice')">
+             <i class="el-icon-s-order"></i>
+             <span slot="title">通知界面</span>
+           </el-menu-item>
          </el-menu>
        </el-col>
      </el-row>
@@ -109,6 +114,9 @@
        }else if ((link == "analy-3")) {
          $this.$router.push("/layout/analy3").catch(error => error);
          console.log("go to analy-3");
+       }else if ((link == "notice")) {
+         $this.$router.push("/layout/notice").catch(error => error);
+         console.log("go to notice");
        }
      }
    }

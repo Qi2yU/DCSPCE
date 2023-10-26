@@ -1,0 +1,47 @@
+<style>
+</style>
+<template>
+  <div id="user">
+    <h1>编辑通知</h1>
+    <div style="margin: 20px 0;"></div>
+    通知标题：
+    <el-input
+    type="text"
+    placeholder="选中的原有标题"
+    v-model="text"
+    maxlength="50"
+    show-word-limit
+    >
+    </el-input>
+    通知内容：
+    <el-input
+    type="textarea"
+    :rows="15"
+    placeholder="选中的原有内容"
+    v-model="textarea"
+    maxlength="2000"
+    show-word-limit
+    >
+    </el-input>
+    <div style="margin-top: 20px">
+    <el-button type="success" @click="jump()">确定</el-button>
+  </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'User',
+  data() {
+    return {
+      text: '',
+      textarea: ''
+    }
+  },
+  methods:{
+    jump(){
+        this.$router.push("/layout/notice");
+    }
+  }
+}
+</script>
