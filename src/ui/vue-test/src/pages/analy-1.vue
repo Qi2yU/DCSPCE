@@ -1,55 +1,39 @@
 <style>
-
-
-
-
 </style>
-
-
-
 <template>
-
-  
-<div id="main" style="width: 600px; height: 400px"></div>
-
-  
+  <div id="user">
+    <h1>趋势分析</h1>
+    <ana_button></ana_button>
+    <chart :cD = "chartData" :num = "chartData.length"></chart>
+    
+    <el-button type="primary"    class = "download">导出</el-button>
+  </div>
 </template>
 
 <script>
+import ana_button from '../components/analy2_buttons.vue'
+import chart from '../components/analy2_chart.vue'
 export default {
   name: 'User',
-  mounted() {
-    this.drawChart();
-  },
-  methods:{
-    drawChart() {
-      // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
-      let myChart = this.$echarts.init(document.getElementById("main"));
-      // 指定图表的配置项和数据
-      let option = {
-        title: {
-          text: "ECharts 入门示例",
-        },
-        tooltip: {},
-        legend: {
-          data: ["销量"],
-        },
-        xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"],
-        },
-        yAxis: {},
-        series: [
-          {
-            name: "销量",
-            type: "bar",
-            data: [5, 20, 36, 10, 10, 20],
-          },
-        ],
-      };
-      // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
-    },
+  data(){
+    return{
+      chartData:[{
+        name:'企业1',
+        nums:[1,2,3,5],
 
+      },{
+        name:'企业2',
+        nums:[4,5,6,7],
+      },{
+        name:'企业3',
+        nums:[5,5,5,6],
+      },
+      ],
+    }
+  },
+  components:{
+    ana_button,
+    chart
   }
 }
 </script>
