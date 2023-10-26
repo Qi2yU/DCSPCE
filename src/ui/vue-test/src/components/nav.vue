@@ -33,7 +33,12 @@
              <i class="el-icon-menu"></i>
              <span slot="title">系统管理</span>
            </el-menu-item>
- 
+           
+           <el-menu-item index="5" @click="goPage('dataexam')">
+             <i class="el-icon-menu"></i>
+             <span slot="title">数据审核</span>
+           </el-menu-item>
+
            <el-menu-item index="2" @click="goPage('sum')">
              <i class="el-icon-s-order"></i>
              <span slot="title">数据汇总</span>
@@ -86,7 +91,10 @@
      goPage(link) {
        if (link == "home") {
          $this.$router.push("/").catch(error => error);
-       } else if ((link == "sum")) {
+       } else if ((link == "dataexam")) {
+         $this.$router.push("/dataexam").catch(error => error);
+         console.log("go to dataexam");
+       }else if ((link == "sum")) {
          $this.$router.push("/sum").catch(error => error);
          console.log("go to sum");
        } else if ((link == "query")) {
