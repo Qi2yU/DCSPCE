@@ -43,7 +43,7 @@
              <i class="el-icon-s-order"></i>
              <span slot="title">数据查询</span>
            </el-menu-item>
-           <el-menu-item index="3" @click="goPage('notice')">
+           <el-menu-item index="4" @click="goPage('notice')">
              <i class="el-icon-s-order"></i>
              <span slot="title">查看通知</span>
            </el-menu-item>

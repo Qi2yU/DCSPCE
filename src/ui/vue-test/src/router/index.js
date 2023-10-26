@@ -20,6 +20,7 @@ import Login from '@/pages/login'
 import Record from "@/pages-company/record"
 import Company from "@/pages-company/layout-company"
 import Upload from "@/pages-company/upload"
+import Query_result_com from "@/pages-company/query_result"
 import Query_com from "@/pages-company/query"
 import Notice from "@/pages-company/notice"
 Vue.use(Router)
@@ -49,6 +50,10 @@ export default new Router({
         path: 'query',
         name: 'Query_com',
         component: Query_com
+      }, {
+        path: 'query_result',
+        name: 'Query_result_com',
+        component: Query_result_com
       }, {
         path: 'notice',
         name: 'Notice',

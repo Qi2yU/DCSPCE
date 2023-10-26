@@ -9,7 +9,6 @@
       </el-col>
       <el-col :span="6"></el-col>
     </el-row>
-    <el-row span="6"></el-row>
     <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
       <el-col :span="5"></el-col>
       <el-col :span="20">
