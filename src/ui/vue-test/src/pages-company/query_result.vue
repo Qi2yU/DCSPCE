@@ -29,7 +29,7 @@
         </el-table-column>
         <el-table-column
             prop="query_num"
-            label="调查期数据">
+            label="调查期人数">
         </el-table-column>
         <el-table-column
             prop="descend_type"
