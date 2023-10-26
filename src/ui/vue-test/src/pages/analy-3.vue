@@ -6,6 +6,7 @@
   <div id="user">
     <h1>取样分析</h1>
     <choice_button @query-event = "Query_fun" @chose-event = "Chose_fun"></choice_button>
+
     <el-table
     ref="multipleTable"
     :data="tableData"
@@ -27,7 +28,6 @@
     </el-table-column>
   </el-table>
   <div style="margin-top: 20px">
-   
     <el-button @click="toggleSelection()">取消选择</el-button>
   </div>
   <chart :td = tableData></chart>
@@ -81,6 +81,7 @@ export default {
     handleSelectionChange(val) {
         this.multipleSelection = val;
     },
+
     Query_fun(value){
       console.log(value)
      
@@ -89,19 +90,6 @@ export default {
         this.queryData.push(this.tableData[i])
       }
     },
-    Chose_fun(r){
-      this.radio = r
-      console.log(r)
-      if(r == 0){
-        this.showData = [];
-      }
-      else if(r == 1){
-        for(let i = 0;i < this.tableData.length; i++){
-        this.showData.push(this.tableData[i])
-      }
-      }
-    },
-
    
   },
 
