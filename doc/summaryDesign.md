@@ -99,7 +99,7 @@
 
     + 基本事件流：
 
-        ![image-20231026165337052](C:\Users\Lin Chen\AppData\Roaming\Typora\typora-user-images\image-20231026165337052.png)
+        ![image-20231026165337052](/asset/查看通知事件流图.png)
 
 + 本企业数据查询
 
