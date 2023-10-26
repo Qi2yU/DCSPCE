@@ -29,6 +29,12 @@
            @open="handleOpen"
            @close="handleClose"
          >
+
+           <el-menu-item index="0" @click="goPage('file_check')">
+             <i class="el-icon-menu"></i>
+             <span slot="title">备案审核</span>
+           </el-menu-item>
+
            <el-menu-item index="1" @click="goPage('home')">
              <i class="el-icon-menu"></i>
              <span slot="title">系统管理</span>
@@ -94,9 +100,12 @@
  
      //跳转到某个导航页
      goPage(link) {
-       if (link == "home") {
+      if (link == "file_check") {
+         $this.$router.push("/layout/file_check").catch(error => error);
+         console.log("666");
+       } else if (link == "centre") {
          $this.$router.push("/layout/centre").catch(error => error);
-       } else if ((link == "dataexam")) {
+       }  else if ((link == "dataexam")) {
          $this.$router.push("/layout/dataexam").catch(error => error);
          console.log("go to dataexam");
        }else if ((link == "sum")) {
