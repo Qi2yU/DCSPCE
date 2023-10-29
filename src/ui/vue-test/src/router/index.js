@@ -24,6 +24,8 @@ import Queryres from '@/pages/query_res'
 import Notice_pro from '@/pages/notice'
 import AddNotice from '@/pages/addNotice'
 import EditNotice from '@/pages/editNotice'
+import FileCheck from '@/pages/file_check.vue'
+import FileBeChecked from '@/pages/file_be_checked.vue'
 
 import Record from "@/pages-company/record"
 import Company from "@/pages-company/layout-company"
@@ -85,6 +87,15 @@ export default new Router({
         path: 'centre',
         name: 'Centre',
         component: Centre
+      },{
+        path: 'file_check',
+        name: 'FileCheck',
+        component: FileCheck,
+        children:[{
+          path: 'file_be_checked',
+          name: 'FileBeChecked', 
+          component: FileBeChecked,
+        }]
       }, {
         path: 'sum',
         name: 'Sum',
