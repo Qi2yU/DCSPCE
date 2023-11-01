@@ -9,7 +9,7 @@
       style="width: 100%">
       <el-table-column
         prop="date"
-        label="企业名城"
+        label="企业名称"
         width="180">
       </el-table-column>
       <el-table-column

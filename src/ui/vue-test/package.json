@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^1.6.0",
     "babel-preset-es201": "^0.0.1-security",
     "core-js": "^3.8.3",
     "echarts": "^5.4.3",
