@@ -35,10 +35,7 @@
              <span slot="title">备案审核</span>
            </el-menu-item>
 
-           <el-menu-item index="1" @click="goPage('home')">
-             <i class="el-icon-menu"></i>
-             <span slot="title">系统管理</span>
-           </el-menu-item>
+           
            
            <el-menu-item index="5" @click="goPage('dataexam')">
              <i class="el-icon-menu"></i>
@@ -71,9 +68,15 @@
              </el-menu-item-group>
            </el-submenu>
            
-           <el-menu-item index="5" @click="goPage('notice')">
+           <el-menu-item index="6" @click="goPage('notice')">
              <i class="el-icon-s-order"></i>
              <span slot="title">通知界面</span>
+           </el-menu-item>
+
+
+           <el-menu-item index="1" @click="goPage('home')">
+             <i class="el-icon-menu"></i>
+             <span slot="title">系统管理</span>
            </el-menu-item>
          </el-menu>
        </el-col>
