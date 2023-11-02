@@ -129,6 +129,38 @@ export default {
         if (valid) {
           // 执行保存并上报的操作
           // 在这里你可以提交表单数据到后端或者执行其他操作
+
+          this.$http
+            .post('/companyinfo_submit', {
+              user_id: '123',
+              company_name: this.form.companyName,
+              company_id: this.form.organizationCode,
+              city: this.form.region,
+              district: this.form.region,
+              phone: this.form.contactNumber,
+              company_character: this.form.companyType,
+              company_industry: this.form.industry,
+              company_business: this.form.mainBusiness,
+              linksman: this.form.contactPerson,
+              linaddress: this.form.contactAddress, // changed from 'linaddress' to 'linkaddress'
+              post_num: this.form.postalCode,
+              fax_num: this.form.fax,
+              email: this.form.email,
+              is_valid: "0"
+            }, {
+              headers: {
+                'Content-Type': 'application/json'
+              }
+            })
+            .then((response) => {
+              console.log(response.data);
+              // handle the response data here
+            })
+            .catch((error) => {
+              console.error(error);
+              // handle the error here
+            });
+
           console.log('提交表单数据', this.form);
           this.$message({
             message: '提交成功，正在审核中',

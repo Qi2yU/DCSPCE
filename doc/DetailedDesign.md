@@ -26,6 +26,8 @@
 
 ![系统框架图](./asset/系统框架图.png)
 
+![系统框架图](./asset/系统框架图.png)
+
 ### 二、项目体系架构
 
 前端 到 后端 到 数据库
@@ -56,8 +58,35 @@
 
 
 
-##### 企业备案
+##### 企业备案 `companyinfo_submit.java`
 
++ 提交企业备案信息
+路由：`/record`分配给`CompanyInfo_service`
+
+     + 输入类型和输入值：
+
+        | 参数名称 | 参数类型 | 参数说明               |
+        | -------- | -------- | ---------------------- |
+        | user_id      | String   | 用户名 |
+        | company_name      | String   | 企业名称 |
+        | company_id      | String   | 组织机构代码 |
+        | city      | String   | 企业所在城市 |
+        | district      | String   | 企业所属区 |
+        | phone      | String   | 联系电话 |
+        | company_character      | String   | 企业性质 |
+        | company_industry      | String   | 所属行业 |
+        | company_business      | String   | 主要经营业务 |
+        | linksman      | String   | 联系人 |
+        | linaddress      | String   | 联系地址 |
+        | post_num      | String   | 邮政编码 |
+        | fax_num      | String   | 传真 |
+        | email      | String   | EMAIL |
+
+    + 返回类型和返回值：
+
+        | 参数名称            | 参数类型 | 参数说明                   |
+        | ------------------- | -------- | -------------------------- |
+        | result           | String   | 返回备案提交结果         |
 
 
 ##### 企业就业信息上报 `data_collection.java`
@@ -153,7 +182,35 @@
 
 #### Service 设计
 
+##### 将企业提交的备案信息插入数据库`CompanyInfo_service.java`
 
++ 方法一 cpinfo_submit
+    + 输入参数表: 
+
+        | 参数名称 | 参数类型 | 参数说明               |
+        | -------- | -------- | ---------------------- |
+        | user_id      | String   | 用户名 |
+        | company_name      | String   | 企业名称 |
+        | company_id      | String   | 组织机构代码 |
+        | city      | String   | 企业所在城市 |
+        | district      | String   | 企业所属区 |
+        | phone      | String   | 联系电话 |
+        | company_character      | String   | 企业性质 |
+        | company_industry      | String   | 所属行业 |
+        | company_business      | String   | 主要经营业务 |
+        | linksman      | String   | 联系人 |
+        | linaddress      | String   | 联系地址 |
+        | post_num      | String   | 邮政编码 |
+        | fax_num      | String   | 传真 |
+        | email      | String   | EMAIL |
+
+    + 返回类型和返回值
+
+        | 参数名称 | 参数类型 | 参数说明 |
+        | -------- | -------- | -------- |
+        | result   | String   | 操作结果 |
+
+    + 调用Mapper `Companyinfo_Mapper`
 
 
 
