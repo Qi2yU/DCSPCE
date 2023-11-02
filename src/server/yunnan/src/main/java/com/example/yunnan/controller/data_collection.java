@@ -23,14 +23,14 @@ public class data_collection {
         ede.printMyData();
         // 写入DB
         // ...
-        dataCollectionService.test_companydata(ede.getCompanyID(),
-                ede.getDocEmploymentNumber(),
-                ede.getCurEmploymentNumber(),
-                ede.getNumDecreasedReason(),
-                Integer.toString(ede.getMainReason()),
-                Integer.toString(ede.getSecondReason()),
-                ede.getReasonDetail(),
-                ede.getStatus());
+//        dataCollectionService.test_companydata(ede.getCompanyID(),
+//                ede.getDocEmploymentNumber(),
+//                ede.getCurEmploymentNumber(),
+//                ede.getNumDecreasedReason(),
+//                Integer.toString(ede.getMainReason()),
+//                Integer.toString(ede.getSecondReason()),
+//                ede.getReasonDetail(),
+//                ede.getStatus());
 
         return "Hello SpringBoot!";
     }
