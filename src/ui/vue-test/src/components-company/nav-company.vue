@@ -34,7 +34,7 @@
              <span slot="title">企业备案</span>
            </el-menu-item>
  
-           <el-menu-item index="2" @click="goPage('upload')">
+           <el-menu-item index="2" @click="goPage('data_collection')">
              <i class="el-icon-s-order"></i>
              <span slot="title">数据上报</span>
            </el-menu-item>
@@ -74,9 +74,9 @@
      goPage(link) {
        if (link == "record") {
          $this.$router.push("/company/record").catch(error => error);
-       } else if ((link == "upload")) {
-         $this.$router.push("/company/upload").catch(error => error);
-         console.log("go to upload");
+       } else if ((link == "data_collection")) {
+         $this.$router.push("/company/data_collection").catch(error => error);
+         console.log("go to data_collection");
        } else if ((link == "query")) {
          $this.$router.push("/company/query").catch(error => error);
          console.log("go to query");
