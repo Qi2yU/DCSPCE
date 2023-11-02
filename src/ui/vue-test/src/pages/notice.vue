@@ -17,18 +17,18 @@
     </el-table-column>
     <el-table-column
       fixed
-      prop="date"
+      prop="time"
       label="日期"
       width="150">
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+      <template slot-scope="scope">{{ scope.row.time }}</template>
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="sponsor"
       label="发布用户"
       width="150">
     </el-table-column>
     <el-table-column
-      prop="province"
+      prop="title"
       label="标题"
       width="300">
     </el-table-column>
@@ -54,46 +54,28 @@
     name: 'User',
     data() {
       return {
-        tableData: [{
-          id: '1',
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '2',
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '3',
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '4',
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '5',
-          date: '2016-05-08',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '6',
-          date: '2016-05-06',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '7',
-          date: '2016-05-07',
-          name: '王小虎',
-          province: '上海',
-        }],
+        tableData: [],
         multipleSelection: []
       }
     },
+  created(){
+    this.$http.get("/gov_notice/get_all").then((response)=>{
+      console.log(response);
+      var tdata = response.data;
+      var lens, i, temp, tempSpan;
+      lens = tdata.length;
+      for (i = 0; i < lens; i++) {
+          temp = i+1;           
+          tempSpan = document.createElement("id");
+          tempSpan.innerHTML =  temp + " ";
+          tdata[i].insert(tempSpan);
+      }
 
+      this.tableData = tdata;
+      console.log(this.tableData);
+      console.log("notice 页面 初始化结束");
+    });
+  },
   methods: {
       jump_add(){
         this.$router.push("/layout/addNotice");
@@ -110,7 +92,16 @@
           this.$refs.multipleTable.clearSelection();
         }
       },
-
+      // addidtoTableData(lists){
+      //   var lens, i, temp, tempSpan;
+      //   lens = lists.length;
+      //   for (i = 0; i < lens; i++) {
+      //       temp = i+1;           
+      //       tempSpan = document.createElement("id");
+      //       tempSpan.innerHTML =  temp + " ";
+      //       lists[i].insertBefore(tempSpan, lists[i].childNodes[0]);
+      //   }
+      // },
       tableRowClassName ({ row, rowIndex }) {
           row.rowIndex = rowIndex;
       },
