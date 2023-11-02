@@ -74,10 +74,24 @@
            </el-menu-item>
 
 
-           <el-menu-item index="1" @click="goPage('home')">
-             <i class="el-icon-menu"></i>
-             <span slot="title">系统管理</span>
-           </el-menu-item>
+           <el-submenu index="1">
+             <template slot="title">
+               <i class="el-icon-location"></i>
+               <span>系统管理</span>
+             </template>
+             <el-menu-item-group>
+               <el-menu-item index="1-1"  @click="goPage('centre-1')">调查期管理</el-menu-item>
+             </el-menu-item-group>
+             <el-menu-item-group>
+               <el-menu-item index="1-2"  @click="goPage('centre-2')">用户管理</el-menu-item>
+             </el-menu-item-group>
+             <el-menu-item-group>
+               <el-menu-item index="1-3"  @click="goPage('centre-3')">角色管理</el-menu-item>
+             </el-menu-item-group>
+             <el-menu-item-group>
+              <el-menu-item index="1-4"   @click="goPage('centre-4')">系统状态监测</el-menu-item>
+             </el-menu-item-group>
+           </el-submenu>
          </el-menu>
        </el-col>
      </el-row>
@@ -106,9 +120,19 @@
       if (link == "file_check") {
          $this.$router.push("/layout/file_check").catch(error => error);
          console.log("666");
-       } else if (link == "centre") {
-         $this.$router.push("/layout/centre").catch(error => error);
-       }  else if ((link == "dataexam")) {
+       } else if ((link == "centre-1")) {
+        console.log("/layout/centre-1")
+         $this.$router.push("/layout/centre-1").catch(error => error);
+       } else if((link == "centre-2")) {
+        console.log("/layout/centre-2")
+         $this.$router.push("/layout/centre-2").catch(error => error);
+       } else if((link == "centre-3")) {
+        console.log("/layout/centre-3")
+         $this.$router.push("/layout/centre-3").catch(error => error);
+       } else if((link == "centre-4")) {
+        console.log("/layout/centre-4")
+         $this.$router.push("/layout/centre-4").catch(error => error);
+       } else if ((link == "dataexam")) {
          $this.$router.push("/layout/dataexam").catch(error => error);
          console.log("go to dataexam");
        }else if ((link == "sum")) {
