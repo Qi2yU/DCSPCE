@@ -150,7 +150,93 @@
 
 
 
-##### 审核并上报数据
+##### 审核并上报数据`committed_control.java`
+
++ 获取各市已上报和未上报企业数量
+
+    路由：`/datacount`	分配给 `Datacount_service`
+
+    + 输入类型和输入值：
+
+        | 参数名称 | 参数类型 | 参数说明               |
+        | -------- | -------- | ---------------------- |
+        | province | String   | 统计上报数量的市的名称 |
+        | user_id  | String   | 上报企业的用户名       |
+
+    - 返回类型和返回值：
+
+        | 参数名称    | 参数类型 | 参数说明               |
+        | ----------- | -------- | ---------------------- |
+        | committed   | int      | 某市已上报企业的总数量 |
+        | uncommitted | int      | 某市未上报企业的总数量 |
+        | province    | String   | 市的名称               |
+
++ 获取已上报企业的概览信息
+
+    路由：`/committed`	分配给`Committed_service`
+
+    + 输入类型和输入值：
+
+        | 参数名称 | 参数类型 | 参数说明 |
+        | -------- | -------- | -------- |
+        | province | String   | 市的名称 |
+
+    + 返回类型和返回值：
+
+        | 参数名称  | 参数类型 | 参数说明     |
+        | --------- | -------- | ------------ |
+        | user_id   | String   | 企业的用户名 |
+        | user_name | String   | 企业的名称   |
+        | state1    | String   | 审核状态     |
+        | state2    | String   | 上报状态     |
+
++ 获取某个企业具体上报数据
+
+    路由：`/detail`	分配给`Detail_service`
+
+    + 输入类型和输入值：
+
+        | 参数名称 | 参数类型 | 参数说明     |
+        | -------- | -------- | ------------ |
+        | user_id  | String   | 企业的用户名 |
+
+    + 返回类型和返回值：
+
+        | 参数名称        | 参数类型 | 参数说明         |
+        | --------------- | -------- | ---------------- |
+        | user_id         | String   | 企业的用户名     |
+        | user_name       | String   | 企业的名称       |
+        | last_people_num | int      | 上一调查期人数   |
+        | now_people_num  | int      | 当前调查期人数   |
+        | decrease_reason | String   | 就业人数减少类型 |
+        | main_reason     | String   | 主要原因         |
+        | second_reason   | String   | 次要原因         |
+        | explain_reason  | String   | 原因说明         |
+
++ 获取未上报企业信息
+
+    路由：`/uncommitted`	分配给`uncommitted_service`
+
+    + 输入类型和输入值：
+
+        | 参数名称 | 参数类型 | 参数说明 |
+        | -------- | -------- | -------- |
+        | province | String   | 市的名称 |
+
+    + 返回类型和返回值：
+
+        | 参数名称        | 参数类型 | 参数说明         |
+        | --------------- | -------- | ---------------- |
+        | user_id         | String   | 企业的用户名     |
+        | user_name       | String   | 企业的名称       |
+        | last_people_num | int      | 上一调查期人数   |
+        | now_people_num  | int      | 当前调查期人数   |
+        | decrease_reason | String   | 就业人数减少类型 |
+        | main_reason     | String   | 主要原因         |
+        | second_reason   | String   | 次要原因         |
+        | explain_reason  | String   | 原因说明         |
+        | phone           | String   | 联系电话         |
+        | state           | String   | 状态             |
 
 
 
@@ -160,11 +246,59 @@
 
 
 
-##### 数据汇总
+##### 数据汇总`sum_data.java`
 
+​	路由/sum
 
+- 汇总字段含有时间信息，分配给`sum_databyTime_service`
+
+    - 输入类型和输入值
+
+        | 参数名称 | 参数类型 | 参数说明           |
+        | -------- | -------- | ------------------ |
+        | sum_id   | String   | 前端传入的汇总字段 |
+
+        
+
+    - 返回类型和返回值
+
+        | 名称      | 类型   | 说明               |
+        | --------- | ------ | ------------------ |
+        | kind_name | String | 具体的汇总字段名称 |
+        | num       | Int    | 改汇总字段的汇总值 |
+
+        
+
+- 汇总字段不含有时间信息（单独设置选择时间段按钮），分配给`sum_databyOthers_service`
+
+    - 输入类型和输入值
+
+        | 参数名称   | 参数类型 | 参数说明               |
+        | ---------- | -------- | ---------------------- |
+        | sum_id     | String   | 前端传入的汇总字段     |
+        | start_time | String   | 前端传入的汇总开始时间 |
+        | end_time   | String   | 前端传入的汇总结束时间 |
+
+    - 返回类型和返回值
+
+        | 名称      | 类型   | 说明               |
+        | --------- | ------ | ------------------ |
+        | kind_name | String | 具体的汇总字段名称 |
+        | num       | Int    | 改汇总字段的汇总值 |
 
 ##### 数据分析
+
+- 取样分析
+
+    路由： `/analy3`       分配给 `sample_analy_service`
+
+- 趋势分析
+
+    路由： `/analy2`       分配给 `trend_analy_service`
+
+- 对比分析
+
+    路由： `/analy1`       分配给 `compare_analy_service`
 
 
 
@@ -269,6 +403,81 @@
 
     + 调用Mapper `Cedata_Operating_Mapper`
 
+
+##### 数据汇总
+
+- 汇总字段含有时间信息`sum_databyTime_service`
+
+    - 方法一get_alltime_data
+
+        参数列表
+
+        | 参数名称   | 参数类型 | 参数说明 |
+        | ---------- | -------- | -------- |
+        | start_time | String   | 开始时间 |
+        | end_time   | String   | 结束时间 |
+
+        返回类型和返回值
+
+        | 参数名称    | 参数类型        | 参数说明       |
+        | ----------- | --------------- | -------------- |
+        | sumfor_data | List<SumEntity> | 待汇总实体列表 |
+
+    - 方法二sumdata
+
+        参数列表 :无
+
+        返回类型和返回值
+
+        | 参数名称    | 参数类型         | 参数说明         |
+        | ----------- | ---------------- | ---------------- |
+        | result_data | List<sum_result> | 汇总后的实体列表 |
+
+        
+
+- 汇总字段不含有时间信息（单独设置选择时间段按钮）`sum_databyOthers_service`
+
+    - 方法一 getTimeId
+
+        参数列表
+
+        | 参数名称   | 参数类型 | 参数说明 |
+        | ---------- | -------- | -------- |
+        | start_time | String   | 开始时间 |
+        | end_time   | String   | 结束时间 |
+
+        返回类型和返回值
+
+        | 参数名称     | 参数类型     | 参数说明       |
+        | ------------ | ------------ | -------------- |
+        | time_id_list | List<String> | 调查期时间列表 |
+
+    - 方法二 getdata
+
+        参数列表
+
+        | 参数名称     | 参数类型     | 参数说明       |
+        | ------------ | ------------ | -------------- |
+        | time_id_list | List<String> | 调查期时间列表 |
+        | sum_id       | String       | 汇总字段       |
+
+        返回类型和返回值
+
+        | 参数名称    | 参数类型        | 参数说明       |
+        | ----------- | --------------- | -------------- |
+        | sumfor_data | List<SumEntity> | 待汇总实体列表 |
+
+    - 方法三sumdata
+
+        参数列表 :无
+
+        返回类型和返回值
+
+        | 参数名称    | 参数类型         | 参数说明         |
+        | ----------- | ---------------- | ---------------- |
+        | result_data | List<sum_result> | 汇总后的实体列表 |
+
+        
 
 
 
