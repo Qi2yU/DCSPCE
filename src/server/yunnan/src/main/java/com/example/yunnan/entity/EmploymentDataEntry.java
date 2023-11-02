@@ -11,6 +11,16 @@ public class EmploymentDataEntry {
     private int status;
 
 
+    public void printMyData(){
+        System.out.println(this.getCompanyID());
+        System.out.println(this.getDocEmploymentNumber());
+        System.out.println(this.getCurEmploymentNumber());
+        System.out.println(this.getNumDecreasedReason());
+        System.out.println(this.getMainReason());
+        System.out.println(this.getSecondReason());
+        System.out.println(this.getReasonDetail());
+    }
+
     public EmploymentDataEntry get_default_EDE(int seed){
         EmploymentDataEntry dede = new EmploymentDataEntry();
         switch (seed){

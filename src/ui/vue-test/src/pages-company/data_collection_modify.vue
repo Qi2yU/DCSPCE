@@ -146,16 +146,15 @@
     },
     created:function(){
       this.$http.get("/get_company_collection_data").then((response)=>{
-        console.log(response);
+        // console.log(response);
         this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
         this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
         this.comCurData.numDecreasedReason = response.data.numDecreasedReason > 0? response.data.numDecreasedReason: '';
         this.comCurData.mainReason = response.data.mainReason > 0? response.data.mainReason: '';
         this.comCurData.secondReason = response.data.secondReason > 0? response.data.secondReason: '';
         this.comCurData.reasonDetail = response.data.reasonDetail;
-        console.log("初始化结束");
+        // console.log("初始化结束");
       });
-      console.log("被创建");
     },
     methods: {
       updateEmployData(){
@@ -165,11 +164,29 @@
         console.log(this.comCurData);
         // 再提交到后端
         // this.$http.post("/data_collection").then((response)=>{});
+               this.$http({
+                         url: '/data_collection',
+                         method:'post',
+                         //发送格式为json
+                         data:JSON.stringify({
+                              companyID : '11111',    // todo 这个后面换成当前用户的id
+                              docEmploymentNumber : this.comCurData.docEmploymentNumber,
+                              curEmploymentNumber : this.comCurData.curEmploymentNumber,
+                              numDecreasedReason : this.comCurData.numDecreasedReason,
+                              mainReason : this.comCurData.mainReason,
+                              secondReason : this.comCurData.secondReason,
+                              reasonDetail : this.comCurData.reasonDetail,
+                        }),
+                        headers:
+                        {
+                          'Content-Type': 'application/json'
+                        }
+                       }).then(console.log(return_value));
         this.go_back_collection();
       },
       go_back_collection(){
         $this.$router.push("/company/data_collection").catch(error => error);
-        console.log("go to data_collection");
+        // console.log("go to data_collection");
       },
     }
   }

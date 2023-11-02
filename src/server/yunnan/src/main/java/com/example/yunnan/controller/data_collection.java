@@ -14,8 +14,13 @@ public class data_collection {
     @RequestMapping(value="/data_collection",method= RequestMethod.POST)
     public String collect_data(@RequestBody  EmploymentDataEntry ede){
         // 当期上报的就业数据写入数据库
-        System.out.println(ede.getCompanyID() + ede.getDocEmploymentNumber() + ede.getCurEmploymentNumber());
+
+        ede.printMyData();
         // 写入DB
+        // ...
+
+
+
         return "Hello SpringBoot!";
     }
 
