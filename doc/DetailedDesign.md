@@ -121,11 +121,93 @@
 
 
 
-##### 审核并上报数据
+##### 审核并上报数据`committed_control.java`
 
++ 获取各市已上报和未上报企业数量
 
+  路由：`/datacount`	分配给 `Datacount_service`
 
+  + 输入类型和输入值：
 
+    | 参数名称 | 参数类型 | 参数说明               |
+    | -------- | -------- | ---------------------- |
+    | province | String   | 统计上报数量的市的名称 |
+    | user_id  | String   | 上报企业的用户名       |
+
+  - 返回类型和返回值：
+
+    | 参数名称    | 参数类型 | 参数说明               |
+    | ----------- | -------- | ---------------------- |
+    | committed   | int      | 某市已上报企业的总数量 |
+    | uncommitted | int      | 某市未上报企业的总数量 |
+    | province    | String   | 市的名称               |
+
++ 获取已上报企业的概览信息
+
+  路由：`/committed`	分配给`Committed_service`
+
+  + 输入类型和输入值：
+
+    | 参数名称 | 参数类型 | 参数说明 |
+    | -------- | -------- | -------- |
+    | province | String   | 市的名称 |
+
+  + 返回类型和返回值：
+
+    | 参数名称  | 参数类型 | 参数说明     |
+    | --------- | -------- | ------------ |
+    | user_id   | String   | 企业的用户名 |
+    | user_name | String   | 企业的名称   |
+    | state1    | String   | 审核状态     |
+    | state2    | String   | 上报状态     |
+
++ 获取某个企业具体上报数据
+
+  路由：`/detail`	分配给`Detail_service`
+
+  + 输入类型和输入值：
+
+    | 参数名称 | 参数类型 | 参数说明     |
+    | -------- | -------- | ------------ |
+    | user_id  | String   | 企业的用户名 |
+
+  + 返回类型和返回值：
+
+    | 参数名称        | 参数类型 | 参数说明         |
+    | --------------- | -------- | ---------------- |
+    | user_id         | String   | 企业的用户名     |
+    | user_name       | String   | 企业的名称       |
+    | last_people_num | int      | 上一调查期人数   |
+    | now_people_num  | int      | 当前调查期人数   |
+    | decrease_reason | String   | 就业人数减少类型 |
+    | main_reason     | String   | 主要原因         |
+    | second_reason   | String   | 次要原因         |
+    | explain_reason  | String   | 原因说明         |
+
++ 获取未上报企业信息
+
+  路由：`/uncommitted`	分配给`uncommitted_service`
+
+  + 输入类型和输入值：
+
+    | 参数名称 | 参数类型 | 参数说明 |
+    | -------- | -------- | -------- |
+    | province | String   | 市的名称 |
+
+  + 返回类型和返回值：
+
+    | 参数名称        | 参数类型 | 参数说明         |
+    | --------------- | -------- | ---------------- |
+    | user_id         | String   | 企业的用户名     |
+    | user_name       | String   | 企业的名称       |
+    | last_people_num | int      | 上一调查期人数   |
+    | now_people_num  | int      | 当前调查期人数   |
+    | decrease_reason | String   | 就业人数减少类型 |
+    | main_reason     | String   | 主要原因         |
+    | second_reason   | String   | 次要原因         |
+    | explain_reason  | String   | 原因说明         |
+    | phone           | String   | 联系电话         |
+    | state           | String   | 状态             |
 
 ##### 数据查询
 
