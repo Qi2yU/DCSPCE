@@ -30,7 +30,7 @@
 
 ### 二、项目体系架构
 
-前端 到 后端 到 数据库
+
 
 ![系统架构图](./asset/系统架构图.png)
 
@@ -91,50 +91,50 @@
 
 ##### 企业就业信息上报 `data_collection.java`
 
-+ 查询当期上报数据 
-    路由： `/get_company_cedata`       分配给 `Get_company_cedata_service`
+- 查询当期上报数据 
+  路由： `/get_company_cedata`       分配给 `Get_company_cedata_service`
 
-    + 输入类型和输入值：
+  - 输入类型和输入值：
 
-        | 参数名称 | 参数类型 | 参数说明               |
-        | -------- | -------- | ---------------------- |
-        | cid      | String   | 待查询企业当前期的数据 |
+    | 参数名称 | 参数类型 | 参数说明               |
+    | -------- | -------- | ---------------------- |
+    | cid      | String   | 待查询企业当前期的数据 |
 
-    + 返回类型和返回值：
+  - 返回类型和返回值：
 
-        | 参数名称            | 参数类型 | 参数说明                   |
-        | ------------------- | -------- | -------------------------- |
-        | companyID           | String   | 查询信息的企业ID号         |
-        | docEmploymentNumber | int      | 企业建档期就业人数         |
-        | curEmploymentNumber | int      | 企业调查期就业人数         |
-        | numDecreasedReason  | int      | 人数减少原因               |
-        | mainReason          | int      | 主要原因                   |
-        | secondReason        | int      | 次要原因                   |
-        | reasonDetail        | String   | 原因解释                   |
-        | status              | int      | 状态码，表示当前的备案状态 |
+    | 参数名称            | 参数类型 | 参数说明                   |
+    | ------------------- | -------- | -------------------------- |
+    | companyID           | String   | 查询信息的企业ID号         |
+    | docEmploymentNumber | int      | 企业建档期就业人数         |
+    | curEmploymentNumber | int      | 企业调查期就业人数         |
+    | numDecreasedReason  | int      | 人数减少原因               |
+    | mainReason          | int      | 主要原因                   |
+    | secondReason        | int      | 次要原因                   |
+    | reasonDetail        | String   | 原因解释                   |
+    | status              | int      | 状态码，表示当前的备案状态 |
 
-+ 修改当期上报数据 
-    路由：`/modify_company_cedata`     分配给 `Modify_company_cedata_service`
+- 修改当期上报数据 
+  路由：`/modify_company_cedata`     分配给 `Modify_company_cedata_service`
 
-    + 输入类型和输入值：
+  - 输入类型和输入值：
 
-        | 参数名称            | 参数类型 | 参数说明                   |
-        | ------------------- | -------- | -------------------------- |
-        | cid                 | String   | 每一个操作必带的cid号      |
-        | companyID           | String   | 要修改信息的企业ID号       |
-        | docEmploymentNumber | int      | 企业建档期就业人数         |
-        | curEmploymentNumber | int      | 企业调查期就业人数         |
-        | numDecreasedReason  | int      | 人数减少原因               |
-        | mainReason          | int      | 主要原因                   |
-        | secondReason        | int      | 次要原因                   |
-        | reasonDetail        | String   | 原因解释                   |
-        | status              | int      | 状态码，表示当前的备案状态 |
+    | 参数名称            | 参数类型 | 参数说明                   |
+    | ------------------- | -------- | -------------------------- |
+    | cid                 | String   | 每一个操作必带的cid号      |
+    | companyID           | String   | 要修改信息的企业ID号       |
+    | docEmploymentNumber | int      | 企业建档期就业人数         |
+    | curEmploymentNumber | int      | 企业调查期就业人数         |
+    | numDecreasedReason  | int      | 人数减少原因               |
+    | mainReason          | int      | 主要原因                   |
+    | secondReason        | int      | 次要原因                   |
+    | reasonDetail        | String   | 原因解释                   |
+    | status              | int      | 状态码，表示当前的备案状态 |
 
-    + 返回类型和返回值：
+  - 返回类型和返回值：
 
-        | 参数名称 | 参数类型 | 参数说明 |
-        | -------- | -------- | -------- |
-        | result   | String   | 操作结果 |
+    | 参数名称 | 参数类型 | 参数说明 |
+    | -------- | -------- | -------- |
+    | result   | String   | 操作结果 |
 
 
 
@@ -142,8 +142,27 @@
 
 
 
-##### 查看通知
+##### 查看通知 `company_notice.java`
 
+- 查看特定的一条通知 
+
+  路由： `/get_company_notice`       分配给 `Get_company_notice_service`
+
+  + 输入类型和输入值：
+
+    | 参数名称  | 参数类型 | 参数说明 |
+    | --------- | -------- | -------- |
+    | companyID | String   | 企业ID号 |
+    | noticeID  | String   | 通知ID号 |
+
+  + 输出类型和输出值：
+
+    | 参数名称  | 参数类型 | 参数说明         |
+    | --------- | -------- | ---------------- |
+    | date      | String   | 发布日期         |
+    | govmentID | String   | 发布通知的省ID号 |
+    | title     | String   | 通知标题         |
+    | content   | String   | 通知内容         |
 
 
 ##### 审核备案信息
@@ -302,9 +321,26 @@
 
 
 
-##### 发布通知
+##### 发布通知 `gov_notice.java`
 
+- 发布一条新的通知 
 
+  路由： `/Insert_gov_notice`       分配给 `Insert_gov_notice_service`
+
+  - 输入类型和输入值：
+
+    | 参数名称    | 参数类型 | 参数说明         |
+    | ----------- | -------- | ---------------- |
+    | govermentID | String   | 发布通知的省ID号 |
+    | title       | String   | 通知标题         |
+    | content     | String   | 通知内容         |
+
+  - 输出类型和输出值：
+    | 参数名称    | 参数类型 | 参数说明         |
+    | ----------- | -------- | ---------------- |
+    | govermentID | String   | 发布通知的省ID号 |
+
+  - 
 
 ##### 代填报数据
 
@@ -352,56 +388,56 @@
 
 ##### 获取某企业当期调查期的数据 `Get_company_cedata_service.java`
 
-+ 方法一 get_company_cedata_by_cid
+- 方法一 get_company_cedata_by_cid
 
-    + 输入参数表: 
+  - 输入参数表: 
 
-        | 参数名称 | 参数类型 | 参数说明               |
-        | -------- | -------- | ---------------------- |
-        | cid      | String   | 待查询企业当前期的数据 |
+    | 参数名称 | 参数类型 | 参数说明               |
+    | -------- | -------- | ---------------------- |
+    | cid      | String   | 待查询企业当前期的数据 |
 
-    + 返回类型和返回值
+  - 返回类型和返回值
 
-        | 参数名称            | 参数类型 | 参数说明                   |
-        | ------------------- | -------- | -------------------------- |
-        | companyID           | String   | 查询信息的企业ID号         |
-        | docEmploymentNumber | int      | 企业建档期就业人数         |
-        | curEmploymentNumber | int      | 企业调查期就业人数         |
-        | numDecreasedReason  | int      | 人数减少原因               |
-        | mainReason          | int      | 主要原因                   |
-        | secondReason        | int      | 次要原因                   |
-        | reasonDetail        | String   | 原因解释                   |
-        | status              | int      | 状态码，表示当前的备案状态 |
+    | 参数名称            | 参数类型 | 参数说明                   |
+    | ------------------- | -------- | -------------------------- |
+    | companyID           | String   | 查询信息的企业ID号         |
+    | docEmploymentNumber | int      | 企业建档期就业人数         |
+    | curEmploymentNumber | int      | 企业调查期就业人数         |
+    | numDecreasedReason  | int      | 人数减少原因               |
+    | mainReason          | int      | 主要原因                   |
+    | secondReason        | int      | 次要原因                   |
+    | reasonDetail        | String   | 原因解释                   |
+    | status              | int      | 状态码，表示当前的备案状态 |
 
-    + 调用Mapper `Cedata_Operating_Mapper`
+  - 调用Mapper `Cedata_Operating_Mapper`
 
 
 
 ##### 修改某企业当期调查期的数据 Modify_company_cedata_service.java`
 
-+ 方法一 modify_company_cedata_by_cid
+- 方法一 modify_company_cedata_by_cid
 
-    + 输入参数表: 
+  - 输入参数表: 
 
-        | 参数名称            | 参数类型 | 参数说明                   |
-        | ------------------- | -------- | -------------------------- |
-        | cid                 | String   | 每一个操作必带的cid号      |
-        | companyID           | String   | 要修改信息的企业ID号       |
-        | docEmploymentNumber | int      | 企业建档期就业人数         |
-        | curEmploymentNumber | int      | 企业调查期就业人数         |
-        | numDecreasedReason  | int      | 人数减少原因               |
-        | mainReason          | int      | 主要原因                   |
-        | secondReason        | int      | 次要原因                   |
-        | reasonDetail        | String   | 原因解释                   |
-        | status              | int      | 状态码，表示当前的备案状态 |
+    | 参数名称            | 参数类型 | 参数说明                   |
+    | ------------------- | -------- | -------------------------- |
+    | cid                 | String   | 每一个操作必带的cid号      |
+    | companyID           | String   | 要修改信息的企业ID号       |
+    | docEmploymentNumber | int      | 企业建档期就业人数         |
+    | curEmploymentNumber | int      | 企业调查期就业人数         |
+    | numDecreasedReason  | int      | 人数减少原因               |
+    | mainReason          | int      | 主要原因                   |
+    | secondReason        | int      | 次要原因                   |
+    | reasonDetail        | String   | 原因解释                   |
+    | status              | int      | 状态码，表示当前的备案状态 |
 
-    + 返回类型和返回值
+  - 返回类型和返回值
 
-        | 参数名称 | 参数类型 | 参数说明 |
-        | -------- | -------- | -------- |
-        | result   | String   | 操作结果 |
+    | 参数名称 | 参数类型 | 参数说明 |
+    | -------- | -------- | -------- |
+    | result   | String   | 操作结果 |
 
-    + 调用Mapper `Cedata_Operating_Mapper`
+  - 调用Mapper `Cedata_Operating_Mapper`
 
 
 ##### 数据汇总
@@ -486,7 +522,7 @@
 
 ##### Cedata_Operating_Mapper
 
-+ 操作当前调查期的数据库
+- 操作当前调查期的数据库
 
 
 
