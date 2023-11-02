@@ -24,15 +24,18 @@
      <el-row class="tac">
        <el-col>
          <el-menu
-           default-active="1"
+           default-active="0"
            class="el-menu-vertical-demo"
            @open="handleOpen"
            @close="handleClose"
          >
-           <el-menu-item index="1" @click="goPage('home')">
+
+           <el-menu-item index="0" @click="goPage('file_check')">
              <i class="el-icon-menu"></i>
-             <span slot="title">系统管理</span>
+             <span slot="title">备案审核</span>
            </el-menu-item>
+
+           
            
            <el-menu-item index="5" @click="goPage('dataexam')">
              <i class="el-icon-menu"></i>
@@ -65,9 +68,15 @@
              </el-menu-item-group>
            </el-submenu>
            
-           <el-menu-item index="5" @click="goPage('notice')">
+           <el-menu-item index="6" @click="goPage('notice')">
              <i class="el-icon-s-order"></i>
              <span slot="title">通知界面</span>
+           </el-menu-item>
+
+
+           <el-menu-item index="1" @click="goPage('home')">
+             <i class="el-icon-menu"></i>
+             <span slot="title">系统管理</span>
            </el-menu-item>
          </el-menu>
        </el-col>
@@ -94,9 +103,12 @@
  
      //跳转到某个导航页
      goPage(link) {
-       if (link == "home") {
+      if (link == "file_check") {
+         $this.$router.push("/layout/file_check").catch(error => error);
+         console.log("666");
+       } else if (link == "centre") {
          $this.$router.push("/layout/centre").catch(error => error);
-       } else if ((link == "dataexam")) {
+       }  else if ((link == "dataexam")) {
          $this.$router.push("/layout/dataexam").catch(error => error);
          console.log("go to dataexam");
        }else if ((link == "sum")) {

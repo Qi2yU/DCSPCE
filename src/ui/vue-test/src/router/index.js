@@ -24,10 +24,13 @@ import Queryres from '@/pages/query_res'
 import Notice_pro from '@/pages/notice'
 import AddNotice from '@/pages/addNotice'
 import EditNotice from '@/pages/editNotice'
+import FileCheck from '@/pages/file_check.vue'
+import FileBeChecked from '@/pages/file_be_checked.vue'
 
 import Record from "@/pages-company/record"
 import Company from "@/pages-company/layout-company"
-import Upload from "@/pages-company/upload"
+import Data_Collection from "@/pages-company/data_collection"
+import Data_Collection_Modify from "@/pages-company/data_collection_modify"
 import Query_result_com from "@/pages-company/query_result"
 import Query_com from "@/pages-company/query"
 import Notice from "@/pages-company/notice"
@@ -53,9 +56,14 @@ export default new Router({
         name: 'Record',
         component: Record
       }, {
-        path: 'upload',
-        name: 'Upload',
-        component: Upload
+        path: 'data_collection',
+        name: 'Data_Collection',
+        component: Data_Collection
+      }, {
+        
+        path: 'data_collection_modify',
+        name: 'Data_Collection_Modify',
+        component: Data_Collection_Modify
       }, {
         path: 'query',
         name: 'Query_com',
@@ -85,6 +93,15 @@ export default new Router({
         path: 'centre',
         name: 'Centre',
         component: Centre
+      },{
+        path: 'file_check',
+        name: 'FileCheck',
+        component: FileCheck,
+        children:[{
+          path: 'file_be_checked',
+          name: 'FileBeChecked', 
+          component: FileBeChecked,
+        }]
       }, {
         path: 'sum',
         name: 'Sum',
