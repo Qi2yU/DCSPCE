@@ -60,18 +60,7 @@
     },
   created(){
     this.$http.get("/gov_notice/get_all").then((response)=>{
-      console.log(response);
-      var tdata = response.data;
-      var lens, i, temp, tempSpan;
-      lens = tdata.length;
-      for (i = 0; i < lens; i++) {
-          temp = i+1;           
-          tempSpan = document.createElement("id");
-          tempSpan.innerHTML =  temp + " ";
-          tdata[i].insert(tempSpan);
-      }
-
-      this.tableData = tdata;
+      this.tableData = response;
       console.log(this.tableData);
       console.log("notice 页面 初始化结束");
     });
@@ -92,16 +81,6 @@
           this.$refs.multipleTable.clearSelection();
         }
       },
-      // addidtoTableData(lists){
-      //   var lens, i, temp, tempSpan;
-      //   lens = lists.length;
-      //   for (i = 0; i < lens; i++) {
-      //       temp = i+1;           
-      //       tempSpan = document.createElement("id");
-      //       tempSpan.innerHTML =  temp + " ";
-      //       lists[i].insertBefore(tempSpan, lists[i].childNodes[0]);
-      //   }
-      // },
       tableRowClassName ({ row, rowIndex }) {
           row.rowIndex = rowIndex;
       },

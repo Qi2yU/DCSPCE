@@ -37,9 +37,9 @@ public class gov_notice {
         // 这里先抓一个默认的数据
         NoticeEntry n1 = new NoticeEntry("000","省", "省第一条通知",
                 "2023/11/2",0, "11");
-        NoticeEntry n2 = new NoticeEntry("000","省", "省第二条通知",
+        NoticeEntry n2 = new NoticeEntry("001","省", "省第二条通知",
                 "2023/11/2",0, "11");
-        NoticeEntry n3 = new NoticeEntry("000","市", "市第一条通知",
+        NoticeEntry n3 = new NoticeEntry("002","市", "市第一条通知",
                 "2023/11/2",0, "11");
 
         ArrayList<NoticeEntry> an = new ArrayList<>();
