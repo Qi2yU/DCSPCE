@@ -12,6 +12,10 @@ import Layout from '@/pages/layout'
 import Centre from '@/pages/centre'
 import Sum from '@/pages/sum'
 import Query from '@/pages/query'
+import Centre1 from '@/pages/centre-1'
+import Centre2 from '@/pages/centre-2'
+import Centre3 from '@/pages/centre-3'
+import Centre4 from '@/pages/centre-4'
 import Analy1 from '@/pages/analy-1'
 import Analy2 from '@/pages/analy-2'
 import Analy3 from '@/pages/analy-3'
@@ -154,6 +158,22 @@ export default new Router({
         path: 'editNotice',
         name: 'EditNotice',
         component: EditNotice
+      },{
+        path: 'centre1',
+        name: 'Centre1',
+        component: Centre1
+      },{
+        path: 'centre2',
+        name: 'Centre2',
+        component: Centre2
+      },{
+        path: 'centre3',
+        name: 'Centre3',
+        component: Centre3
+      },{
+        path: 'centre4',
+        name: 'Centre4',
+        component: Centre4
       }
        ]
     },
