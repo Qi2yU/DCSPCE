@@ -2,13 +2,18 @@ package com.example.yunnan.controller;
 
 
 import com.example.yunnan.entity.EmploymentDataEntry;
+import com.example.yunnan.service.Data_collection_service;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 @CrossOrigin
 public class data_collection {
+
+    @Autowired
+    private Data_collection_service dataCollectionService;
 
 
     @RequestMapping(value="/data_collection",method= RequestMethod.POST)
@@ -18,8 +23,14 @@ public class data_collection {
         ede.printMyData();
         // 写入DB
         // ...
-
-
+        dataCollectionService.test_companydata(ede.getCompanyID(),
+                ede.getDocEmploymentNumber(),
+                ede.getCurEmploymentNumber(),
+                ede.getNumDecreasedReason(),
+                Integer.toString(ede.getMainReason()),
+                Integer.toString(ede.getSecondReason()),
+                ede.getReasonDetail(),
+                ede.getStatus());
 
         return "Hello SpringBoot!";
     }
