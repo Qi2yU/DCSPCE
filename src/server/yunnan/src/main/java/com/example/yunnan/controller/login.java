@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @RestController
-public class login_check {
+@CrossOrigin
+public class login {
 
     @Autowired
     private User_login_check_service userLoginCheckService;
@@ -23,13 +24,26 @@ public class login_check {
         System.out.println(userLoginInfo.getUserId());
         System.out.println(userLoginInfo.getPassword());
         String sql_password;
+        char split_role;
+        /*查询数据库中密码，以便匹配*/
         sql_password = userLoginCheckService.findpasswordById(userLoginInfo.getUserId());
+        /*直接通过用户输入进行分割更快,查询数据库中角色，以便匹配成功后进行页面跳转*/
+        split_role = userLoginInfo.getUserId().charAt(4);
         if(Objects.equals(sql_password, userLoginInfo.getPassword())) {
-            return "success";
+            System.out.println(split_role);
+            if (split_role == '0') {
+                return "/layout";
+            } else if (split_role == '1') {
+                return "/layout";
+            } else if (split_role == '2') {
+                return "/company";
+            }
+            return "/login";
         } else {
             return "false";
         }
     }
+
 
     /*
     *下面是Get方法的示例 */

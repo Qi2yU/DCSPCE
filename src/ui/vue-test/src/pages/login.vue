@@ -39,7 +39,7 @@
         </el-col>
       </el-row>
       <!-- 目前进入不同系统的按钮 -->
-      <el-row type="flex" class="row-bg card" justify="center">
+      <!-- <el-row type="flex" class="row-bg card" justify="center">
         <el-col class="login-system">
             <el-form label-width="10%" >
                 <el-form-item class="btn-ground">
@@ -49,8 +49,7 @@
                 </el-form-item>
             </el-form>
         </el-col>
-
-      </el-row>
+      </el-row> -->
     </div>
   </template>
   
@@ -64,68 +63,92 @@
           // 账户数据
           username: '',
           // 密码数据
-          password: '',
-          // 验证码数据
-          code: '',
-          // 记住密码
-          remember: false,
-          // 验证码的key，因为前后端分离，这里验证码不能由后台存入session，所以交给vue状态管理
-          codeToken: ''
+          password: ''
+          // // 验证码数据
+          // code: '',
+          // // 记住密码
+          // remember: false,
+          // // 验证码的key，因为前后端分离，这里验证码不能由后台存入session，所以交给vue状态管理
+          // codeToken: ''
         },
         // 表单验证
         rules: {
           // 设置账户效验规则
           username: [
             {required: true, message: '请输入账户', trigger: 'blur'},
-            {min: 3, max: 10, message: '长度在 3 到 10 个字符的账户', trigger: 'blur'}
+            {min: 11, max: 11, message: '长度为11个字符的账户', trigger: 'blur'}
           ],
           // 设置密码效验规则
           password: [
             {required: true, message: '请输入密码', trigger: 'blur'},
             {min: 6, max: 15, message: '长度在 6 到 15 个字符的密码', trigger: 'blur'}
-          ],
-          // 设置验证码效验规则
-          code: [
-            {required: true, message: '请输入验证码', trigger: 'blur'},
-            {min: 5, max: 5, message: '长度为 5 个字符', trigger: 'blur'}
           ]
+          // 设置验证码效验规则
+          // code: [
+          //   {required: true, message: '请输入验证码', trigger: 'blur'},
+          //   {min: 5, max: 5, message: '长度为 5 个字符', trigger: 'blur'}
+          // ]
         },
         // 绑定验证码图片
-        codeImg: null
+        // codeImg: null
       };
     },
     methods: {
       // 提交表单
-      submitForm(formName) {
-      this.$router.push("/layout").catch(error => error);
-      console.log("go to layout");
-      
-      // this.$refs[formName].validate((valid) => {
-      //   if (valid) {
-      //     // 表单验证成功
-      //     alert('submit')
-      //   } else {
-      //     console.log('error submit!!');
-      //     return false;
-      //   }
-      // });
+      submitForm() {
+        console.log(this.loginForm);
+
+        this.$http({
+          url: '/login',
+          method: 'post',
+          data: JSON.stringify({
+            userId: this.loginForm.username,
+            password: this.loginForm.password
+          }),
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => {
+          const return_router = response.data;
+
+          console.log(return_router)
+
+          // const targetRoute = return_router.targetRoute;
+
+          this.$router.push(return_router);
+        });
       },
+      // submitForm(formName) {
+      // this.$router.push("/layout").catch(error => error);
+      // console.log("go to layout");
+      
+      // // this.$refs[formName].validate((valid) => {
+      // //   if (valid) {
+      // //     // 表单验证成功
+      // //     alert('submit')
+      // //   } else {
+      // //     console.log('error submit!!');
+      // //     return false;
+      // //   }
+      // // });
+      // },
       // 重置表单
       resetForm(formName) {
         this.$refs[formName].resetFields();
       },
-      goto_city(){
-        this.$router.push("/layout").catch(error => error);
-        console.log("go to layout");
-      },
-      goto_province(){
-        this.$router.push("/layout").catch(error => error);
-        console.log("go to layout");
-      },
-      goto_company(){
-        this.$router.push("/company").catch(error => error);
-        console.log("go to company");
-      },
+      // goto_city(){
+      //   this.$router.push("/layout").catch(error => error);
+      //   console.log("go to layout");
+      // },
+      // goto_province(){
+      //   this.$router.push("/layout").catch(error => error);
+      //   console.log("go to layout");
+      // },
+      // goto_company(){
+      //   this.$router.push("/company").catch(error => error);
+      //   console.log("go to company");
+      // },
     },
   }
   </script>
