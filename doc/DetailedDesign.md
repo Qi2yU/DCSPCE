@@ -21,7 +21,7 @@
 | 使用技术   | 相关版本                                                     |
 | ---------- | ------------------------------------------------------------ |
 | vue        | 使用vue2<br />npm：9.8.1<br />vue/cli：5.0.8<br />element-ui：2.15.14<br />其余部件版本可见 仓库`\src\ui\vue-test\`目录下`package-lock.json`文件 |
-| springboot | springboot：2.2.2<br />jdk：1.8<br />maven: 3.8.8<br />其余部件版本可查看仓库`\src\server\yunnan\pom.xml`文件 |
+| springboot | springboot：2.7.17<br />jdk：1.8<br />maven: 3.8.8<br />mybatis: 2.2.2<br />其余部件版本可查看仓库`\src\server\yunnan\pom.xml`文件 |
 | mysql      | 8.0.35                                                       |
 
 ![系统框架图](./asset/系统框架图.png)
@@ -54,7 +54,24 @@
 
 ##### 用户登录 `login.java`
 
+* 用户输入用户名和密码登录系统
 
+  路由：`/login`	分配给`User_login_check_service`
+
+  * 输入类型与输入值
+
+    | 参数名称 | 参数类型 | 参数说明       |
+    | -------- | -------- | -------------- |
+    | userId   | String   | 用户名         |
+    | password | String   | 用户输入的密码 |
+  
+  * 返回类型和返回值
+  
+    | 参数名称     | 参数类型 | 参数说明       |
+    | ------------ | -------- | -------------- |
+    | return_value | String   | 返回的路由信息 |
+  
+  
 
 ##### 企业备案
 
@@ -228,8 +245,6 @@
 ##### 代填报数据
 
 
-
-##### 系统管理
 
 
 
