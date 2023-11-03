@@ -42,8 +42,8 @@
 
 
  <script>
-import navtop from "@/components-city/nav-top.vue";
-import leftNav from "@/components-city/nav.vue";
+import navtop from "@/components/components-company/nav-top.vue";
+import leftNav from "@/components/components-company/nav-company.vue";
 export default {
   components: {
     navtop,

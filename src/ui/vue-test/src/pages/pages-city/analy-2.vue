@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import ana_button from '../components-city/analy2_components/analy2_buttons.vue'
-import chart from '../components-city/analy2_components/analy2_chart.vue'
+import ana_button from '../../components/components-city/analy2_components/analy2_buttons.vue'
+import chart from '../../components/components-city/analy2_components/analy2_chart.vue'
 export default {
   name: 'User',
   data(){

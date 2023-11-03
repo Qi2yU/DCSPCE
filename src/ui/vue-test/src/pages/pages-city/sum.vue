@@ -85,7 +85,7 @@
 </template>
 
 <script>
-  import SumButton from "../components-pro/sum_components/sum_buttons.vue"
+  import SumButton from "../../components/components-city/sum_components/sum_buttons.vue"
 
 
   export default {

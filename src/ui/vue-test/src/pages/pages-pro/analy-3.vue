@@ -36,8 +36,8 @@
 </template>
 
 <script>
-import choice_button from '../components-pro/analy3_components/analy3_buttons.vue'
-import chart from '../components-pro/analy3_components/analy3_chart.vue'
+import choice_button from '../../components/components-pro/analy3_components/analy3_buttons.vue'
+import chart from '../../components/components-pro/analy3_components/analy3_chart.vue'
 
 export default {
   data(){
