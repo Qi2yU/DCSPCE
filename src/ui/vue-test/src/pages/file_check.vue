@@ -14,8 +14,8 @@
     <br>
     
    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-        <el-menu-item index="1" @click="goPage('file_passed')">已通过</el-menu-item>
-        <el-menu-item index="2" @click="goPage('file_be_checked')">待审核</el-menu-item>
+        <el-menu-item index="1" @click="goPage('file_be_checked')">待审核</el-menu-item>
+        <el-menu-item index="2" @click="goPage('file_passed')">已通过</el-menu-item>
         <el-menu-item index="3" @click="goPage('file_backed')">已驳回</el-menu-item>
         <el-menu-item index="4" @click="goPage('file_no_uploaded')">未上报</el-menu-item>
     </el-menu>

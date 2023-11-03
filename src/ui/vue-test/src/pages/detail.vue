@@ -67,7 +67,7 @@ export default{
     },
     methods:{
         pass(){
-            this.flag1='审核通过';
+            this.flag1='审核';
             console.log(this.flag1);
         },
         commit(){
