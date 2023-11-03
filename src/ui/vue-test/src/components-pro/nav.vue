@@ -118,40 +118,40 @@
      //跳转到某个导航页
      goPage(link) {
       if (link == "file_check") {
-         $this.$router.push("/government/file_check").catch(error => error);
+         $this.$router.push("/government-pro/file_check").catch(error => error);
          console.log("666");
        } else if ((link == "centre-1")) {
-        console.log("/government/centre-1")
-         $this.$router.push("/government/centre-1").catch(error => error);
+        console.log("/government-pro/centre-1")
+         $this.$router.push("/government-pro/centre-1").catch(error => error);
        } else if((link == "centre-2")) {
-        console.log("/government/centre-2")
-         $this.$router.push("/government/centre-2").catch(error => error);
+        console.log("/government-pro/centre-2")
+         $this.$router.push("/government-pro/centre-2").catch(error => error);
        } else if((link == "centre-3")) {
-        console.log("/government/centre-3")
-         $this.$router.push("/government/centre-3").catch(error => error);
+        console.log("/government-pro/centre-3")
+         $this.$router.push("/government-pro/centre-3").catch(error => error);
        } else if((link == "centre-4")) {
-        console.log("/government/centre-4")
-         $this.$router.push("/government/centre-4").catch(error => error);
+        console.log("/government-pro/centre-4")
+         $this.$router.push("/government-pro/centre-4").catch(error => error);
        } else if ((link == "dataexam")) {
-         $this.$router.push("/government/dataexam").catch(error => error);
+         $this.$router.push("/government-pro/dataexam").catch(error => error);
          console.log("go to dataexam");
        }else if ((link == "sum")) {
-         $this.$router.push("/government/sum").catch(error => error);
+         $this.$router.push("/government-pro/sum").catch(error => error);
          console.log("go to sum");
        } else if ((link == "query")) {
-         $this.$router.push("/government/query").catch(error => error);
+         $this.$router.push("/government-pro/query").catch(error => error);
          console.log("go to query");
        }else if ((link == "analy-1")) {
-         $this.$router.push("/government/analy1").catch(error => error);
+         $this.$router.push("/government-pro/analy1").catch(error => error);
          console.log("go to analy-1");
        }else if ((link == "analy-2")) {
-         $this.$router.push("/government/analy2").catch(error => error);
+         $this.$router.push("/government-pro/analy2").catch(error => error);
          console.log("go to analy-2");
        }else if ((link == "analy-3")) {
-         $this.$router.push("/government/analy3").catch(error => error);
+         $this.$router.push("/government-pro/analy3").catch(error => error);
          console.log("go to analy-3");
        }else if ((link == "notice")) {
-         $this.$router.push("/government/notice").catch(error => error);
+         $this.$router.push("/government-pro/notice").catch(error => error);
          console.log("go to notice");
        }
      }
