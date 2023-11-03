@@ -28,6 +28,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
+        <option name="localRepository" value="E:\apache-maven-3.8.6\repository" />
         <option name="mavenHome" value="E:/apache-maven-3.8.6" />
         <option name="useMavenConfig" value="true" />
         <option name="userSettingsFile" value="E:\apache-maven-3.8.6\conf\settings.xml" />
