@@ -1,2 +1,4 @@
-package com.example.yunnan.mapper;public interface sum_databyTime {
+package com.example.yunnan.mapper;
+
+public interface sum_databyTime {
 }
