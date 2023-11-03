@@ -8,8 +8,7 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/pages/layout'
-import Centre from '@/pages/centre'
+import Government from '@/pages/government_home'
 import File_check from '@/pages/file_check'
 import File_passed from '@/pages/file_passed'
 import File_be_checked from '@/pages/file_be_checked'
@@ -18,10 +17,12 @@ import File_no_uploaded from '@/pages/file_no_uploaded'
 import File_detail from '@/pages/file_detail'
 import Sum from '@/pages/sum'
 import Query from '@/pages/query'
+
 import Centre1 from '@/pages/centre-1'
 import Centre2 from '@/pages/centre-2'
 import Centre3 from '@/pages/centre-3'
 import Centre4 from '@/pages/centre-4'
+
 import Analy1 from '@/pages/analy-1'
 import Analy2 from '@/pages/analy-2'
 import Analy3 from '@/pages/analy-3'
@@ -96,9 +97,9 @@ export default new Router({
  
 
     {
-      path: '/layout',
-      name: 'Layout',
-      component: Layout,
+      path: '/government',
+      name: 'Goverment',
+      component: Government,
       children: [{
         path: 'file_check',
         name: 'File_check',
@@ -125,10 +126,6 @@ export default new Router({
         name: 'File_detail',
         component: File_detail
       }, {
-        path: 'centre',
-        name: 'Centre',
-        component: Centre
-      },{
         path: 'file_check',
         name: 'FileCheck',
         component: FileCheck,
@@ -190,19 +187,19 @@ export default new Router({
         name: 'EditNotice',
         component: EditNotice
       },{
-        path: 'centre1',
+        path: 'centre-1',
         name: 'Centre1',
         component: Centre1
       },{
-        path: 'centre2',
+        path: 'centre-2',
         name: 'Centre2',
         component: Centre2
       },{
-        path: 'centre3',
+        path: 'centre-3',
         name: 'Centre3',
         component: Centre3
       },{
-        path: 'centre4',
+        path: 'centre-4',
         name: 'Centre4',
         component: Centre4
       }
