@@ -6,7 +6,7 @@
         border
         style="width: 100%">
             <el-table-column
-                prop="num"
+                prop="userID"
                 label="企业编号"
                 width="240">
             </el-table-column>
@@ -42,27 +42,27 @@
       data() {
         return {
           tableData: [{
-            num: '1',
+            userID: '1',
             name: 'c1',
             flag1: '未审核',
             flag2: '未上报'
           }, {
-            num: '2',
+            userID: '2',
             name: 'c2',
             flag1: '审核通过',
             flag2: '未上报'
           }, {
-            num: '3',
+            userID: '3',
             name: 'c3',
             flag1: '未审核',
             flag2: '未上报'
           },{
-            num: '4',
+            userID: '4',
             name: 'c4',
             flag1: '审核通过',
             flag2: '已上报'
           },{
-            num: '5',
+            userID: '5',
             name: 'c5',
             flag1: '未审核',
             flag2: '未上报'
@@ -75,6 +75,7 @@
         this.$router.push(
           {path:'/layout/detail',
         query:{
+          userID:row.userID,
           flag1:row.flag1,
           flag2:row.flag2
         }}

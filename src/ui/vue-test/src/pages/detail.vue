@@ -5,15 +5,15 @@
     
         <el-descriptions title="详细信息"  :column="2" border>
             <el-descriptions-item label="企业名称">{{item.name}}</el-descriptions-item>
-            <el-descriptions-item label="企业编号">{{item.id}}</el-descriptions-item>
+            <el-descriptions-item label="企业编号">{{item.userId}}</el-descriptions-item>
             <el-descriptions-item label="调查期">{{item.time}}</el-descriptions-item>
-            <el-descriptions-item label="建档期就业人数">{{ item.oldnum }}</el-descriptions-item>
-            <el-descriptions-item label="调查期就业人数">{{item.newnum}}</el-descriptions-item>
-            <el-descriptions-item label="就业人数减少类型">{{item.category}}</el-descriptions-item>
-            <el-descriptions-item label="主要原因">{{item.mreason}}</el-descriptions-item>
+            <el-descriptions-item label="建档期就业人数">{{ item.oldNum }}</el-descriptions-item>
+            <el-descriptions-item label="调查期就业人数">{{item.nowNum}}</el-descriptions-item>
+            <el-descriptions-item label="就业人数减少类型">{{item.decReason}}</el-descriptions-item>
+            <el-descriptions-item label="主要原因">{{item.mainReason}}</el-descriptions-item>
             <el-descriptions-item label="主要原因说明">{{item.mdesc}}</el-descriptions-item>
-            <el-descriptions-item label="次要原因">{{item.sreason}}</el-descriptions-item>
-            <el-descriptions-item label="次要原因说明">{{item.sdesc}}</el-descriptions-item>
+            <el-descriptions-item label="次要原因">{{item.secReason}}</el-descriptions-item>
+            <el-descriptions-item label="次要原因说明">{{item.explain}}</el-descriptions-item>
             <el-descriptions-item label="第三原因">{{item.treason}}</el-descriptions-item>
             <el-descriptions-item label="第三原因说明">{{item.tdesc}}</el-descriptions-item>
         </el-descriptions>
@@ -40,23 +40,34 @@
 
 <script>
 export default{
+    created(){
+        this.$http.get("/detail",{
+            params:{
+                userID:this.userId
+            }
+        }).then((response)=>{
+            this.item=response.data;
+    });
+},
     data()
     {
         return{
-               item: {
-                    name:"c1",
-                    id:"1",
-                    time:"调查期1",
-                    oldnum:"300",
-                    newnum:"240",
-                    category:"",
-                    mreason:"自然减员",
-                    mdesc:"爱的飒飒的煎熬搜代价是的拉升了打开时间来得及阿里斯顿看见啊临时端口骄傲了三大",
-                    sreason:"产业结构调整",
-                    sdesc:"撒登记卡山东矿机爱仕达看见啊收到货卡接收端和看撒湿哒哒红色经典",
-                    treason:"退休",
-                    tdesc:"安徽省金卡号圣诞节看哈数控刀具哈克斯接电话卡接电话看见啊山东矿机阿萨德还看见",
-                },
+                item:{},
+            //    item: {
+            //         // name:"c1",
+            //         userId:"1",
+            //         time:"调查期1",
+            //         oldNum:"300",
+            //         nowNum:"240",
+            //         decReason:"",
+            //         mainReason:"自然减员",
+            //         mdesc:"爱的飒飒的煎熬搜代价是的拉升了打开时间来得及阿里斯顿看见啊临时端口骄傲了三大",
+            //         secReason:"产业结构调整",
+            //         explain:"撒登记卡山东矿机爱仕达看见啊收到货卡接收端和看撒湿哒哒红色经典",
+            //         treason:"退休",
+            //         tdesc:"安徽省金卡号圣诞节看哈数控刀具哈克斯接电话卡接电话看见啊山东矿机阿萨德还看见",
+            //     },
+                userId:this.$route.query.userID,
                 flag1:this.$route.query.flag1,
                 flag2:this.$route.query.flag2,
                 flag3:false,

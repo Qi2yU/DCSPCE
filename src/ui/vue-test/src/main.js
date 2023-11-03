@@ -10,7 +10,7 @@ import axios from 'axios'
 Vue.prototype.$http = axios
 Vue.prototype.$echarts = echarts
 
-axios.defaults.baseURL = 'http://localhost:8090/'
+axios.defaults.baseURL = 'http://localhost:8081/'
 axios.defaults.timeout = 5000 
 
 Vue.config.productionTip = false

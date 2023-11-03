@@ -30,25 +30,31 @@
       
       <script>
         export default {
+          created(){
+            this.$http.get("/count").then((response)=>{
+            this.tableData=response.data;
+    });
+          },
           data() {
             return {
-              tableData: [{
-                province: '玉溪市',
-                committed: '24',
-                uncommitted: '8'
-              }, {
-                province: '昆明市',
-                committed: '30',
-                uncommitted: '23'
-              }, {
-                province: '曲靖市',
-                committed: '24',
-                uncommitted: '23'
-              }, {
-                province: '昭通市',
-                committed: '24',
-                uncommitted: '6'
-              }],
+              tableData:[],
+              // tableData: [{
+              //   province: '玉溪市',
+              //   committed: '24',
+              //   uncommitted: '8'
+              // }, {
+              //   province: '昆明市',
+              //   committed: '30',
+              //   uncommitted: '23'
+              // }, {
+              //   province: '曲靖市',
+              //   committed: '24',
+              //   uncommitted: '23'
+              // }, {
+              //   province: '昭通市',
+              //   committed: '24',
+              //   uncommitted: '6'
+              // }],
               currentCell:null,
               currentcol:null
             }

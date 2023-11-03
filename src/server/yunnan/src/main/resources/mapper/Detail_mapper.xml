@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.yunnan.mapper.Detail_mapper">
+    <resultMap id="DetailMap" type="com.example.yunnan.entity.detaildata">
+        <result column="user_id" property="userId"/>
+        <result column="last_people_num" property="oldNum"/>
+        <result column="now_people_num" property="nowNum"/>
+        <result column="decrease_reason" property="decReason"/>
+        <result column="main_reason" property="mainReason"/>
+        <result column="second_reason" property="secReason"/>
+        <result column="explain_reason" property="explain"/>
+        <result column="state" property="state"/>
+        <result column="user_name" property="userName"/>
+<!--        <association property="userinfo" javaType="com.example.yunnan.entity.UserInfo">-->
+<!--            <result property="user_name" column="user_name"></result>-->
+<!--            <result property="user_id" column="uid"></result>-->
+<!--            <result property="password" column="password"></result>-->
+<!--            <result property="is_record" column="is_record"></result>-->
+<!--            <result property="role" column="role"></result>-->
+<!--        </association>-->
+
+    </resultMap>
+    <select id="getDetailById" resultMap="DetailMap">
+        select
+            d.user_id,
+            d.last_people_num,
+            d.now_people_num,
+            d.decrease_reason,
+            d.main_reason,
+            d.second_reason,
+            d.explain_reason,
+            d.state,
+            u.user_name
+
+            from data_2023_09_1 d,user_accounts u
+            where d.user_id = u.user_id and d.user_id = #{userId};
+    </select>
+
+    <resultMap id="DataExam" type="com.example.yunnan.entity.DataExam">
+        <result property="province" column="city"/>
+        <result property="committed" column="committed"/>
+        <result property="uncommitted" column="uncommitted"/>
+    </resultMap>
+    <select id="getCountByState" resultMap="DataExam">
+        SELECT
+        c.city,
+        COUNT(CASE WHEN d.state = 0 THEN d.user_id ELSE NULL END) AS uncommitted,
+        COUNT(CASE WHEN d.state = 1 THEN d.user_id ELSE NULL END) AS committed
+        FROM
+        company_info c
+        LEFT JOIN
+        data_2023_09_1 d ON c.user_id = d.user_id
+        GROUP BY
+        c.city;
+
+
+
+    </select>
+    <select id="getCountByCity" resultMap="DataExam">
+        SELECT
+        c.city,
+        COUNT(CASE WHEN d.state = 0 THEN d.user_id ELSE NULL END) AS uncommitted,
+        COUNT(CASE WHEN d.state = 1 THEN d.user_id ELSE NULL END) AS committed
+        FROM
+        company_info c
+        LEFT JOIN
+        data_2023_09_1 d ON c.user_id = d.user_id
+        WHERE
+        c.city = #{city}
+        GROUP BY
+        c.city;
+    </select>
+</mapper>
+
