@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.yunnan.mapper.sum_databyTime">
+    <select id="findbycity" resultType="string">
+        select user_id from company_info where city = #{sum_id};
+    </select>
+    <select id="findbycompany_character" resultType="string">
+        select user_id from company_info where company_character = #{sum_id};
+    </select>
+    <select id="findbycompany_industry" resultType="string">
+        select user_id from company_info where company_industry = #{sum_id};
+    </select>
+
+</mapper>

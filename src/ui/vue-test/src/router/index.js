@@ -10,6 +10,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Layout from '@/pages/layout'
 import Centre from '@/pages/centre'
+import File_check from '@/pages/file_check'
+import File_passed from '@/pages/file_passed'
+import File_be_checked from '@/pages/file_be_checked'
+import File_backed from '@/pages/file_backed'
+import File_no_uploaded from '@/pages/file_no_uploaded'
+import File_detail from '@/pages/file_detail'
 import Sum from '@/pages/sum'
 import Query from '@/pages/query'
 import Analy1 from '@/pages/analy-1'
@@ -90,6 +96,31 @@ export default new Router({
       name: 'Layout',
       component: Layout,
       children: [{
+        path: 'file_check',
+        name: 'File_check',
+        component: File_check,
+        children:[{
+          path: 'file_passed',
+        name: 'File_passed',
+        component: File_passed,
+        },{
+          path: 'file_be_checked',
+        name: 'File_be_checked',
+        component: File_be_checked,
+        },{
+          path: 'file_backed',
+        name: 'File_backed',
+        component: File_backed,
+        },{
+          path: 'file_no_uploaded',
+        name: 'File_no_uploaded',
+        component: File_no_uploaded,
+        }]
+      },{
+        path: 'file_detail',
+        name: 'File_detail',
+        component: File_detail
+      }, {
         path: 'centre',
         name: 'Centre',
         component: Centre
