@@ -1,5 +1,6 @@
 package com.example.yunnan.controller;
 
+import com.example.yunnan.entity.SumResEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.yunnan.entity.SumEntity;
@@ -10,19 +11,26 @@ import java.util.List;
 
 
 public class sum_data {
-
-    private sum_databyTime_service Servic;
-    @GetMapping("/sum/{sum_id}/{start_time}/{end_time}")
+    @Autowired
+    private sum_databyTime_service sum_Servic ;
+    @GetMapping("/sum")
     @ResponseBody
-    public void get_sum(@PathVariable String sum_id, @PathVariable String start_time, @PathVariable String end_time){
-        if(sum_id =="企业性质"){
+    public List<SumResEntity> get_sum(String sum_id, String start_time, String end_time){
+            System.out.print(sum_id);
+            if(sum_id.equals("调查期")  ){
+                System.out.print("按调查期汇总");
+                StringBuffer sbs =  new StringBuffer(start_time);
+                StringBuffer sbe =  new StringBuffer(end_time);
+                sum_Servic.get_datafortime(start_time, end_time);
+                sum_Servic.sum_datafortime();
+                //sum_Servic.debug_show();
+                return sum_Servic.give_res();
+            }
+            else if(sum_id.equals("企业性质") ){
 
-        }
-        else if(sum_id == "调查期"){
-            start_time = "2023_9_0";
-            end_time = "2023_9_1";
+            }
 
-        }
+            return sum_Servic.give_res();
 
     }
 

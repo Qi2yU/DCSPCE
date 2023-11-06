@@ -10,4 +10,5 @@ public interface sum_databyTime {
 
 
     List<SumEntity> get_data(String timeTableId);
+
 }

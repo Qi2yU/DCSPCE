@@ -8,10 +8,15 @@
         <result column="user_id" property="user_id"></result>
     </resultMap>
 
-    <select id="get_data" resultMap="Time">
+    <select id="get_data" resultMap="Time" statementType="STATEMENT">
         select now_people_num,user_id from
-        #{timeTableId}
+        ${timeTableId}
 
     </select>
+
+
+<!--    <select id="get_datawithpro" >-->
+<!--        select * from ${timeTableId} join -->
+<!--    </select>-->
 
 </mapper>
