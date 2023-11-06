@@ -106,8 +106,6 @@ public class sum_databyTime_service {
 
 
         while(true){
-            System.out.print(time + "\n");
-
             List<SumEntity>  data_signle = new ArrayList<>();
             StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
             time_fmt.replace(6,7,"_");//20xx09_1
@@ -149,7 +147,9 @@ public class sum_databyTime_service {
 
             Iterator<List<SumEntity>> ite =  data_collection.iterator();
             while (ite.hasNext()){
+
                 List<SumEntity> data_single = ite.next();
+                System.out.print(data_single.get(0).getKind_name());
                 SumResEntity sum_res = new SumResEntity();
                 if(data_single.get(0).getKind_name().charAt(7) == last_char ){
                     sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,6));
