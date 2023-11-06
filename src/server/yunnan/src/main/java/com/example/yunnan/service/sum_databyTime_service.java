@@ -6,6 +6,7 @@ import com.example.yunnan.entity.SumResEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -13,6 +14,7 @@ import java.util.List;
 public class sum_databyTime_service {
     @Autowired
     private sum_databyTime sum_databyTime_mapper ;
+    private int researh_period = 2;
 
     private List<List<SumEntity>> data_collection = new ArrayList<>();
     private List<SumEntity> data_collectionwithpor = new ArrayList<>();
@@ -128,18 +130,63 @@ public class sum_databyTime_service {
             }
         }
     }
-    public void sum_datafortime(){
+    public void sum_datafortime(int type){
         System.out.print("汇总数据\n" );
-        for(List<SumEntity> data_single : data_collection){
-            SumResEntity sum_res = new SumResEntity();
-            sum_res.setKind_name(data_single.get(0).getKind_name());
-            int sum = 0;
-            for (SumEntity data : data_single){
-                sum += data.getNum();
+        if (type == 0){
+            for(List<SumEntity> data_single : data_collection){
+                SumResEntity sum_res = new SumResEntity();
+                sum_res.setKind_name(data_single.get(0).getKind_name());
+                int sum = 0;
+                for (SumEntity data : data_single){
+                    sum += data.getNum();
+                }
+                sum_res.setSum_num(sum);
+                data_sum_res.add(sum_res);
             }
-            sum_res.setSum_num(sum);
-            data_sum_res.add(sum_res);
         }
+        else if(type == 1){
+            char last_char = (char)(researh_period - 1 + '0');
+
+            Iterator<List<SumEntity>> ite =  data_collection.iterator();
+            while (ite.hasNext()){
+                List<SumEntity> data_single = ite.next();
+                SumResEntity sum_res = new SumResEntity();
+                if(data_single.get(0).getKind_name().charAt(7) == last_char ){
+                    sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,6));
+                    int sum = 0;
+                    for (SumEntity data : data_single){
+                        sum += data.getNum();
+                    }
+                    sum_res.setSum_num(sum);
+                }
+                else{
+                    sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,6));
+                    int sum = 0;
+                    for (SumEntity data : data_single){
+                        sum += data.getNum();
+                    }
+                    int last_num = data_single.get(0).getKind_name().charAt(7) - '0';
+                    for(int i = 0; i < researh_period - last_num - 1  ; i++){
+                        if(!ite.hasNext()){
+                            break;
+                        }
+                        List<SumEntity> data_single_next = ite.next();
+                        for (SumEntity data : data_single_next){
+                            sum += data.getNum();
+                        }
+                    }
+                    sum_res.setSum_num(sum);
+                }
+                data_sum_res.add(sum_res);
+            }
+        }
+        else if(type == 2){
+
+        }
+        else {
+
+        }
+
     }
 
     public void debug_show(){
