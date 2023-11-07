@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/sum_databyOthers.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/sum_databyOthers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/sum_databyTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/sum_databyTime.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyOthers_service.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/sum_databyTime.xml" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/sum_databyTime.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
