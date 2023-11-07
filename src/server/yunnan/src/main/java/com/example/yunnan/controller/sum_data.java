@@ -22,17 +22,20 @@ public class sum_data {
             int period = sum_Servic.getResearh_period();
             int day = 0;
             int step = 30/period;
-            StringBuffer sbs =  new StringBuffer(start_time);//20xx_09_12
+            StringBuffer sbs =  new StringBuffer(start_time);//20xx_09_12 20xx_12_01
             StringBuffer sbe =  new StringBuffer(end_time);
             for(int i = 0; i < period; i++){
                 day += step;
                 String last = "0";
                 last += String.valueOf(i);
-                if(Integer.valueOf(start_time.substring(8,10)) < day){
+                if(Integer.valueOf(start_time.substring(8)) < day &&
+                        (Integer.valueOf(start_time.substring(8)) > day-step)
+                ){
 
                     sbs.replace(8,10,last);
                 }
-                if(Integer.valueOf(end_time.substring(8,10)) < day){
+                if(Integer.valueOf(end_time.substring(8)) < day &&
+                        (Integer.valueOf(end_time.substring(8)) > day-step)){
                     sbe.replace(8,10,last);
                 }
             }
@@ -40,6 +43,9 @@ public class sum_data {
             sbs.deleteCharAt(4);
             sbe.deleteCharAt(7);
             sbe.deleteCharAt(4);
+            start_time = String.valueOf(sbs);
+            end_time = String.valueOf(sbe);
+
 
             if(sum_id.equals("调查期") || sum_id.equals("企业年度")|| sum_id.equals("企业月度")|| sum_id.equals("企业季度")){
                 switch (sum_id){
