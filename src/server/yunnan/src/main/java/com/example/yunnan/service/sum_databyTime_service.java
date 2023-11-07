@@ -8,23 +8,25 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
 public class sum_databyTime_service {
     @Autowired
     private sum_databyTime sum_databyTime_mapper ;
-    private int researh_period = 2;
+
 
     private List<List<SumEntity>> data_collection = new ArrayList<>();
     private List<SumEntity> data_collectionwithpor = new ArrayList<>();
-
-    public List<SumResEntity> getData_sum_res() {
-        return data_sum_res;
-    }
-
     private List<SumResEntity>  data_sum_res = new ArrayList<>();
-
+    private int researh_period = 2;
+    public void Clean(){
+        data_collection.clear();
+        data_collectionwithpor.clear();
+        data_sum_res.clear();
+    }
     String compute_Time(String time, String et){//字符串类型：20xx0901， 20xx0900，长度为8
         if(Integer.valueOf(time) >= Integer.valueOf(et)){
             return time;
@@ -120,6 +122,32 @@ public class sum_databyTime_service {
             time = compute_Time(time, et);
         }
     }
+    public void get_dataforpro(String st, String et, int type){
+        String time = new String(st);//20xx0901
+
+        while(true){
+            List<SumEntity>  data_signle = new ArrayList<>();
+            StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
+            time_fmt.replace(6,7,"_");//20xx09_1
+            time_fmt.insert(4,"_");//20xx_09_1
+            time_fmt.insert(0,"data_");//data_20xx_09_1
+            if(type == 0){
+                data_signle =  sum_databyTime_mapper.get_datawithpro_city(String.valueOf(time_fmt));
+            }
+            else if(type == 1){
+                data_signle =  sum_databyTime_mapper.get_datawithpro_char(String.valueOf(time_fmt));
+            }
+            else if(type == 2){
+                data_signle =  sum_databyTime_mapper.get_datawithpro_industry(String.valueOf(time_fmt));
+            }
+
+            data_collection.add(data_signle);
+            if(Integer.valueOf(time) >= Integer.valueOf(et)){
+                break;
+            }
+            time = compute_Time(time, et);
+        }
+    }
 
     public void sum_dataforpor(){
         for(List<SumEntity> data_single : data_collection){
@@ -127,7 +155,18 @@ public class sum_databyTime_service {
                 data_collectionwithpor.add(data);
             }
         }
+        Map<String, Integer> collect = data_collectionwithpor.stream().
+                collect(Collectors.groupingBy(SumEntity::getKind_name,Collectors.summingInt(SumEntity::getNum)));
+        System.out.println(collect);
+        for (String key : collect.keySet()){
+            SumResEntity sumRes = new SumResEntity();
+            sumRes.setKind_name(key);
+            sumRes.setSum_num(collect.get(key));
+            data_sum_res.add(sumRes);
+        }
+
     }
+
     public void sum_datafortime(int type){
         System.out.print("汇总数据\n" );
         if (type == 0){

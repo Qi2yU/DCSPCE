@@ -14,9 +14,37 @@
 
     </select>
 
+    <resultMap id="City" type="SumEntity">
+        <result column="now_people_num" property="num"></result>
+        <result column="user_id" property="user_id"></result>
+        <result column="city" property="kind_name"></result>
+    </resultMap>
 
-<!--    <select id="get_datawithpro" >-->
-<!--        select * from ${timeTableId} join -->
-<!--    </select>-->
+    <select id="get_datawithpro_city" resultMap="City">
+        select t.now_people_num, t.user_id, c.city from ${timeTableId} as t join company_info as c
+        where t.user_id = c.user_id
+    </select>
+
+    <resultMap id="Character" type="SumEntity">
+        <result column="now_people_num" property="num"></result>
+        <result column="user_id" property="user_id"></result>
+        <result column="company_character" property="kind_name"></result>
+    </resultMap>
+
+    <select id="get_datawithpro_char" resultMap="Character">
+        select t.now_people_num, t.user_id, c.company_character from ${timeTableId} as t join company_info as c
+        where t.user_id = c.user_id
+    </select>
+
+    <resultMap id="Industry" type="SumEntity">
+        <result column="now_people_num" property="num"></result>
+        <result column="user_id" property="user_id"></result>
+        <result column="company_industry" property="kind_name"></result>
+    </resultMap>
+
+    <select id="get_datawithpro_industry" resultMap="Industry">
+        select t.now_people_num, t.user_id, c.company_industry from ${timeTableId} as t join company_info as c
+        where t.user_id = c.user_id
+    </select>
 
 </mapper>
