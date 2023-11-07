@@ -46,5 +46,22 @@
         select t.now_people_num, t.user_id, c.company_industry from ${timeTableId} as t join company_info as c
         where t.user_id = c.user_id
     </select>
+    
+    <resultMap id="Mounted" type="SumMountedEntity">
+        <result column="now_people_num" property="num"></result>
+        <result column="company_name" property="name"></result>
+        <result column="company_industry" property="industry"></result>
+        <result column="city" property="city"></result>
+    </resultMap>
+
+    <select id="get_datamounted" resultMap="Mounted">
+        select t.now_people_num, c.company_industry, c.city, c.company_name from ${timeTableId} as t join company_info as c
+        where t.user_id = c.user_id
+    </select>
+
+    <select id="get_timeTableId" resultType="String">
+        select index_data_table from research_schedule where is_finish =0
+    </select>
+
 
 </mapper>

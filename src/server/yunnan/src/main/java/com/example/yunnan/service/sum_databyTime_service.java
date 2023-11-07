@@ -1,5 +1,6 @@
 package com.example.yunnan.service;
 import com.example.yunnan.entity.SumEntity;
+import com.example.yunnan.entity.SumMountedEntity;
 import com.example.yunnan.mapper.sum_databyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.yunnan.entity.SumResEntity;
@@ -22,6 +23,12 @@ public class sum_databyTime_service {
     private List<SumEntity> data_collectionwithpor = new ArrayList<>();
     private List<SumResEntity>  data_sum_res = new ArrayList<>();
 
+    public List<SumMountedEntity> retData_mounted() {
+        return data_mounted;
+    }
+
+    private List<SumMountedEntity> data_mounted = new ArrayList<>();
+
     public int getResearh_period() {
         return researh_period;
     }
@@ -31,6 +38,15 @@ public class sum_databyTime_service {
         data_collection.clear();
         data_collectionwithpor.clear();
         data_sum_res.clear();
+    }
+
+    public void get_datamounted(){
+        String time = sum_databyTime_mapper.get_timeTableId();
+        System.out.print(time);
+        data_mounted = sum_databyTime_mapper.get_datamounted(time);
+        for(SumMountedEntity data : data_mounted){
+            data.setTime(time);
+        }
     }
     String compute_Time(String time, String et){//字符串类型：20xx0901， 20xx0900，长度为8
         if(Integer.valueOf(time) >= Integer.valueOf(et)){

@@ -1,9 +1,9 @@
 package com.example.yunnan.controller;
 
 import com.example.yunnan.entity.SumResEntity;
+import com.example.yunnan.entity.SumMountedEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.yunnan.entity.SumEntity;
 import com.example.yunnan.service.sum_databyTime_service;
 import java.util.List;
 
@@ -14,11 +14,18 @@ public class sum_data {
     @Autowired
     private sum_databyTime_service sum_Servic ;
     private int sevice_type;
+
+
+    @GetMapping("/government-pro/sum/mounted")
+    public List<SumMountedEntity> get_mounted(){
+        sum_Servic.get_datamounted();
+        return sum_Servic.retData_mounted();
+
+    }
     @GetMapping("/government-pro/sum")
     @ResponseBody
-    public List<SumResEntity> get_sum(String sum_id, String start_time, String end_time){
+    public List<SumResEntity> get_sum( String sum_id,  String start_time,  String end_time){
             sum_Servic.Clean();
-            System.out.print(sum_id);
             int period = sum_Servic.getResearh_period();
             int day = 0;
             int step = 30/period;
@@ -98,5 +105,6 @@ public class sum_data {
             return sum_Servic.give_res();
 
     }
+
 
 }
