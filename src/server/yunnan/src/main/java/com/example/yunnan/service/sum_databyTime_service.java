@@ -21,6 +21,11 @@ public class sum_databyTime_service {
     private List<List<SumEntity>> data_collection = new ArrayList<>();
     private List<SumEntity> data_collectionwithpor = new ArrayList<>();
     private List<SumResEntity>  data_sum_res = new ArrayList<>();
+
+    public int getResearh_period() {
+        return researh_period;
+    }
+
     private int researh_period = 2;
     public void Clean(){
         data_collection.clear();

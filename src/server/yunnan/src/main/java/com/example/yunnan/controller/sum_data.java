@@ -8,17 +8,39 @@ import com.example.yunnan.service.sum_databyTime_service;
 import java.util.List;
 
 @RestController
-
+@CrossOrigin
 
 public class sum_data {
     @Autowired
     private sum_databyTime_service sum_Servic ;
     private int sevice_type;
-    @GetMapping("/sum")
+    @GetMapping("/government-pro/sum")
     @ResponseBody
     public List<SumResEntity> get_sum(String sum_id, String start_time, String end_time){
             sum_Servic.Clean();
             System.out.print(sum_id);
+            int period = sum_Servic.getResearh_period();
+            int day = 0;
+            int step = 30/period;
+            StringBuffer sbs =  new StringBuffer(start_time);//20xx_09_12
+            StringBuffer sbe =  new StringBuffer(end_time);
+            for(int i = 0; i < period; i++){
+                day += step;
+                String last = "0";
+                last += String.valueOf(i);
+                if(Integer.valueOf(start_time.substring(8,10)) < day){
+
+                    sbs.replace(8,10,last);
+                }
+                if(Integer.valueOf(end_time.substring(8,10)) < day){
+                    sbe.replace(8,10,last);
+                }
+            }
+            sbs.deleteCharAt(7);
+            sbs.deleteCharAt(4);
+            sbe.deleteCharAt(7);
+            sbe.deleteCharAt(4);
+
             if(sum_id.equals("调查期") || sum_id.equals("企业年度")|| sum_id.equals("企业月度")|| sum_id.equals("企业季度")){
                 switch (sum_id){
                     case"调查期":
@@ -38,8 +60,7 @@ public class sum_data {
                         break;
                 }
                 System.out.print("按调查期汇总\n");
-                StringBuffer sbs =  new StringBuffer(start_time);
-                StringBuffer sbe =  new StringBuffer(end_time);
+
                 sum_Servic.get_datafortime(start_time, end_time);
                 sum_Servic.sum_datafortime(sevice_type);
                 //sum_Servic.debug_show();
