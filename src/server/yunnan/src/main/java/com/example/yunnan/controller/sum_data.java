@@ -1,7 +1,8 @@
 package com.example.yunnan.controller;
 
-import com.example.yunnan.entity.SumResEntity;
+import com.example.yunnan.entity.SumEntity;
 import com.example.yunnan.entity.SumMountedEntity;
+import com.example.yunnan.entity.SumResEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.example.yunnan.service.sum_databyTime_service;
@@ -24,7 +25,7 @@ public class sum_data {
     }
     @GetMapping("/government-pro/sum")
     @ResponseBody
-    public List<SumResEntity> get_sum( String sum_id,  String start_time,  String end_time){
+    public List<SumResEntity> get_sum(String sum_id, String start_time, String end_time){
             sum_Servic.Clean();
             int period = sum_Servic.getResearh_period();
             int day = 0;
@@ -38,7 +39,6 @@ public class sum_data {
                 if(Integer.valueOf(start_time.substring(8)) < day &&
                         (Integer.valueOf(start_time.substring(8)) > day-step)
                 ){
-
                     sbs.replace(8,10,last);
                 }
                 if(Integer.valueOf(end_time.substring(8)) < day &&
@@ -53,8 +53,9 @@ public class sum_data {
             start_time = String.valueOf(sbs);
             end_time = String.valueOf(sbe);
 
-
+            int flag = 0;
             if(sum_id.equals("调查期") || sum_id.equals("企业年度")|| sum_id.equals("企业月度")|| sum_id.equals("企业季度")){
+                flag = 1;
                 switch (sum_id){
                     case"调查期":
                         sevice_type = 0;
@@ -64,23 +65,31 @@ public class sum_data {
                         break;
                     case"企业季度":
                         sevice_type = 2;
+                        StringBuffer stm =  new StringBuffer(start_time);//20xx0901
+                        StringBuffer etm =  new StringBuffer(end_time);
+                        start_time = stm.replace(6,8,"00").toString();
+                        end_time = etm.replace(6,8,"0"+String.valueOf(period-1)).toString();
+
                         break;
                     case"企业年度":
                         sevice_type = 3;
+                        StringBuffer sty =  new StringBuffer(start_time);//20xx0901
+                        StringBuffer ety =  new StringBuffer(end_time);
+                        start_time = sty.replace(4,8,"0100").toString();
+                        end_time = ety.replace(4,8,"0100").toString();
                         break;
                     default:
                         sevice_type = 0;
                         break;
                 }
-                System.out.print("按调查期汇总\n");
 
                 sum_Servic.get_datafortime(start_time, end_time);
                 sum_Servic.sum_datafortime(sevice_type);
-                //sum_Servic.debug_show();
-                return sum_Servic.give_res();
+
             }
             else if(sum_id.equals("企业性质")|| sum_id.equals("所属行业")||sum_id.equals("企业地区")){
                 sum_Servic.Clean();
+                flag = 0;
                 switch (sum_id){
                     case"企业地区":
                         sevice_type = 0;
@@ -102,7 +111,7 @@ public class sum_data {
 
 
 
-            return sum_Servic.give_res();
+            return sum_Servic.give_res(sevice_type, flag);
 
     }
 

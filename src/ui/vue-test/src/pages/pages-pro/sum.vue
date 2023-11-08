@@ -91,7 +91,7 @@ import XLSX from "xlsx"
     mounted(){
           this.$http.get("http://localhost:8070/government-pro/sum/mounted",{
  
-          }).then((response)=>{
+          }).then((response)=>{ 
             this.tableData = response.data
             console.log(response)
           })
