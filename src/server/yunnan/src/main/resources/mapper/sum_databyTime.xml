@@ -3,14 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.yunnan.mapper.sum_databyTime">
-    <select id="findbycity" resultType="string">
-        select user_id from company_info where city = #{sum_id};
-    </select>
-    <select id="findbycompany_character" resultType="string">
-        select user_id from company_info where company_character = #{sum_id};
-    </select>
-    <select id="findbycompany_industry" resultType="string">
-        select user_id from company_info where company_industry = #{sum_id};
+    <resultMap id="Time" type="SumEntity">
+        <result column="now_people_num" property="num"></result>
+        <result column="user_id" property="user_id"></result>
+    </resultMap>
+
+    <select id="get_data" resultMap="Time">
+        select now_people_num,user_id from
+        #{timeTableId}
+
     </select>
 
 </mapper>

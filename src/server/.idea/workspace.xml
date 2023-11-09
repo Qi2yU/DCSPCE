@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="" />
+    <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/router/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -36,7 +38,9 @@
     </option>
   </component>
   <component name="ProjectId" id="2XbU0jS4Bki01JUeCHGbGICZs5D" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
