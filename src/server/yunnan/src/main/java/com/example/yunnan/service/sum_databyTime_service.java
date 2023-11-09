@@ -139,6 +139,9 @@ public class sum_databyTime_service {
             time_fmt.insert(4,"_");//20xx_09_1
             time_fmt.insert(0,"data_");//data_20xx_09_1
             data_signle =  sum_databyTime_mapper.get_data(String.valueOf(time_fmt));
+            if(data_signle.size() == 0){
+                break;
+            }
             data_signle.get(0).setKind_name(time);
             data_collection.add(data_signle);
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
@@ -348,13 +351,7 @@ public class sum_databyTime_service {
 
     }
 
-    public void debug_show(){
-        System.out.print("显示结果\n");
-        for (SumResEntity show_data : data_sum_res){
 
-            System.out.println(show_data.getKind_name());
-        }
-    }
 
     public List<SumResEntity> give_res(int type, int flag){
             if(flag == 1){
