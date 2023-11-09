@@ -7,7 +7,6 @@
  * @FilePath: \vueTest\houtai\src\page\user.vue
  -->
 
-
 <template>
   <div>
    <SumButton @sum-event="Sum_fun"></SumButton>
@@ -23,35 +22,23 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="type"
+      prop="character"
       label="企业性质"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="business"
+      prop="industry"
       label="所属行业"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="local"
+      prop="city"
       label="地区">
     </el-table-column>
     <el-table-column
-      prop="research"
+      prop="time"
       label="调查期">
     </el-table-column>
-    <!-- <el-table-column
-      prop="address"
-      label="企业季度">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="企业月度">
-    </el-table-column>
-    <el-table-column
-      prop="address"
-      label="企业年度">
-    </el-table-column> -->
     <el-table-column
       prop="num"
       label="就业人数">
@@ -67,12 +54,12 @@
     stripe
     style="width: 100%, display: block;">
     <el-table-column
-      prop="choice"
+      prop="kind_name"
       :label = choice_name
       width="180">
     </el-table-column>
     <el-table-column
-      prop="num"
+      prop="sum_num"
       label="就业人数">
     </el-table-column>
   </el-table>
@@ -85,89 +72,83 @@
 </template>
 
 <script>
-  import SumButton from "../../components/components-pro/sum_components/sum_buttons.vue"
 
+import SumButton from "../../components/components-pro/sum_components/sum_buttons.vue"
+import FileSaver from "file-saver";
+import XLSX from "xlsx"
 
   export default {
     data() {
       return {
-        tableData: [{
-          name: 'x公司',
-          type: 'a',
-          business: '上海市普陀区金沙江路 1518 弄',
-          local: '上海市普陀区金沙江路 1518 弄',
-          research: '2016-05-02',
-          num:'10'
-
-        }, {
-          name: 'y公司',
-          type: 'b',
-          business: '上海市普陀区金沙江路 1517 弄',
-          local: '上海市普陀区金沙江路 1518 弄',
-          research: '2016-05-02',
-          num:'30'
-        }, {
-          name: 'a公司',
-          type: 'b',
-          business: '上海市普陀区金沙江路 1519 弄',
-          local: '上海市普陀区金沙江路 1518 弄',
-          research: '2016-05-04',
-          num:'10'
-        }, {
-          name: 'b公司',
-          type: 'b',
-          business: '上海市普陀区金沙江路 1516 弄',
-          local: '上海市普陀区金沙江路 1518 弄',
-          research: '2016-05-02',
-          num:'20'
-        }],
-        tableData_Gru:[
-        ],
+        tableData: [],
+        tableData_Gru:[],
         choice_name:'汇总项',
-
-        
+        sum_id:'',
+        start_time:'',
+        end_time:'',
       }
+    },
+    mounted(){
+          this.$http.get("http://localhost:8070/government-pro/sum/mounted",{
+ 
+          }).then((response)=>{ 
+            this.tableData = response.data
+            console.log(response)
+          })
+          .catch(function(error){
+            console.log(error)
+          })
     },
     components:{
       SumButton,
     },
     methods:{
-      Sum_fun(v1, v2, v3){
-          this.tableData_Gru = []
-          console.log(v1,v2,v3)
+      Sum_fun(v1, v4){
           switch(v1){
-            case('选项1'):this.choice_name = "企业性质"
-            case('选项2'):this.choice_name = "所属行业"
-            case('选项3'):this.choice_name = "调查期"
-            case('选项4'):this.choice_name = "地区"
-            case('选项5'):this.choice_name = "企业季度"
-            case('选项6'):this.choice_name = "企业月度"
-            case('选项7'):this.choice_name = "企业年度"
-            case('选项8'):this.choice_name = "企业性质"
+            case('选项1'):this.choice_name = "企业性质" ,this.sum_id ="企业性质"
+            break
+            case('选项2'):this.choice_name = "所属行业",this.sum_id = "所属行业"
+            break
+            case('选项3'):this.choice_name = "调查期",this.sum_id = "调查期"
+            break
+            case('选项4'):this.choice_name = "地区",this.sum_id = "地区"
+            break
+            case('选项5'):this.choice_name = "企业季度",this.sum_id = "企业季度"
+            break
+            case('选项6'):this.choice_name = "企业月度",this.sum_id = "企业月度"
+            break
+            case('选项7'):this.choice_name = "企业年度",this.sum_id = "企业年度"
+            break
+            case('选项8'):this.choice_name = "企业性质",this.sum_id = "企业性质"
+            break
           }
-          let keyContainerTemp = {} // 以key进行分组的临时对象
-          this.tableData.forEach((item) => {
-            keyContainerTemp[item.type] = keyContainerTemp[item.type] || []
-            keyContainerTemp[item.type].push(item)
+          if(v4!=null){
+            this.start_time = v4[0]
+            this.end_time = v4[1]
+            console.log(this.start_time)
+            console.log(this.end_time)
+          }
+          else{
+            console.log("未选择时间")
+          }
+
+          console.log(this.sum_id)
+        
+          this.$http.get("http://localhost:8070/government-pro/sum",{
+            params:{
+              sum_id: this.sum_id,
+              start_time:this.start_time,
+              end_time:this.end_time,
+            }
+          }).then((response)=>{
+            this.tableData_Gru = response.data
           })
-          console.log(keyContainerTemp)
-          
-          let keysTemp = Object.keys(keyContainerTemp)
-          keysTemp.forEach((keysItem) => {
-            let count = 0
-            keyContainerTemp[keysItem].forEach((item) => {
-              count += parseInt(item.num) // 遍历每种Key对应的数量汇总
-            })
-            this.tableData_Gru.push({ 
-              choice: keysItem,
-              num:count })
-          })
-          console.log(this.tableData_Gru)
+         
       },
 
 
       DownloadHandler(){
-
+        
       }
     }
   }
