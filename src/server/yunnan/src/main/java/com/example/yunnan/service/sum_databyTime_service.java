@@ -19,6 +19,7 @@ public class sum_databyTime_service {
     private sum_databyTime sum_databyTime_mapper ;
     private int researh_period = 2;
 
+
     private List<List<SumEntity>> data_collection = new ArrayList<>();
     private List<SumEntity> data_collectionwithpor = new ArrayList<>();
     private List<SumResEntity>  data_sum_res = new ArrayList<>();

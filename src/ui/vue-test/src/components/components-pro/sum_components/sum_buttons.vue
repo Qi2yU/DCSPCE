@@ -1,5 +1,4 @@
  
- 
  <template>
   <div>
     <el-select v-model="value1" placeholder="汇总字段">

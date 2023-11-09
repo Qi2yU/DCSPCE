@@ -22,28 +22,7 @@
   export default{
     data(){
       return{
-        options1:[{
-            value: '选项1',
-            label: 'a市'
-        },{
-          value: '选项2',
-          label: 'b市',
-        }, {
-          value: '选项3',
-          label: 'c市'
-        }, {
-            value: '选项4',
-            label: 'd市'
-          },{
-          value: '选项5',
-          label: 'e市',
-        }, {
-          value: '选项6',
-          label: 'f市'
-        },  {
-          value: '选项7',
-          label: 'g市'
-        }],
+        options1:[],
         value:'',
         radio:'1',
       }

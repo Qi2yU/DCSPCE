@@ -2,7 +2,7 @@
 </style>
 
 <template>
-<div id="main" style="width: 600px; height: 400px"></div>
+
 
 </template>
 
@@ -25,7 +25,9 @@ export default {
       var pieData = [];
       for(var i = 0; i <this.td.length; i++){
             pieData.push(this.td[i]);
-        }
+            console.log(td[i]);
+      }
+      
       console.log(pieData);
         var option = {
             series: [

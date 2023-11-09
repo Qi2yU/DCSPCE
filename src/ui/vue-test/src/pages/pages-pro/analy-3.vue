@@ -5,7 +5,7 @@
 <template>
   <div id="user">
     <h1>取样分析</h1>
-    <choice_button @query-event = "Query_fun" @chose-event = "Chose_fun"></choice_button>
+    <choice_button @query-event = "Query_fun" ></choice_button>
 
     <el-table
     ref="multipleTable"
@@ -30,14 +30,14 @@
   <div style="margin-top: 20px">
     <el-button @click="toggleSelection()">取消选择</el-button>
   </div>
-  <chart :td = tableData></chart>
+  <div id="main" style="width: 600px; height: 400px"></div>
   <el-button type="primary"    class = "download">导出</el-button>
   </div>
 </template>
 
 <script>
 import choice_button from '../../components/components-pro/analy3_components/analy3_buttons.vue'
-import chart from '../../components/components-pro/analy3_components/analy3_chart.vue'
+
 
 export default {
   data(){
@@ -45,19 +45,7 @@ export default {
       showData:[
 
       ],
-      tableData:[{
-      name:"a市",
-      value:"10",
-      },{
-      name:"b市",
-      value:"20",
-      },{
-      name:"a市",
-      value:"30",
-      },{
-      name:"a市",
-      value:"10",
-      }],
+      tableData:[],
       queryData:[],
       value:"",
       radio:"1",
@@ -66,7 +54,10 @@ export default {
   },
   components:{
     choice_button,
-    chart
+   
+  },
+  mounted(){
+    getPieData();
   },
   methods: {
     toggleSelection(rows) {
@@ -78,6 +69,7 @@ export default {
           this.$refs.multipleTable.clearSelection();
         }
       },
+
     handleSelectionChange(val) {
         this.multipleSelection = val;
     },
@@ -89,6 +81,29 @@ export default {
       for(let i = 0;i < this.tableData.length; i++){
         this.queryData.push(this.tableData[i])
       }
+    },
+    drawChart(){
+      // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
+      let myChart = this.$echarts.init(document.getElementById("main"));
+      // 指定图表的配置项和数据  
+      console.log(pieData);
+        var option = {
+            series: [
+                {
+                    type: 'pie',
+                    data: tableData
+                }
+            ]
+        }
+      // 使用刚指定的配置项和数据显示图表。
+      myChart.setOption(option);
+    },
+    async getPieData(){
+      this.$http.get("http://localhost:8070/government-pro/sample/mounted").
+      then((response)=>{ 
+          this.tableData = response.data
+          console.log(response)
+      })
     },
    
   },
