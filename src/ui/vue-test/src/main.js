@@ -4,7 +4,6 @@ import ElementUI from 'element-ui'
 import VueRouter from 'vue-router'
 import router from './router'
 import * as echarts from 'echarts';
-
 import axios from 'axios'
 
 Vue.prototype.$http = axios

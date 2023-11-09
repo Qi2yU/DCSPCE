@@ -8,39 +8,79 @@
  */
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from '@/pages/layout'
-import Centre from '@/pages/centre'
-import File_check from '@/pages/file_check'
-import File_passed from '@/pages/file_passed'
-import File_be_checked from '@/pages/file_be_checked'
-import File_backed from '@/pages/file_backed'
-import File_no_uploaded from '@/pages/file_no_uploaded'
-import File_detail from '@/pages/file_detail'
-import Sum from '@/pages/sum'
-import Query from '@/pages/query'
-import Analy1 from '@/pages/analy-1'
-import Analy2 from '@/pages/analy-2'
-import Analy3 from '@/pages/analy-3'
-import Login from '@/pages/login'
-import DataExam from '@/pages/data_exam'
-import Committed from '@/pages/committed'
-import Uncommitted from '@/pages/uncommitted'
-import Detail from '@/pages/detail'
-import Queryres from '@/pages/query_res'
-import Notice_pro from '@/pages/notice'
-import AddNotice from '@/pages/addNotice'
-import EditNotice from '@/pages/editNotice'
-import FileCheck from '@/pages/file_check.vue'
-import FileBeChecked from '@/pages/file_be_checked.vue'
 
-import Record from "@/pages-company/record"
-import Company from "@/pages-company/layout-company"
-import Data_Collection from "@/pages-company/data_collection"
-import Data_Collection_Modify from "@/pages-company/data_collection_modify"
-import Query_result_com from "@/pages-company/query_result"
-import Query_com from "@/pages-company/query"
-import Notice from "@/pages-company/notice"
-import ReadNotice from "@/pages-company/readNotice"
+//省的界面
+import Government_Pro from '@/pages/pages-pro/government_home'
+import File_check from '@/pages/pages-pro/file_check'
+import File_passed from '@/pages/pages-pro/file_passed'
+import File_be_checked from '@/pages/pages-pro/file_be_checked'
+import File_backed from '@/pages/pages-pro/file_backed'
+import File_no_uploaded from '@/pages/pages-pro/file_no_uploaded'
+import File_detail from '@/pages/pages-pro/file_detail'
+import Sum from '@/pages/pages-pro/sum'
+import Query from '@/pages/pages-pro/query'
+import Centre1 from '@/pages/pages-pro/centre-1'
+import Centre2 from '@/pages/pages-pro/centre-2'
+import Centre3 from '@/pages/pages-pro/centre-3'
+import Centre4 from '@/pages/pages-pro/centre-4'
+import Analy1 from '@/pages/pages-pro/analy-1'
+import Analy2 from '@/pages/pages-pro/analy-2'
+import Analy3 from '@/pages/pages-pro/analy-3'
+import Login from '@/pages/pages-pro/login'
+import DataExam from '@/pages/pages-pro/data_exam'
+import Committed from '@/pages/pages-pro/committed'
+import Uncommitted from '@/pages/pages-pro/uncommitted'
+import Detail from '@/pages/pages-pro/detail'
+import Queryres from '@/pages/pages-pro/query_res'
+import Notice_pro from '@/pages/pages-pro/notice'
+import AddNotice from '@/pages/pages-pro/addNotice'
+import EditNotice from '@/pages/pages-pro/editNotice'
+import FileCheck from '@/pages/pages-pro/file_check.vue'
+import FileBeChecked from '@/pages/pages-pro/file_be_checked.vue'
+
+
+//市的界面
+import Government_City from '@/pages/pages-city/government_home'
+import File_check_City from '@/pages/pages-city/file_check'
+import File_passed_City from '@/pages/pages-city/file_passed'
+import File_be_checked_City from '@/pages/pages-city/file_be_checked'
+import File_backed_City from '@/pages/pages-city/file_backed'
+import File_no_uploaded_City from '@/pages/pages-city/file_no_uploaded'
+import File_detail_City from '@/pages/pages-city/file_detail'
+import Sum_City from '@/pages/pages-city/sum'
+import Query_City from '@/pages/pages-city/query'
+import Centre1_City from '@/pages/pages-city/centre-1'
+import Centre2_City from '@/pages/pages-city/centre-2'
+import Centre3_City from '@/pages/pages-city/centre-3'
+import Centre4_City from '@/pages/pages-city/centre-4'
+import Analy1_City from '@/pages/pages-city/analy-1'
+import Analy2_City from '@/pages/pages-city/analy-2'
+import Login_City from '@/pages/pages-city/login'
+import DataExam_City from '@/pages/pages-city/data_exam'
+import Committed_City from '@/pages/pages-city/committed'
+import Uncommitted_City from '@/pages/pages-city/uncommitted'
+import Detail_City from '@/pages/pages-city/detail'
+import Queryres_City from '@/pages/pages-city/query_res'
+import Notice_pro_City from '@/pages/pages-city/notice'
+import AddNotice_City from '@/pages/pages-city/addNotice'
+import EditNotice_City from '@/pages/pages-city/editNotice'
+import FileCheck_City from '@/pages/pages-city/file_check.vue'
+import FileBeChecked_City from '@/pages/pages-city/file_be_checked.vue'
+//公司的界面
+import Record from "@/pages/pages-company/record"
+import Company from "@/pages/pages-company/layout-company"
+import Data_Collection from "@/pages/pages-company/data_collection"
+import Data_Collection_Modify from "@/pages/pages-company/data_collection_modify"
+import Query_result_com from "@/pages/pages-company/query_result"
+import Query_com from "@/pages/pages-company/query"
+import Notice from "@/pages/pages-company/notice"
+import ReadNotice from "@/pages/pages-company/readNotice"
+
+
+
+
+
+
 
 Vue.use(Router)
 
@@ -89,13 +129,14 @@ export default new Router({
       }, ]
     },
   
- 
-
     {
-      path: '/layout',
-      name: 'Layout',
-      component: Layout,
+      path: '/government-pro',
+      name: 'GovermentPro',
+      component: Government_Pro,
       children: [{
+        path:"",
+        redirect:"file_be_checked"
+      },{
         path: 'file_check',
         name: 'File_check',
         component: File_check,
@@ -121,10 +162,6 @@ export default new Router({
         name: 'File_detail',
         component: File_detail
       }, {
-        path: 'centre',
-        name: 'Centre',
-        component: Centre
-      },{
         path: 'file_check',
         name: 'FileCheck',
         component: FileCheck,
@@ -185,8 +222,130 @@ export default new Router({
         path: 'editNotice',
         name: 'EditNotice',
         component: EditNotice
+      },{
+        path: 'centre-1',
+        name: 'Centre1',
+        component: Centre1
+      },{
+        path: 'centre-2',
+        name: 'Centre2',
+        component: Centre2
+      },{
+        path: 'centre-3',
+        name: 'Centre3',
+        component: Centre3
+      },{
+        path: 'centre-4',
+        name: 'Centre4',
+        component: Centre4
       }
        ]
-    },
+    }, 
+
+    {
+      path: '/government-city',
+      name: 'Goverment_City',
+      component: Government_City,
+      children: [{
+        path: 'file_check',
+        name: 'File_check_City',
+        component: File_check_City,
+        children:[{
+          path: 'file_passed',
+          name: 'File_passed_City',
+        component: File_passed_City,
+        },{
+          path: 'file_be_checked',
+        name: 'File_be_checked_City',
+        component: File_be_checked_City,
+        },{
+          path: 'file_backed',
+        name: 'File_backed_City',
+        component: File_backed_City,
+        },{
+          path: 'file_no_uploaded',
+        name: 'File_no_uploaded_City',
+        component: File_no_uploaded_City,
+        }]
+      },{
+        path: 'file_detail',
+        name: 'File_detail_City',
+        component: File_detail_City
+      }, {
+        path: 'file_check',
+        name: 'FileCheck_City',
+        component: FileCheck_City,
+        children:[{
+          path: 'file_be_checked',
+          name: 'FileBeChecked_City', 
+          component: FileBeChecked_City,
+        }]
+      }, {
+        path: 'sum',
+        name: 'Sum_City',
+        component: Sum_City
+      }, {
+        path: 'query',
+        name: 'Query_City',
+        component: Query_City
+      }, {
+        path: 'analy1',
+        name: 'Analy1_City',
+        component: Analy1_City
+      }, {
+        path: 'analy2',
+        name: 'Analy2_City',
+        component: Analy2_City
+      }, {
+        path: 'dataexam',
+        name: 'DataExam_City',
+        component: DataExam_City
+      },{
+        path: 'committed',
+        name: 'Committed_City',
+        component: Committed_City
+      },{
+        path: 'uncommitted',
+        name: 'Uncommitted_City',
+        component: Uncommitted_City
+      },{
+        path: 'detail',
+        name: 'Detail_City',
+        component: Detail_City
+      },{
+        path: 'queryres',
+        name: 'Queryres_City',
+        component: Queryres_City
+      },{
+        path: 'notice',
+        name: 'NOtice_pro_City',
+        component: Notice_pro_City
+      },{
+        path: 'addNotice',
+        name: 'AddNotice_City',
+        component: AddNotice_City
+      },{
+        path: 'editNotice',
+        name: 'EditNotice_City',
+        component: EditNotice_City
+      },{
+        path: 'centre-1',
+        name: 'Centre1_City',
+        component: Centre1_City
+      },{
+        path: 'centre-2',
+        name: 'Centre2_City',
+        component: Centre2_City
+      },{
+        path: 'centre-3',
+        name: 'Centre3_City',
+        component: Centre3_City
+      },{
+        path: 'centre-4',
+        name: 'Centre4_City',
+        component: Centre4_City
+      }
+       ]
+    }
   ]
 })

@@ -1,17 +1,17 @@
 <template>
     <div>   
         <el-descriptions title="备案审核详细信息"  :column="2" border>
-            <el-descriptions-item label="企业名称">{{item.name}}</el-descriptions-item>
-            <el-descriptions-item label="组织机构代码">{{item.id}}</el-descriptions-item>
-            <el-descriptions-item label="联系人">{{item.contact}}</el-descriptions-item>
-            <el-descriptions-item label="联系电话">{{item.telephone }}</el-descriptions-item>
-            <el-descriptions-item label="所属地区">{{item.region}}</el-descriptions-item>
-            <el-descriptions-item label="联系地址">{{item.address}}</el-descriptions-item>
-            <el-descriptions-item label="邮政编码">{{item.code}}</el-descriptions-item>
-            <el-descriptions-item label="企业性质">{{item.charactor}}</el-descriptions-item>
-            <el-descriptions-item label="所属行业">{{item.belong}}</el-descriptions-item>
-            <el-descriptions-item label="传真">{{item.fax}}</el-descriptions-item>
-            <el-descriptions-item label="主要经营业务">{{item.business}}</el-descriptions-item>
+            <el-descriptions-item label="企业名称">{{item.company_name}}</el-descriptions-item>
+            <el-descriptions-item label="组织机构代码">{{item.user_id}}</el-descriptions-item>
+            <el-descriptions-item label="联系人">{{item.linksman}}</el-descriptions-item>
+            <el-descriptions-item label="联系电话">{{item.phone }}</el-descriptions-item>
+            <el-descriptions-item label="所属地区">{{item.city}}</el-descriptions-item>
+            <el-descriptions-item label="联系地址">{{item.linaddress}}</el-descriptions-item>
+            <el-descriptions-item label="邮政编码">{{item.post_num}}</el-descriptions-item>
+            <el-descriptions-item label="企业性质">{{item.company_character}}</el-descriptions-item>
+            <el-descriptions-item label="所属行业">{{item.company_industry}}</el-descriptions-item>
+            <el-descriptions-item label="传真">{{item.fax_num}}</el-descriptions-item>
+            <el-descriptions-item label="主要经营业务">{{item.company_business}}</el-descriptions-item>
             <el-descriptions-item label="Email">{{item.email}}</el-descriptions-item>
         </el-descriptions>
         
@@ -40,29 +40,29 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default{
+
+        
+    
     data()
     {
         return{
-               item: {
-                    name:"xxxx公司",
-                    id:"111111",
-                    contact:"张三",
-                    telephone:"1234567890",
-                    region:"昆明市",
-                    address:"昆明市xx路xx号",
-                    code:"650000",
-                    charactor:"私企",
-                    belong:"制造业",
-                    fax:"12345678",
-                    business:"服装制造",
-                    email:"123456@mail",
-                },
+               item: {},
                 flag:this.$route.query.flag,
+                id:this.$route.query.id,
                 flag3:false,
                 textarea:''       
         }
     },
+
+    created:function(){
+        console.log("调用axios");
+      axios.post("http://localhost:8090/company_info/single",
+      this.$route.query.id).then((response)=>{
+        this.item = response.data;})
+    },
+
     methods:{
         pass(){
             this.flag='已通过';
