@@ -37,6 +37,7 @@ import AddNotice from '@/pages/pages-pro/addNotice'
 import EditNotice from '@/pages/pages-pro/editNotice'
 import FileCheck from '@/pages/pages-pro/file_check.vue'
 import FileBeChecked from '@/pages/pages-pro/file_be_checked.vue'
+import Queryres2 from '@/pages/pages-pro/query_res2'
 
 
 //市的界面
@@ -66,6 +67,7 @@ import AddNotice_City from '@/pages/pages-city/addNotice'
 import EditNotice_City from '@/pages/pages-city/editNotice'
 import FileCheck_City from '@/pages/pages-city/file_check.vue'
 import FileBeChecked_City from '@/pages/pages-city/file_be_checked.vue'
+import Queryres2_City from '@/pages/pages-city/query_res2'
 //公司的界面
 import Record from "@/pages/pages-company/record"
 import Company from "@/pages/pages-company/layout-company"
@@ -237,7 +239,12 @@ export default new Router({
         path: 'centre-4',
         name: 'Centre4',
         component: Centre4
+      },{
+        path: 'queryres2',
+        name: 'Queryres2',
+        component: Queryres2
       }
+
        ]
     }, {
       path: '/government-city',
@@ -341,6 +348,11 @@ export default new Router({
         path: 'centre-4',
         name: 'Centre4',
         component: Centre4_City
+      },{
+        path: 'queryres2',
+        name: 'Queryres2',
+        component: Queryres2_City
+
       }
        ]
     }

@@ -1,50 +1,36 @@
 <template>
     <div>
-        <el-button v-if="flag2==='未上报'" type="primary" size="medium" style="float: right" @click="commit" :disabled="flag1==='未审核'">上报</el-button>
-        <el-button v-else round style="float: right" :disabled="true">已上报</el-button>
+        
     
         <el-descriptions title="详细信息"  :column="2" border>
-            <el-descriptions-item label="企业名称">{{item.userName}}</el-descriptions-item>
+            <el-descriptions-item label="企业名称">{{item.companyName}}</el-descriptions-item>
             <el-descriptions-item label="企业编号">{{item.userId}}</el-descriptions-item>
-            <el-descriptions-item label="调查期">{{item.time}}</el-descriptions-item>
+            <el-descriptions-item label="单位性质">{{item.character}}</el-descriptions-item>
+            <el-descriptions-item label="所属行业">{{item.industry}}</el-descriptions-item>
+            <el-descriptions-item label="所在市">{{item.city}}</el-descriptions-item>
+            <el-descriptions-item label="所在区县">{{item.district}}</el-descriptions-item>
+            
             <el-descriptions-item label="建档期就业人数">{{ item.oldNum }}</el-descriptions-item>
             <el-descriptions-item label="调查期就业人数">{{item.nowNum}}</el-descriptions-item>
             <el-descriptions-item label="就业人数减少类型">{{item.decReason}}</el-descriptions-item>
             <el-descriptions-item label="主要原因">{{item.mainReason}}</el-descriptions-item>
-            <el-descriptions-item label="主要原因说明">{{item.mdesc}}</el-descriptions-item>
+            
             <el-descriptions-item label="次要原因">{{item.secReason}}</el-descriptions-item>
             <el-descriptions-item label="次要原因说明">{{item.explain}}</el-descriptions-item>
-            <el-descriptions-item label="第三原因">{{item.treason}}</el-descriptions-item>
-            <el-descriptions-item label="第三原因说明">{{item.tdesc}}</el-descriptions-item>
+            
         </el-descriptions>
 
-        <el-row v-if="flag1==='未审核'" type="flex" justify="end">
-            <el-button type="primary" size="medium" @click="pass" :disabled="flag3">审核通过</el-button>
-            <el-button type="danger" size="medium" @click="retreat" :disabled="flag3">退回修改</el-button>
-        </el-row>
-        <el-row v-else type="flex" justify="end" >状态：审核通过</el-row>
-        <el-row v-if="flag3">
-            <el-input
-                type="textarea"
-                :rows="4"
-                placeholder="请输入内容"
-                v-model="textarea">
-            </el-input>
-            <el-button type="info" plain style="float: right" @click="advise">提交</el-button>
-            <el-button type="info" plain style="float: right" @click="quit">取消</el-button>
-        </el-row>
-        <el-row>
-            
-        </el-row>
+       
     </div>
 </template>
 
 <script>
 export default{
     created(){
-        this.$http.get("/detail",{
+        this.$http.get("/querydetail",{
             params:{
-                userID: this.userID,
+                tableName:this.tableName,
+                userId: this.userId,
             }
         }).then((response)=>{
             this.item=response.data;
@@ -69,7 +55,8 @@ export default{
             //         treason:"退休",
             //         tdesc:"安徽省金卡号圣诞节看哈数控刀具哈克斯接电话卡接电话看见啊山东矿机阿萨德还看见",
             //     },
-                userID:this.$route.query.id,
+                userId:this.$route.query.userId,
+                tableName:this.$route.query.tableName,
                 flag1:this.$route.query.flag1,
                 flag2:this.$route.query.flag2,
                 flag3:false,
@@ -81,7 +68,7 @@ export default{
     methods:{
         pass(){
             this.flag1='审核';
-            this.$http.get("/passbycity",{
+            this.$http.get("/passbypro",{
             params:{
                 userId: this.userID,
             }
@@ -89,7 +76,7 @@ export default{
             console.log(this.flag1);
         },
         commit(){
-            this.$http.get("/singleupbycity",{
+            this.$http.get("/singleupbypro",{
             params:{
                 userId: this.userID,
             }
@@ -97,7 +84,7 @@ export default{
             this.flag2='已上报';
         },
         retreat(){
-        
+            
             this.flag3=true;
         },
         advise(){

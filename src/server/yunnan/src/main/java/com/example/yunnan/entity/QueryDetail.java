@@ -1,7 +1,11 @@
 package com.example.yunnan.entity;
 
-public class detaildata {
+public class QueryDetail {
     private String userId;
+    private String character;
+    private String industry;
+    private String city;
+    private String district;
     private int oldNum;
     private int nowNum;
     private String decReason;
@@ -9,16 +13,39 @@ public class detaildata {
     private String SecReason;
     private String explain;
     private int state;
-    private String userName;
-//    private UserInfo userinfo;
+    private String companyName;
 
-//    public UserInfo getUserinfo() {
-//        return userinfo;
-//    }
+    public String getCharacter() {
+        return character;
+    }
 
-//    public void setUserinfo(UserInfo userinfo) {
-//        this.userinfo = userinfo;
-//    }
+    public void setCharacter(String character) {
+        this.character = character;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
 
     public String getUserId() {
         return userId;
@@ -84,26 +111,11 @@ public class detaildata {
         this.state = state;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getCompanyName() {
+        return companyName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    @Override
-    public String toString() {
-        return "detaildata{" +
-                "userId='" + userId + '\'' +
-                ", oldNum=" + oldNum +
-                ", nowNum=" + nowNum +
-                ", decReason='" + decReason + '\'' +
-                ", mainReason='" + mainReason + '\'' +
-                ", SecReason='" + SecReason + '\'' +
-                ", explain='" + explain + '\'' +
-                ", state=" + state +
-                ", userName='" + userName + '\'' +
-                '}';
+    public void setCompanyName(String companyName) {
+        this.companyName=companyName;
     }
 }

@@ -5,6 +5,43 @@
 
 
 <mapper namespace="com.example.yunnan.mapper.Detail_mapper">
+
+<!--  获取当前调查期  -->
+    <resultMap id="resTime" type="com.example.yunnan.entity.res_time">
+        <result property="start_time" column="start"/>
+        <result property="end_time" column="end"/>
+        <result property="tableName" column="index_data_table"/>
+    </resultMap>
+    <select id="getTable" resultMap="resTime">
+    select
+    r.index_data_table,
+    r.r_time_start as start,
+    r.f_time_end as end
+    from research_schedule r
+    where r.is_finish=0
+    </select>
+
+
+<!--    省获取每个市上报概览数据-->
+    <resultMap id="DataExam" type="com.example.yunnan.entity.DataExam">
+        <result property="province" column="city"/>
+        <result property="committed" column="committed"/>
+        <result property="uncommitted" column="uncommitted"/>
+    </resultMap>
+    <select id="getCountByState" resultMap="DataExam">
+        SELECT
+        c.city,
+        COUNT(CASE WHEN d.state IN (0, 1, 2) THEN d.user_id ELSE NULL END) AS uncommitted,
+        COUNT(CASE WHEN d.state IN (3, 4, 5) THEN d.user_id ELSE NULL END) AS committed
+        FROM
+        company_info c
+        LEFT JOIN
+        ${tableName} d ON c.user_id = d.user_id
+        GROUP BY
+        c.city;
+    </select>
+
+<!--    获取某一企业详细数据-->
     <resultMap id="DetailMap" type="com.example.yunnan.entity.detaildata">
         <result column="user_id" property="userId"/>
         <result column="last_people_num" property="oldNum"/>
@@ -22,7 +59,6 @@
 <!--            <result property="is_record" column="is_record"></result>-->
 <!--            <result property="role" column="role"></result>-->
 <!--        </association>-->
-
     </resultMap>
     <select id="getDetailById" resultMap="DetailMap">
         select
@@ -36,43 +72,171 @@
             d.state,
             u.user_name
 
-            from data_2023_09_1 d,user_accounts u
+            from ${tableName} d,user_accounts u
             where d.user_id = u.user_id and d.user_id = #{userId};
     </select>
 
-    <resultMap id="DataExam" type="com.example.yunnan.entity.DataExam">
-        <result property="province" column="city"/>
-        <result property="committed" column="committed"/>
-        <result property="uncommitted" column="uncommitted"/>
+
+
+<!--  省端获取某市已上报企业概览数据  -->
+    <resultMap id="Committed" type="com.example.yunnan.entity.Committed">
+        <result property="companyId" column="user_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="state" column="state"/>
     </resultMap>
-    <select id="getCountByState" resultMap="DataExam">
-        SELECT
-        c.city,
-        COUNT(CASE WHEN d.state = 0 THEN d.user_id ELSE NULL END) AS uncommitted,
-        COUNT(CASE WHEN d.state = 1 THEN d.user_id ELSE NULL END) AS committed
-        FROM
-        company_info c
-        LEFT JOIN
-        data_2023_09_1 d ON c.user_id = d.user_id
-        GROUP BY
-        c.city;
-
-
-
+    <select id="getCommittedOnCity" resultMap="Committed">
+        select
+        d.user_id,
+        c.company_name,
+        d.state
+        from ${tableName} d,company_info c
+        where c.city =#{city} and c.user_id =d.user_id and (d.state =3 or d.state=4 or d.state=5)
     </select>
-    <select id="getCountByCity" resultMap="DataExam">
-        SELECT
+
+<!--  获取退回企业数据  -->
+    <resultMap id="Retreat" type="com.example.yunnan.entity.Retreat">
+        <result column="user_id" property="companyId"/>
+        <result column="last_people_num" property="lastNum"/>
+        <result column="now_people_num" property="nowNum"/>
+        <result column="decrease_reason" property="decReason"/>
+        <result column="main_reason" property="mainReason"/>
+        <result column="second_reason" property="secReason"/>
+        <result column="explain_reason" property="explain"/>
+        <result column="user_name" property="userName"/>
+        <result column="company_name" property="companyName"/>
+    </resultMap>
+    <select id="getRetreat" resultMap="Retreat">
+        select
+        d.user_id ,
+        d.last_people_num ,
+        d.now_people_num ,
+        d.decrease_reason ,
+        d.main_reason ,
+        d.second_reason ,
+        d.explain_reason ,
+        c.company_name,
+        c.phone
+        from ${tableName} d,company_info c
+        where c.city =#{city} and c.user_id =d.user_id and d.state =0 and d.now_people_num !=0
+    </select>
+
+<!--    获取未上报企业数据-->
+    <resultMap id="Uncommitted" type="com.example.yunnan.entity.Uncommitted">
+        <result property="companyId" column="user_id"/>
+        <result property="companyName" column="company_name"/>
+    </resultMap>
+    <select id="getUncommitted" resultMap="Uncommitted">
+        select
+        d.user_id ,
+        c.company_name,
+        c.phone
+        from ${tableName} d,company_info c
+        where c.city =#{city} and c.user_id =d.user_id and ((d.state =0 and d.now_people_num =0)
+        or d.state=1 or d.state =2)
+    </select>
+
+<!--  省审核通过更新状态  -->
+    <update id="passByPro">
+        UPDATE ${tableName} d
+        SET d.state = 4
+        where d.user_id =#{userId}
+    </update>
+
+<!--    省单个上报更新状态-->
+    <update id="singleUpByPro">
+        UPDATE ${tableName} d
+        SET d.state = 5
+        where d.user_id =#{userId}
+    </update>
+
+<!--    省批量上报更新状态-->
+    <update id="batchUpByPro">
+        UPDATE ${tableName} d
+        SET d.state = 5
+        WHERE EXISTS (
+        SELECT 1
+        FROM company_info c
+        WHERE d.user_id = c.user_id
+        AND c.city = #{city}
+        AND d.state = 4
+        );
+    </update>
+
+<!--   省退回修改更新状态 -->
+    <update id="retreatByPro">
+        UPDATE ${tableName} d
+        SET d.state = 0
+        where d.user_id =#{userId}
+    </update>
+
+
+<!--  市端  -->
+
+<!--  获取已提交和未提交数据  -->
+    <select id="getCountOnCity" resultMap="DataExam">
+        select
         c.city,
         COUNT(CASE WHEN d.state = 0 THEN d.user_id ELSE NULL END) AS uncommitted,
-        COUNT(CASE WHEN d.state = 1 THEN d.user_id ELSE NULL END) AS committed
+        COUNT(CASE WHEN d.state IN (1, 2, 3) THEN d.user_id ELSE NULL END) AS committed
         FROM
         company_info c
         LEFT JOIN
-        data_2023_09_1 d ON c.user_id = d.user_id
+        ${tableName} d ON c.user_id = d.user_id
         WHERE
-        c.city = #{city}
-        GROUP BY
-        c.city;
+        c.city = #{city};
+
     </select>
+
+<!--获取未上报的详细数据-->
+    <select id="getUncommittedOnCity" resultMap="Uncommitted">
+        select
+        d.user_id ,
+        c.company_name,
+        c.phone
+        from ${tableName} d,company_info c
+        where c.city =#{city} and c.user_id =d.user_id and (d.state =0 and d.now_people_num =0)
+
+    </select>
+
+<!-- 获取已上报概览数据   -->
+    <select id="getCommittedOnCity2" resultMap="Committed">
+        select
+        d.user_id,
+        c.company_name,
+        d.state
+        from ${tableName} d,company_info c
+        where c.city =#{city} and c.user_id =d.user_id and (d.state =1 or d.state=2 or d.state=3)
+    </select>
+
+<!--  市审核通过  -->
+    <update id="passByCity">
+        UPDATE ${tableName} d
+        SET d.state = 2
+        where d.user_id =#{userId}
+    </update>
+
+<!--  市单个上报  -->
+    <update id="singleUpByCity">
+        UPDATE ${tableName} d
+        SET d.state = 3
+        where d.user_id =#{userId}
+    </update>
+
+<!--  市批量上报  -->
+    <update id="batchUpByCity">
+        UPDATE ${tableName} d
+        SET d.state = 3
+        WHERE EXISTS (
+        SELECT 1
+        FROM company_info c
+        WHERE d.user_id = c.user_id
+        AND c.city = #{city}
+        AND d.state = 2
+        );
+    </update>
+
+
+
+
 </mapper>
 

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.yunnan.mapper.Data_query_mapper">
+    <select id="getName" resultType="int" >
+        select d.state from ${tableName} d where d.user_id = #{userId}
+    </select>
+
+    <resultMap id="resTime" type="com.example.yunnan.entity.res_time">
+        <result property="start_time" column="start"/>
+        <result property="end_time" column="end"/>
+        <result property="tableName" column="index_data_table"/>
+    </resultMap>
+    <select id="getTable" resultMap="resTime">
+        select
+        r.index_data_table,
+        r.r_time_start as start,
+        r.f_time_end as end
+        from research_schedule r
+        where (r.r_time_start &gt;= #{start_time} and r.f_time_end &lt;= #{end_time})
+        or (r.r_time_start &lt; #{start_time} and r.f_time_end &gt; #{start_time})
+        or (r.r_time_start &lt; #{end_time} and r.f_time_end &gt; #{end_time})
+    </select>
+
+
+
+
+    <resultMap id="queryRes1" type="com.example.yunnan.entity.query_res1">
+        <result column="user_id" property="userId"/>
+        <result column="company_name" property="companyName"/>
+
+    </resultMap>
+    <select id="getRes1" resultMap="queryRes1">
+        select
+        d.user_id ,
+        c.company_name
+        from ${tableName} d,company_info c
+        <where>
+            d.user_id=c.user_id
+            <if test="companyName != 'all'">
+                AND c.company_name = #{companyName}
+            </if>
+            <if test="userId != 'all'">
+                and d.user_id = #{userId}
+            </if>
+            <if test="character != 'all'">
+                and c.company_character = #{character}
+            </if>
+            <if test="industry != 'all'">
+                and c.company_industry = #{industry}
+            </if>
+            <if test="city != 'all'">
+                and c.city = #{city}
+            </if>
+            <if test="district != 'all'">
+                and c.district = #{district}
+            </if>
+        </where>
+    </select>
+
+    <resultMap id="DetailMap" type="com.example.yunnan.entity.QueryDetail">
+    <result column="user_id" property="userId"/>
+    <result column="last_people_num" property="oldNum"/>
+    <result column="now_people_num" property="nowNum"/>
+    <result column="decrease_reason" property="decReason"/>
+    <result column="main_reason" property="mainReason"/>
+    <result column="second_reason" property="secReason"/>
+    <result column="explain_reason" property="explain"/>
+    <result column="state" property="state"/>
+    <result column="company_name" property="companyName"/>
+        <result column="city" property="city"/>
+        <result column="district" property="district"/>
+        <result column="company_character" property="character"/>
+        <result column="company_industry" property="industry"/>
+    </resultMap>
+    <select id="getQueryDetail" resultMap="DetailMap">
+        select
+        d.user_id,
+        d.last_people_num,
+        d.now_people_num,
+        d.decrease_reason,
+        d.main_reason,
+        d.second_reason,
+        d.explain_reason,
+        c.company_name,
+        c.city,
+        c.district,
+        c.company_character,
+        c.company_industry
+
+        from ${tableName} d, company_info c
+        where d.user_id=c.user_id and d.user_id =#{userId}
+    </select>
+
+</mapper>

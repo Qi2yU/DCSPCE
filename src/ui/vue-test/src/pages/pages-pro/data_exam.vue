@@ -30,25 +30,31 @@
       
       <script>
         export default {
+          created(){
+            this.$http.get("/count").then((response)=>{
+            this.tableData=response.data;
+    });
+          },
           data() {
             return {
-              tableData: [{
-                province: '玉溪市',
-                committed: '24',
-                uncommitted: '8'
-              }, {
-                province: '昆明市',
-                committed: '30',
-                uncommitted: '23'
-              }, {
-                province: '曲靖市',
-                committed: '24',
-                uncommitted: '23'
-              }, {
-                province: '昭通市',
-                committed: '24',
-                uncommitted: '6'
-              }],
+              tableData:[],
+              // tableData: [{
+              //   province: '玉溪市',
+              //   committed: '24',
+              //   uncommitted: '8'
+              // }, {
+              //   province: '昆明市',
+              //   committed: '30',
+              //   uncommitted: '23'
+              // }, {
+              //   province: '曲靖市',
+              //   committed: '24',
+              //   uncommitted: '23'
+              // }, {
+              //   province: '昭通市',
+              //   committed: '24',
+              //   uncommitted: '6'
+              // }],
               currentCell:null,
               currentcol:null
             }
@@ -57,10 +63,15 @@
             show(val,data){
                 console.log(val);
                 console.log(data);
+                console.log(val.province);
                 if(data.property=="committed")
-                this.$router.push('/layout/committed');
+                this.$router.push({path:'/government-pro/committed',
+                  query: {city:val.province,}
+              });
                 else if(data.property=="uncommitted")
-                this.$router.push('/layout/uncommitted');
+                this.$router.push({path:'/government-pro/uncommitted',
+                  query:{city:val.province}
+              });
             }
           }
         }

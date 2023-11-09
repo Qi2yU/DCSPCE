@@ -142,14 +142,14 @@
 
 + 获取各市已上报和未上报企业数量
 
-  路由：`/datacount`	分配给 `Datacount_service`
+  路由：`/count`	分配给`getCountByState`服务
 
   + 输入类型和输入值：
 
-    | 参数名称 | 参数类型 | 参数说明               |
-    | -------- | -------- | ---------------------- |
-    | province | String   | 统计上报数量的市的名称 |
-    | user_id  | String   | 上报企业的用户名       |
+    | 参数名称  | 参数类型 | 参数说明               |
+    | --------- | -------- | ---------------------- |
+    | tableName | String   | 当前调查期数据表名     |
+    | province  | String   | 统计上报数量的市的名称 |
 
   - 返回类型和返回值：
 
@@ -161,13 +161,14 @@
 
 + 获取已上报企业的概览信息
 
-  路由：`/committed`	分配给`Committed_service`
+  路由：`/committed`	分配给`getCommittedOnCity`服务
 
   + 输入类型和输入值：
 
-    | 参数名称 | 参数类型 | 参数说明 |
-    | -------- | -------- | -------- |
-    | province | String   | 市的名称 |
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | city      | String   | 市的名称           |
 
   + 返回类型和返回值：
 
@@ -180,13 +181,14 @@
 
 + 获取某个企业具体上报数据
 
-  路由：`/detail`	分配给`Detail_service`
+  路由：`/detail`	分配给`getDetailById`服务
 
   + 输入类型和输入值：
 
-    | 参数名称 | 参数类型 | 参数说明     |
-    | -------- | -------- | ------------ |
-    | user_id  | String   | 企业的用户名 |
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | user_id   | String   | 企业的用户名       |
 
   + 返回类型和返回值：
 
@@ -203,16 +205,17 @@
 
 + 获取未上报企业信息
 
-  路由：`/uncommitted`	分配给`uncommitted_service`
+  路由：`/uncommitted`	分配给`getUncommitted`
 
   + 输入类型和输入值：
 
-    | 参数名称 | 参数类型 | 参数说明 |
-    | -------- | -------- | -------- |
-    | province | String   | 市的名称 |
-
+    | 参数名称  | 参数类型 | 参数说明 |
+    | --------- | -------- | -------- |
+    | tableName | String   | 数据表名 |
+    | province  | String   | 市的名称 |
+  
   + 返回类型和返回值：
-
+  
     | 参数名称        | 参数类型 | 参数说明         |
     | --------------- | -------- | ---------------- |
     | user_id         | String   | 企业的用户名     |
@@ -225,8 +228,128 @@
     | explain_reason  | String   | 原因说明         |
     | phone           | String   | 联系电话         |
     | state           | String   | 状态             |
+  
++ 退回上报数据
 
-##### 数据查询
+  路由`/retreat` 	分配给`getRetreat`
+
+  + 输入类型和输入值
+
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | user_id   | String   | 企业的用户名       |
+
+
++ 审核通过数据
+
+  路由`/passbypro`   分配给`passByPro`服务
+
+  - 输入类型和输入值
+
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | user_id   | String   | 企业的用户名       |
+
++ 单个上报数据
+
+  路由`/singleupbypro`   分配给`singleUpByPro`
+
+  - 输入类型和输入值
+
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | user_id   | String   | 企业的用户名       |
+
++ 批量上报数据
+
+  路由`/batchupbypro`  分配给`batchUpByPro`服务
+
+  - 输入类型和输入值
+
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | city      | String   | 批量上报的市名     |
+
+
+
+##### 数据查询`Data_query_controller.java`
+
++ 获取符合查询时间段的数据表名列表
+
+  + 输入类型和输入值
+
+    | 参数名称   | 参数类型 | 参数说明     |
+    | ---------- | -------- | ------------ |
+    | start_time | String   | 起始查询时间 |
+    | end_time   | String   | 终止查询时间 |
+
+  + 返回类型和返回值
+
+    | 参数名称   | 参数类型 | 参数说明               |
+    | ---------- | -------- | ---------------------- |
+    | tableName  | String   | 符合条件调查期数据表名 |
+    | start_time | String   | 调查期起始时间         |
+    | end_time   | String   | 调查期结束时间         |
+
++ 获取符合条件的数据列表
+
+  路由`/dataquery`    分配给`getName`服务
+
+  + 输入类型和输入值
+
+    | 参数名称    | 参数类型 | 参数说明       |
+    | ----------- | -------- | -------------- |
+    | tableName   | String   | 调查期数据表名 |
+    | userId      | String   | 企业的用户名   |
+    | companyName | String   | 企业名称       |
+    | character   | String   | 企业性质       |
+    | industry    | String   | 所属行业       |
+    | city        | String   | 所在市         |
+    | district    | String   | 所在区县       |
+
+  + 返回类型和返回值
+
+    | 参数名称    | 参数类型 | 参数说明       |
+    | ----------- | -------- | -------------- |
+    | companyName | String   | 企业名称       |
+    | userId      | String   | 企业的用户名   |
+    | start_time  | String   | 调查期起始时间 |
+    | end_time    | String   | 调查期结束时间 |
+    | tableName   | String   | 调查期编号     |
+
++ 获取详细数据信息
+
+  路由`/querydetail` 	分配给`getQueryDetail`服务
+
+  + 输入类型和输入值
+
+    | 参数名称  | 参数类型 | 参数说明           |
+    | --------- | -------- | ------------------ |
+    | tableName | String   | 当前调查期数据表名 |
+    | user_id   | String   | 企业的用户名       |
+
+  + 返回类型和返回值
+
+    | 参数名称        | 参数类型 | 参数说明         |
+    | --------------- | -------- | ---------------- |
+    | user_id         | String   | 企业的用户名     |
+    | company_name    | String   | 企业的名称       |
+    | last_people_num | int      | 上一调查期人数   |
+    | now_people_num  | int      | 当前调查期人数   |
+    | decrease_reason | String   | 就业人数减少类型 |
+    | main_reason     | String   | 主要原因         |
+    | second_reason   | String   | 次要原因         |
+    | explain_reason  | String   | 原因说明         |
+    | phone           | String   | 联系电话         |
+    | state           | String   | 状态             |
+    | character       | String   | 企业性质         |
+    | industry        | String   | 所属行业         |
+    | city            | String   | 所在市           |
+    | district        | String   | 所在县区         |
 
 
 
