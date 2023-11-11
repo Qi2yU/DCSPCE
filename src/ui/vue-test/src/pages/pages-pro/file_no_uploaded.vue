@@ -186,7 +186,7 @@ methods:{
     },
     CheckDetail(){
         this.$router.push(
-            {path: '/layout/file_detail',
+            {path: '/government-pro/file_detail',
              query:{flag: '未上报'}}).catch(error => error);
         console.log('CheckDetail!');
     }

@@ -41,16 +41,16 @@
       },
       goPage(link) {
         if (link == "file_passed") {
-           $this.$router.push("/layout/file_check/file_passed").catch(error => error);
+           $this.$router.push("/government-pro/file_check/file_passed").catch(error => error);
            console.log("go to passed");
          } else if (link == "file_be_checked") {
-           $this.$router.push("/layout/file_check/file_be_checked").catch(error => error);
+           $this.$router.push("/government-pro/file_check/file_be_checked").catch(error => error);
            console.log("go to be checked");
          } else if ((link == "file_backed")) {
-           $this.$router.push("/layout/file_check/file_backed").catch(error => error);
+           $this.$router.push("/government-pro/file_check/file_backed").catch(error => error);
            console.log("go to backed");
          } else if ((link == "file_no_uploaded")) {
-           $this.$router.push("/layout/file_check/file_no_uploaded").catch(error => error);
+           $this.$router.push("/government-pro/file_check/file_no_uploaded").catch(error => error);
            console.log("go to no_uploaded");
          }
        }
