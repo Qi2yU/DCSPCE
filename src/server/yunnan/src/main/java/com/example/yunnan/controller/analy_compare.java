@@ -1,5 +1,6 @@
 package com.example.yunnan.controller;
 
+import com.example.yunnan.entity.CompareMountedEntity;
 import com.example.yunnan.service.analy_Compare_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,25 +17,28 @@ public class analy_compare {
     @Autowired
     private analy_Compare_service service;
     @GetMapping("/government-pro/analy_compare/city")
-    public List<String> mounted_city(){
-        service.get_mounted();
-        return service.getMounted_char();
+    public List<CompareMountedEntity> mounted_city(){
+        service.Clean_city();
+        service.get_mounted_city();
+        return service.getMounted_city();
     }
 
     @GetMapping("/government-pro/analy_compare/char")
-    public List<String> mounted_char(){
-        service.get_mounted();
+    public List<CompareMountedEntity> mounted_char(){
+        service.Clean_char();
+        service.get_mounted_char();
         return service.getMounted_char();
     }
 
     @GetMapping("/government-pro/analy_compare/indu")
-    public List<String> mounted_indu(){
-        service.get_mounted();
+    public List<CompareMountedEntity> mounted_indu(){
+        service.Clean_indu();
+        service.get_mounted_indu();
         return service.getMounted_indu();
     }
 
-    @GetMapping("/government-pro/analy_compare/analy")
-    public void get_data(String city, String character, String industry, String start_time, String end_time) {
+    @GetMapping("/government-pro/analy_compare/get_data")
+    public void get_data( String start_time, String end_time, String city, String character, String industry) {
         int day = 0;
         int period = 2;
         int step = 30 / period;
@@ -60,6 +64,7 @@ public class analy_compare {
         sbe.deleteCharAt(4);
         start_time = String.valueOf(sbs);
         end_time = String.valueOf(sbe);
+        service.get_data(city, character, industry,start_time, end_time);
 
 
     }
