@@ -9,22 +9,22 @@
         <result column="company_name" property="name"></result>
     </resultMap>
     <select id="get_data" resultMap="data">
-        select t.last_people_num, t.now_people_num, c.company_name form ${timeTableId} as t join company_info as c
+        select t.last_people_num, t.now_people_num, c.company_name from ${timeTableId} as t join company_info as c
         where t.user_id = c.user_id
-        and c.city = ${city} and c.company_character = ${character} and c.company_industry = industry
+        and c.city = "${city}" and c.company_character = "${character}" and c.company_industry = "${industry}"
     </select>
 
     <select id="get_mounted_city" resultType="String">
-        select city from company_info
+        select distinct city from company_info
     </select>
 
 
     <select id="get_mounted_char" resultType="String">
-        select company_character from company_info
+        select distinct company_character from company_info
     </select>
 
     <select id="get_mounted_indu" resultType="String">
-        select company_industry from company_info
+        select distinct company_industry from company_info
     </select>
 
 

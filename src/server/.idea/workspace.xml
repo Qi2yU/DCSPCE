@@ -7,8 +7,9 @@
     <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_compare.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_compare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/entity/CompareMountedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/entity/CompareMountedEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/entity/Compare_tableEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/entity/Compare_tableEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Compare_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Compare_service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/analy_Compare.xml" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/analy_Compare.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

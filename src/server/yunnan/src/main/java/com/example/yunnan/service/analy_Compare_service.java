@@ -2,6 +2,7 @@ package com.example.yunnan.service;
 
 import com.example.yunnan.entity.CompareEntity;
 import com.example.yunnan.entity.CompareMountedEntity;
+import com.example.yunnan.entity.Compare_tableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.yunnan.mapper.analy_Compare_mapper;
@@ -9,11 +10,19 @@ import com.example.yunnan.mapper.analy_Compare_mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 @Service
 public class analy_Compare_service {
 
     private List<CompareEntity> start_data = new ArrayList<>();
     private List<CompareEntity> end_data = new ArrayList<>();
+
+    public List<Compare_tableEntity> getTable_data_list() {
+        return table_data_list;
+    }
+
+    private List<Compare_tableEntity> table_data_list = new ArrayList<>();
     private List<CompareMountedEntity> mounted_city = new ArrayList<>();
     private List<CompareMountedEntity> mounted_char = new ArrayList<>() ;
     private List<CompareMountedEntity> mounted_indu = new ArrayList<>();
@@ -40,6 +49,9 @@ public class analy_Compare_service {
     public void Clean_indu(){
         mounted_indu.clear();
     }
+    public void Clean_table(){
+        table_data_list.clear();
+    }
 
 
 
@@ -50,7 +62,50 @@ public class analy_Compare_service {
     private  analy_Compare_mapper  mapper;
     public void get_data(String city, String character, String industry, String start_time, String end_time){
         start_data = mapper.get_data(start_time, industry,city,character);
+
         end_data = mapper.get_data(end_time, industry,city,character);
+        int now_num, last_num, change_num;
+        String name;
+        for(int i = 0; i < start_data.size(); i++){
+            Compare_tableEntity table_data = new Compare_tableEntity();
+            table_data.setName(start_data.get(i).getName());
+            now_num = start_data.get(i).getNow_num();
+            last_num = start_data.get(i).getLast_num();
+            change_num = now_num - last_num;
+            if(change_num < 0){
+                table_data.setA_less(String.valueOf(change_num));
+            }
+            else {
+                table_data.setA_less(String.valueOf(0));
+            }
+            table_data.setA_change_num(String.valueOf(abs(change_num)));
+            table_data.setA_change_precent(String.valueOf(abs(change_num) / last_num) +"%");
+            table_data_list.add(table_data);
+        }
+        for(int i = 0; i < end_data.size();i++){
+            name = end_data.get(i).getName();
+            now_num = end_data.get(i).getNow_num();
+            last_num = end_data.get(i).getLast_num();
+            change_num = now_num - last_num;
+            for(Compare_tableEntity table_data : table_data_list){
+                if(table_data.getName().equals(name)){
+
+                    if(change_num < 0){
+                        table_data.setB_less(String.valueOf(change_num));
+                    }
+                    else {
+                        table_data.setB_less(String.valueOf(0));
+                    }
+                    table_data.setB_change_num(String.valueOf(abs(change_num)));
+                    table_data.setB_change_precent(String.valueOf(abs(change_num) / last_num) +"%");
+                    break;
+                }
+            }
+        }
+        for(Compare_tableEntity table_data : table_data_list){
+
+        }
+
     }
 
     public void get_mounted_city(){
