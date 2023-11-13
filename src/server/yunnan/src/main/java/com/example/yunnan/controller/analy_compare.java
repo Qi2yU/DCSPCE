@@ -1,6 +1,7 @@
 package com.example.yunnan.controller;
 
 import com.example.yunnan.entity.CompareMountedEntity;
+import com.example.yunnan.entity.Compare_lineEntity;
 import com.example.yunnan.entity.Compare_tableEntity;
 import com.example.yunnan.service.analy_Compare_service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,25 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin
 public class analy_compare {
+
+    public class Return_data<T> implements Serializable {
+
+        int id;
+        List<T> data_list = new ArrayList<>();
+        public Return_data(int i, List<T> data){
+            id = i;
+            for(T t :data){
+                data_list.add(t);
+            }
+        }
+    }
 
 
     @Autowired
@@ -41,7 +56,6 @@ public class analy_compare {
     @GetMapping("/government-pro/analy_compare/get_data")
     public List<Compare_tableEntity> get_data(String start_time, String end_time, String city, String character, String industry) {
         service.Clean_table();
-
 
         int day = 0;
         int period = 2;
@@ -96,10 +110,19 @@ public class analy_compare {
         et_fmt.insert(0,"data_");//data_20xx_09_1
 
         service.get_data(city, character, industry,String.valueOf(st_fmt), String.valueOf(et_fmt));
+        service.get_line();
+        List<Return_data> res = new ArrayList<>();
+        Return_data<Integer> list = new Return_data<Integer>(0,service.getLine_data_list());
+        Return_data<Compare_tableEntity> table  = new Return_data<Compare_tableEntity>(1,service.getTable_data_list());
+        res.add(list);
+        res.add(table);
+        System.out.print(res);
         return service.getTable_data_list();
-
-
     }
-
-
+    @GetMapping("/government-pro/analy_compare/get_line")
+    public  List<Integer> get_line(){
+        service.Clean_list();
+        service.get_line();
+        return service.getLine_data_list();
+    }
 }

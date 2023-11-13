@@ -60,6 +60,7 @@
     </el-select>
   
     <el-button type="primary" @click="get_data"  class = "query" >查询</el-button>
+ 
 
   <el-table
     :data="tableData"
@@ -94,11 +95,12 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="_change_precent"
+      prop="b_change_precent"
       label="调查期B岗位变化占比">
     </el-table-column>
   </el-table>
-
+  <el-button type="primary" @click="show_data"  class = "query" >显示折线图</el-button>
+  <div id="main" style="width: 600px; height: 400px"></div>
 
     
     <el-button type="primary"  class = "download">导出</el-button>
@@ -112,21 +114,27 @@ export default {
   data(){
     return{
       chartData:[],
+      tableData:[],
+
       options_char:[],
       options_city:[],
       options_indu:[],
-      tableData:[],
+      
+
       value_date1:'',
       value_date2:'',
      
       value_city:'',
       value_char:'',
       value_indu:'',
+      option:{},
+      myChart:null,
 
     }
   },
 
   mounted() {
+       this.myChart = this.$echarts.init(document.getElementById("main"));
       this.$http.get("http://localhost:8070/government-pro/analy_compare/city"
       ).then((response)=>{
       let result = response.data
@@ -158,10 +166,36 @@ export default {
     }
     )
 
+
 },
   methods:{
-    get_data(){
+    show_data(){
+      this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
+      ).then(res=>{
+        let result = res.data
+        this.chartData = res.data
+        this.option = {
+            xAxis: {
+               type: 'category',
+               data: ['建档期A', '调查期A', '建档期B', '调查期B']
+            },
+             yAxis: {
+               type: 'value'
+            },
+            series: [{
+              type:'line',
+              data:this.chartData,
+            }]
+        }
+        console.log(this.chartData)
+      })
+      
+      document.getElementById("main").setAttribute('_echarts_instance_', '')
+      this.myChart.clear()
+      this.myChart.setOption(this.option, true)
+    },
 
+    get_data(){      
       this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
         params:{
           start_time:this.value_date1,
@@ -172,9 +206,7 @@ export default {
         }
       }
       ).then(res=>{
-        this.tableData = res.data
-        console.log(this.res)
-        console.log(this.tableData)
+        this.tableData = res.data      
       })
     },
   },

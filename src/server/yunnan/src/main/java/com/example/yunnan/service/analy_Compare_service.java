@@ -2,6 +2,7 @@ package com.example.yunnan.service;
 
 import com.example.yunnan.entity.CompareEntity;
 import com.example.yunnan.entity.CompareMountedEntity;
+import com.example.yunnan.entity.Compare_lineEntity;
 import com.example.yunnan.entity.Compare_tableEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,13 @@ public class analy_Compare_service {
     }
 
     private List<Compare_tableEntity> table_data_list = new ArrayList<>();
+
+
+
+    private List<Integer>  line_data_list = new ArrayList<>();
+    public List<Integer> getLine_data_list() {
+        return line_data_list;
+    }
     private List<CompareMountedEntity> mounted_city = new ArrayList<>();
     private List<CompareMountedEntity> mounted_char = new ArrayList<>() ;
     private List<CompareMountedEntity> mounted_indu = new ArrayList<>();
@@ -50,7 +58,11 @@ public class analy_Compare_service {
         mounted_indu.clear();
     }
     public void Clean_table(){
+
         table_data_list.clear();
+    }
+    public void Clean_list(){
+        line_data_list.clear();
     }
 
 
@@ -102,10 +114,27 @@ public class analy_Compare_service {
                 }
             }
         }
-        for(Compare_tableEntity table_data : table_data_list){
 
+    }
+    public void get_line(){
+
+        int A_last = 0, A_now = 0, B_last = 0, B_now = 0;
+        for(CompareEntity data : start_data){
+            A_last += data.getLast_num();
+            A_now += data.getNow_num();
         }
-
+        for(CompareEntity data : end_data){
+            B_last += data.getLast_num();
+            B_now += data.getNow_num();
+        }
+        List<Integer> num_list = new ArrayList<>();
+        num_list.add(A_last);
+        num_list.add(A_now);
+        num_list.add(B_last);
+        num_list.add(B_now);
+        for(int i = 0; i < 4; i++){
+            line_data_list.add(num_list.get(i));
+        }
     }
 
     public void get_mounted_city(){
