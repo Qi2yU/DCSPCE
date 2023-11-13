@@ -172,8 +172,6 @@ export default {
     show_data(){
       this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{
-        let result = res.data
-        this.chartData = res.data
         this.option = {
             xAxis: {
                type: 'category',
@@ -184,17 +182,15 @@ export default {
             },
             series: [{
               type:'line',
-              data:this.chartData,
+              data:res.data,
             }]
         }
-        console.log(this.chartData)
+        document.getElementById("main").setAttribute('_echarts_instance_', '')
+        this.myChart.clear()
+        this.myChart.setOption(this.option, true)
       })
       
-      document.getElementById("main").setAttribute('_echarts_instance_', '')
-      this.myChart.clear()
-      this.myChart.setOption(this.option, true)
     },
-
     get_data(){      
       this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
         params:{
@@ -210,8 +206,6 @@ export default {
       })
     },
   },
-  components:{
-    
-  }
+
 }
 </script>
