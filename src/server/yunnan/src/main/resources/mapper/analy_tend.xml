@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.yunnan.mapper.analy_Tend_mapper">
+    <select id="get_data" resultType="TendEntity">
+        select c.company_name,t.last_people_num,t.now_people_num from ${timeTableId} as t join company_info as c
+        where 1=1
+        and t.user_id = c.user_id
+        <if test="city != null and city != ''">
+            and c.city = "${city}"
+        </if>
+        <if test="character != null and character != ''">
+            and c.company_character = "${character}"
+        </if>
+        <if test="industry != null and industry != ''">
+            and c.company_industry = "${industry}"
+        </if>
+
+    </select>
+
+    <select id = "get_resname" resultType="TendResEntity">
+        select company_name from company_info
+        where 1=1
+        <if test="city != null and city != ''">
+            and city = "${city}"
+        </if>
+        <if test="character != null and character != ''">
+            and company_character = "${character}"
+        </if>
+        <if test="industry != null and industry != ''">
+            and company_industry = "${industry}"
+        </if>
+    </select>
+
+
+
+    <select id="get_mounted_city" resultType="String">
+        select distinct city from company_info
+    </select>
+
+
+    <select id="get_mounted_char" resultType="String">
+        select distinct company_character from company_info
+    </select>
+
+    <select id="get_mounted_indu" resultType="String">
+        select distinct company_industry from company_info
+    </select>
+
+
+</mapper>

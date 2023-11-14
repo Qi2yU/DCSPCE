@@ -11,6 +11,7 @@
   <div>
    <SumButton @sum-event="Sum_fun"></SumButton>
   <el-table
+    class="Table"
     :data="tableData"
     height="250"
     border
@@ -150,7 +151,32 @@ import XLSX from "xlsx"
 
       DownloadHandler(){
         
+      let time = new Date();
+      let year = time.getFullYear();
+      let month = time.getMonth() + 1;
+      let day = time.getDate();
+      let name = year + "" + month + "" + day;
+      console.log(name)
+      /* generate workbook object from table */
+      //  .table要导出的是哪一个表格
+      var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
+      /* get binary string as output */
+      var wbout = XLSX.write(wb, {
+        bookType: "xlsx",
+        bookSST: true,
+        type: "array"
+      });
+      try {
+        //  name+'.xlsx'表示导出的excel表格名字
+        FileSaver.saveAs(
+          new Blob([wbout], { type: "application/octet-stream" }),
+          name + ".xlsx"
+        );
+      } catch (e) {
+        if (typeof console !== "undefined") console.log(e, wbout);
       }
+      return wbout;
+      },
     }
   }
 </script>

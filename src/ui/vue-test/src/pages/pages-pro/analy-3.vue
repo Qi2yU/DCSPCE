@@ -20,6 +20,7 @@
     <el-table
     ref="multipleTable"
     :data="showData"
+    class="Table"
     border
     tooltip-effect="dark"
     style="width: 100%"
@@ -45,15 +46,17 @@
   </div>
 
   <div id="main" style="width: 600px; height: 400px"></div>
-  <el-button type="primary"    class = "download">导出</el-button>
-
+  <el-button type="primary"  @click = "download"  class = "download">导出饼图</el-button>
+  <el-button type="primary"  @click = "DownloadHandler"  class = "download">导出表格</el-button>
   </div>
+  
 </template>
 
 <script>
 import choice_button from '../../components/components-pro/analy3_components/analy3_buttons.vue'
-
-
+import FileSaver from "file-saver"
+import XLSX from "xlsx"
+import html2canvas from 'html2canvas'
 export default {
   data(){
     return{
@@ -117,7 +120,50 @@ export default {
     },
     delValue(){
       this.showData = this.tableData
-    },  
+    },
+    DownloadHandler(){
+        
+        let time = new Date();
+        let year = time.getFullYear();
+        let month = time.getMonth() + 1;
+        let day = time.getDate();
+        let name = year + "" + month + "" + day;
+        console.log(name)
+        /* generate workbook object from table */
+        //  .table要导出的是哪一个表格
+        var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
+        /* get binary string as output */
+        var wbout = XLSX.write(wb, {
+          bookType: "xlsx",
+          bookSST: true,
+          type: "array"
+        });
+        try {
+          //  name+'.xlsx'表示导出的excel表格名字
+          FileSaver.saveAs(
+            new Blob([wbout], { type: "application/octet-stream" }),
+            name + ".xlsx"
+          );
+        } catch (e) {
+          if (typeof console !== "undefined") console.log(e, wbout);
+        }
+        return wbout;
+        },  
+    download() {
+      // 图表转换成canvas
+      html2canvas(document.getElementById("main")).then(function (canvas) {
+        var img = canvas
+          .toDataURL("image/png")
+          .replace("image/png", "image/octet-stream");
+          // 创建a标签，实现下载
+        var creatIMg = document.createElement("a");
+        creatIMg.download = "图表.png"; // 设置下载的文件名，
+        creatIMg.href = img; // 下载url
+        document.body.appendChild(creatIMg);
+        creatIMg.click();
+        creatIMg.remove(); // 下载之后把创建的元素删除
+      });
+    },
     drawChart(){
       // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
       let myChart = this.$echarts.init(document.getElementById("main"));

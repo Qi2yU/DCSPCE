@@ -32,17 +32,28 @@ public class sum_data {
             int step = 30/period;
             StringBuffer sbs =  new StringBuffer(start_time);//20xx_09_12 20xx_12_01
             StringBuffer sbe =  new StringBuffer(end_time);
+            String key = String.valueOf(step);
+            int s_flag = 1, e_flag = 1;
+
+            if(start_time.substring(8).equals(key)){
+                sbs.replace(8, 10, "00");
+                s_flag = 0;
+            }
+            if(end_time.substring(8).equals(key)){
+                sbe.replace(8, 10, "00");
+                e_flag = 0;
+            }
             for(int i = 0; i < period; i++){
                 day += step;
                 String last = "0";
                 last += String.valueOf(i);
                 if(Integer.valueOf(start_time.substring(8)) < day &&
-                        (Integer.valueOf(start_time.substring(8)) > day-step)
+                        (Integer.valueOf(start_time.substring(8)) > day-step && s_flag == 1)
                 ){
                     sbs.replace(8,10,last);
                 }
                 if(Integer.valueOf(end_time.substring(8)) < day &&
-                        (Integer.valueOf(end_time.substring(8)) > day-step)){
+                        (Integer.valueOf(end_time.substring(8)) > day-step)&& e_flag == 1){
                     sbe.replace(8,10,last);
                 }
             }

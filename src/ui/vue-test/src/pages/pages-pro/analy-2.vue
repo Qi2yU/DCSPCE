@@ -19,16 +19,7 @@
       value-format="yyyy_MM_dd"
       placeholder="选择日期时间">
     </el-date-picker>
-    
-  <!-- <el-date-picker
-      v-model="value_date2"
-      type="datetimerange"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期">
-  </el-date-picker> -->
-
-
+  
   
 
   <el-select v-model="value_city" clearable placeholder="地区" >
@@ -64,6 +55,7 @@
 
   <el-table
     :data="tableData"
+    class="Table"
     border
     style="width: 100%">
     <el-table-column
@@ -103,7 +95,8 @@
   <div id="main" style="width: 600px; height: 400px"></div>
 
     
-    <el-button type="primary"  class = "download">导出</el-button>
+    <el-button type="primary" @click = download class = "download">导出折线图</el-button>
+    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
   </div>
 </template>
 
@@ -165,8 +158,6 @@ export default {
 
     }
     )
-
-
 },
   methods:{
     show_data(){
@@ -195,7 +186,7 @@ export default {
       this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
         params:{
           start_time:this.value_date1,
-          end_time:this.value_date1,
+          end_time:this.value_date2,
           city:this.value_city,
           character:this.value_char,
           industry:this.value_indu
@@ -204,6 +195,49 @@ export default {
       ).then(res=>{
         this.tableData = res.data      
       })
+    },
+    DownloadHandler(){
+        
+        let time = new Date();
+        let year = time.getFullYear();
+        let month = time.getMonth() + 1;
+        let day = time.getDate();
+        let name = year + "" + month + "" + day;
+        console.log(name)
+        /* generate workbook object from table */
+        //  .table要导出的是哪一个表格
+        var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
+        /* get binary string as output */
+        var wbout = XLSX.write(wb, {
+          bookType: "xlsx",
+          bookSST: true,
+          type: "array"
+        });
+        try {
+          //  name+'.xlsx'表示导出的excel表格名字
+          FileSaver.saveAs(
+            new Blob([wbout], { type: "application/octet-stream" }),
+            name + ".xlsx"
+          );
+        } catch (e) {
+          if (typeof console !== "undefined") console.log(e, wbout);
+        }
+        return wbout;
+        },  
+    download() {
+      // 图表转换成canvas
+      html2canvas(document.getElementById("main")).then(function (canvas) {
+        var img = canvas
+          .toDataURL("image/png")
+          .replace("image/png", "image/octet-stream");
+          // 创建a标签，实现下载
+        var creatIMg = document.createElement("a");
+        creatIMg.download = "图表.png"; // 设置下载的文件名，
+        creatIMg.href = img; // 下载url
+        document.body.appendChild(creatIMg);
+        creatIMg.click();
+        creatIMg.remove(); // 下载之后把创建的元素删除
+      });
     },
   },
 
