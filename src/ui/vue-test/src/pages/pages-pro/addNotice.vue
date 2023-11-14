@@ -8,7 +8,7 @@
     <el-input
     type="text"
     placeholder="请输入内容"
-    v-model="text"
+    v-model="form.text"
     maxlength="50"
     show-word-limit
     >
@@ -18,7 +18,7 @@
     type="textarea"
     :rows="15"
     placeholder="请输入内容"
-    v-model="textarea"
+    v-model="form.textarea"
     maxlength="2000"
     show-word-limit
     >
@@ -34,13 +34,22 @@ export default {
   name: 'User',
   data() {
     return {
-      text: '',
-      textarea: ''
+      form:{
+        text: '',
+        textarea: '',
+        current_date: new data()
+      }
     }
   },
   methods:{
     jump(){
-        this.$router.push("/layout/notice");
+      const formData={
+        text:this.form.text,
+        textarea:this.form.textarea,
+        gov_id: $id//全局变量
+      };
+      this.$http.post("/gov_add_notice/add",formData).then(response=>{console.log('成功发送到后端', response);});
+      this.$router.push("/layout/notice");
     }
   }
 }

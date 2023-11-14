@@ -1,5 +1,4 @@
 package com.example.yunnan.controller;
 
-public class analy_data {
-
+public class gov_edit_notice {
 }
