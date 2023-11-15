@@ -78,7 +78,7 @@ export default {
           this.drawChart();
           this.setOptions_city();
       })
-    console.log(this)
+    
   
   },
 
@@ -93,25 +93,40 @@ export default {
           this.$refs.multipleTable.clearSelection();
         }
       },
+    defaultSelection(rows){
+      if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+    },
     handleSelectionChange(val) {
         this.multipleSelection = val;
     },
     Query_fun(){
-      
-      let name = Object.values(this.options_city.at(this.value))[0]
-      let obj = this.tableData.filter((data_single)=>Object.values(data_single)[0]  == name)
-      console.log(this.showData)
-      this.showData = obj
+      console.log(this.value)
+      if(this.value == ""){
+        return
+      }
+      else{
+        let name = Object.values(this.options_city.at(this.value - 1))[0]
+        let obj = this.tableData.filter((data_single)=>Object.values(data_single)[0]  == name)
+        console.log(this.showData)
+        this.showData = obj
+      }
+
   
      
     },
     setOptions_city(){
 
-      for(let i = 0;i < this.tableData.length; i++){
+      for(let i = 0;i < this.tableData.length ; i++){
        
         var name = this.tableData[i]["name"]
-        let obj = {"label": name, "value" : i}
-        console.log(obj)
+        let obj = {"label": name, "value" : i+1}
+     
         this.options_city.push(obj)
         
     
@@ -120,6 +135,7 @@ export default {
     },
     delValue(){
       this.showData = this.tableData
+      this.value = "";
     },
     DownloadHandler(){
         

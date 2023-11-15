@@ -91,7 +91,7 @@
       label="调查期B岗位变化占比">
     </el-table-column>
   </el-table>
-  <el-button type="primary" @click="show_data"  class = "query" >显示折线图</el-button>
+
   <div id="main" style="width: 600px; height: 400px"></div>
 
     
@@ -101,7 +101,9 @@
 </template>
 
 <script>
-
+import FileSaver from "file-saver"
+import XLSX from "xlsx"
+import html2canvas from 'html2canvas'
 export default {
   name: 'User',
   data(){
@@ -160,8 +162,21 @@ export default {
     )
 },
   methods:{
-    show_data(){
-      this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
+
+   async get_data(){      
+     await this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
+        params:{
+          start_time:this.value_date1,
+          end_time:this.value_date2,
+          city:this.value_city,
+          character:this.value_char,
+          industry:this.value_indu
+        }
+      }
+      ).then(res=>{
+        this.tableData = res.data      
+      })
+      await  this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{
         this.option = {
             xAxis: {
@@ -179,21 +194,6 @@ export default {
         document.getElementById("main").setAttribute('_echarts_instance_', '')
         this.myChart.clear()
         this.myChart.setOption(this.option, true)
-      })
-      
-    },
-    get_data(){      
-      this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
-        params:{
-          start_time:this.value_date1,
-          end_time:this.value_date2,
-          city:this.value_city,
-          character:this.value_char,
-          industry:this.value_indu
-        }
-      }
-      ).then(res=>{
-        this.tableData = res.data      
       })
     },
     DownloadHandler(){

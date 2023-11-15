@@ -91,7 +91,7 @@ public class analy_Compare_service {
                 table_data.setA_less(String.valueOf(0));
             }
             table_data.setA_change_num(String.valueOf(abs(change_num)));
-            table_data.setA_change_precent(String.valueOf(abs(change_num) / last_num) +"%");
+            table_data.setA_change_precent(String.valueOf(abs(change_num) * 100 / now_num)  +"%");
             table_data_list.add(table_data);
         }
         for(int i = 0; i < end_data.size();i++){
@@ -109,7 +109,7 @@ public class analy_Compare_service {
                         table_data.setB_less(String.valueOf(0));
                     }
                     table_data.setB_change_num(String.valueOf(abs(change_num)));
-                    table_data.setB_change_precent(String.valueOf(abs(change_num) / last_num) +"%");
+                    table_data.setB_change_precent(String.valueOf(abs(change_num) * 100 / now_num) +"%");
                     break;
                 }
             }

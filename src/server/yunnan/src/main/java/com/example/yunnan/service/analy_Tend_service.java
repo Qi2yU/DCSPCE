@@ -3,6 +3,7 @@ package com.example.yunnan.service;
 import com.example.yunnan.entity.CompareMountedEntity;
 import com.example.yunnan.entity.TendEntity;
 import com.example.yunnan.entity.TendResEntity;
+import com.example.yunnan.entity.TendTableEntity;
 import com.example.yunnan.mapper.analy_Tend_mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +40,10 @@ public class analy_Tend_service {
     public void Clean_indu(){
         mounted_indu.clear();
     }
+
+    public void Clean_time(){
+        time_list.clear();
+    }
     private List<List<TendEntity>> data_collection = new ArrayList<>();
     private List<String> time_list = new ArrayList<>();
 
@@ -46,6 +51,8 @@ public class analy_Tend_service {
         return data_res;
     }
     private List<TendResEntity> data_res = new ArrayList<>();
+
+    private List<TendTableEntity> data_table = new ArrayList<>();
     @Autowired
     private analy_Tend_mapper mapper;
 
@@ -127,6 +134,28 @@ public class analy_Tend_service {
         }
         return time;
     }
+
+    public List<String> get_time(String start_time, String end_time){
+        String time = new String(start_time);
+        while (true){
+            StringBuffer sb = new StringBuffer(time);
+
+            sb.insert(8,"号调查期");
+            sb.replace(6,7,"第");
+            sb.insert(6,"月");
+            sb.insert(4,"年");
+            sb.deleteCharAt(5);
+            System.out.print(sb);
+            time_list.add(String.valueOf(sb));//20xx0301
+
+            if(Integer.valueOf(time) >= Integer.valueOf(end_time)){
+                break;
+            }
+            time = compute_Time(time, end_time);
+        }
+
+        return time_list;
+    }
     public void get_data(String start_time, String end_time, String city, String character, String industry){
         data_res = mapper.get_resname(industry,city,character);
         String time = new String(start_time);
@@ -146,7 +175,7 @@ public class analy_Tend_service {
                 data.add_last_num(data_found.get().getLast_people_num());
                 data.add_now_num(data_found.get().getNow_people_num());
             }
-            time_list.add(time);
+
             data_signle.get(0).setTime(time);
             data_collection.add(data_signle);
             if(Integer.valueOf(time) >= Integer.valueOf(end_time)){
@@ -154,7 +183,24 @@ public class analy_Tend_service {
             }
             time = compute_Time(time, end_time);
         }
-        data_res.get(0).print_list();
+
+    }
+    public List<TendTableEntity> get_table(){
+        data_table.clear();
+
+        for(TendResEntity data : data_res){
+            TendTableEntity table_data = new TendTableEntity();
+            table_data.setCompany_name(data.getCompany_name());
+            for(int i = 0 ; i < data.get_size(); i++){
+                int change = data.now_num_list.get(i) - data.last_num_list.get(i);
+                int percent = change * 100 / data.now_num_list.get(i);
+                table_data.add_table_data(String.valueOf(percent) + "%");
+            }
+            table_data.setTime_list(time_list);
+            data_table.add(table_data);
+        }
+
+        return data_table;
     }
     public void get_mounted_city(){
         List<String> list;

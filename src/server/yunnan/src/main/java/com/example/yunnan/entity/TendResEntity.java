@@ -8,6 +8,7 @@ public class TendResEntity {
         return company_name;
     }
 
+
     public void setCompany_name(String company_name) {
         this.company_name = company_name;
     }
@@ -23,6 +24,10 @@ public class TendResEntity {
         now_num_list.add(num);
     }
 
+
+    public int get_size(){
+        return last_num_list.size();
+    }
     public void print_list(){
         for (int i = 0; i < now_num_list.size(); i++){
             System.out.print(now_num_list.get(i) + " ");
