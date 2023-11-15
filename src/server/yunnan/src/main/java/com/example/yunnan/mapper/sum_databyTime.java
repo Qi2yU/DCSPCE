@@ -19,4 +19,6 @@ public interface sum_databyTime {
 
     List<SumMountedEntity> get_datamounted(String timeTableId);
 
+    List<SumMountedEntity> get_datamounted_city(String timeTableId, String city);
+
 }

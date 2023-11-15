@@ -52,6 +52,16 @@ public class sum_databyTime_service {
             data.setTime(time);
         }
     }
+
+    public List<SumMountedEntity> get_datamounted_city(String city){
+        String time = sum_databyTime_mapper.get_timeTableId();
+        System.out.print(time);
+        data_mounted = sum_databyTime_mapper.get_datamounted_city(time, city);
+        for(SumMountedEntity data : data_mounted){
+            data.setTime(time);
+        }
+        return data_mounted;
+    }
     String compute_Time(String time, String et){//字符串类型：20xx0901， 20xx0900，长度为8
         if(Integer.valueOf(time) >= Integer.valueOf(et)){
             return time;

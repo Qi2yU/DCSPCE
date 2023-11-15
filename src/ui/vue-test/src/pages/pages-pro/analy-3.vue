@@ -41,9 +41,7 @@
 
   </el-table>
 
-  <div style="margin-top: 20px">
-    <el-button @click="toggleSelection()">取消选择</el-button>
-  </div>
+
 
   <div id="main" style="width: 600px; height: 400px"></div>
   <el-button type="primary"  @click = "download"  class = "download">导出饼图</el-button>
@@ -62,62 +60,79 @@ export default {
     return{
       showData:[],
       tableData:[],
+      chartData:[],
       options_city:[],
       value:"",
+      multipleSelection:[],
+      myChart:null,
+      option:{},
+
+      query_toggle:{},
+      
+      flag:true,
+      query_flag : false,
+      query_change : true
     }
   },
   components:{
     choice_button,
-   
   },
-  mounted(){
-    this.$http.get("http://localhost:8070/government-pro/sample/mounted").
+ mounted(){
+   this.$http.get("http://localhost:8070/government-pro/sample/mounted").
       then((response)=>{ 
           this.tableData = response.data
           this.showData = this.tableData
+          this.chartData = this.tableData
+          this.multipleSelection = this.tableData
           this.drawChart();
           this.setOptions_city();
+          this.defaultSelection();
+          
       })
+      
     
   
   },
 
-
   methods: {
-    toggleSelection(rows) {
-        if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
-      },
-    defaultSelection(rows){
-      if (rows) {
-          rows.forEach(row => {
-            this.$refs.multipleTable.toggleRowSelection(row);
-          });
-        } else {
-          this.$refs.multipleTable.clearSelection();
-        }
+
+    toggleSelection() {
+    this.multipleSelection.forEach(row => {
+      this.$refs.multipleTable.toggleRowSelection(
+        this.query_toggle.find(item => { return row.name == item.names;}
+      ),false);
+    });
+    },
+
+    defaultSelection(){
+      this.$nextTick(()=>{
+        this.$refs.multipleTable.toggleAllSelection()
+      })
     },
     handleSelectionChange(val) {
         this.multipleSelection = val;
+        console.log(this.multipleSelection)
+        if(this.flag){
+          this.chartData = val
+          this.drawChart();
+        }
+        else{
+
+        }
     },
     Query_fun(){
-      console.log(this.value)
       if(this.value == ""){
         return
       }
       else{
         let name = Object.values(this.options_city.at(this.value - 1))[0]
         let obj = this.tableData.filter((data_single)=>Object.values(data_single)[0]  == name)
-        console.log(this.showData)
         this.showData = obj
       }
-
-  
+      this.defaultSelection()
+      this.flag = false
+      this.query_change = true
+   
      
     },
     setOptions_city(){
@@ -135,7 +150,19 @@ export default {
     },
     delValue(){
       this.showData = this.tableData
+      this.flag = true
+      this.chartData = this.tableData
+      if(this.query_flag){
+        // let index = this.chartData.indexOf(this.query_toggle)
+        // console.log(this.showData)
+        // this.drawChart()
+      }else{
+        this.defaultSelection()
+      }
+      this.query_flag = false
+      
       this.value = "";
+  
     },
     DownloadHandler(){
         
@@ -182,21 +209,38 @@ export default {
     },
     drawChart(){
       // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
-      let myChart = this.$echarts.init(document.getElementById("main"));
+       this.myChart = this.$echarts.init(document.getElementById("main"));
       // 指定图表的配置项和数据  
-        var option = {
+      this.option = {
             series: [
                 {
                     type: 'pie',
-                    data: this.tableData
+                    data: this.chartData
                 }
             ]
         }
       // 使用刚指定的配置项和数据显示图表。
-      myChart.setOption(option);
+      document.getElementById("main").setAttribute('_echarts_instance_', '')
+      this.myChart.clear()
+      this.myChart.setOption(this.option, true)
     },
   },
-
-
+  watch:{
+    multipleSelection(new_arry,old_arry){
+      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change ){
+        console.log("取消一个") 
+        let index = this.chartData.indexOf(this.showData[0])
+        this.chartData.splice(index,1)
+        this.query_change = false
+        this.drawChart()
+      }
+      if(new_arry.length == 1 && old_arry.length == 0 && this.query_change == false){
+        console.log("增加一个")
+        this.query_change = true
+        this.chartData.push(this.showData[0])
+        this.drawChart()
+      }
+    }
+  }
 }
 </script>

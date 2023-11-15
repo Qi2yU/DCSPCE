@@ -23,6 +23,13 @@ public class sum_data {
         return sum_Servic.retData_mounted();
 
     }
+    @GetMapping("/government-city/sum/mounted")
+    public List<SumMountedEntity> get_mounted_city(String city){
+        System.out.print(city);
+       return sum_Servic.get_datamounted_city(city);
+
+
+    }
     @GetMapping("/government-pro/sum")
     @ResponseBody
     public List<SumResEntity> get_sum(String sum_id, String start_time, String end_time){
