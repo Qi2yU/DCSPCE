@@ -6,10 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_compare.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_compare.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_tend.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_tend.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/analy_Tend_mapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/analy_Tend_mapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/analy_tend.xml" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/analy_tend.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/analy-1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/analy-1.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,11 +114,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_tend.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

@@ -155,7 +155,7 @@ public class analy_Tend_service {
             sb.insert(6,"月");
             sb.insert(4,"年");
             sb.deleteCharAt(5);
-            System.out.print(sb);
+
             time_list.add(String.valueOf(sb));//20xx0301
 
             if(Integer.valueOf(time) >= Integer.valueOf(end_time)){
@@ -271,8 +271,10 @@ public class analy_Tend_service {
             entity.setNum(String.valueOf(i));
             StringBuffer name = new StringBuffer(list.get(i));
             name.delete(0,5);
-            name.replace(4,4,"年");
+            name.insert(9,"号调查期");
+            name.replace(4,5,"年");
             name.replace(7,7,"月");
+            name.delete(8,9);
 
             entity.setName(String.valueOf(name));
             mounted_start.add(entity);
@@ -287,8 +289,11 @@ public class analy_Tend_service {
             entity.setNum(String.valueOf(i));
             StringBuffer name = new StringBuffer(list.get(i));
             name.delete(0,5);
+            name.insert(9,"号调查期");
             name.replace(4,5,"年");
             name.replace(7,7,"月");
+            name.delete(8,9);
+
 
 
             entity.setName(String.valueOf(name));

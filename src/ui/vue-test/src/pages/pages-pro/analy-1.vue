@@ -4,19 +4,8 @@
   <div id="user">
     <h1>趋势分析</h1>
 
-    <el-date-picker
-      v-model="value_date"
-      type="datetimerange"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      align="right"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      >
-    </el-date-picker>
-    <el-select v-model="value_city" clearable placeholder="起始调查期" >
+
+    <el-select v-model="start_time" clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
         :key="item.value"
@@ -25,7 +14,7 @@
        >
       </el-option>
     </el-select>
-    <el-select v-model="value_city" clearable placeholder="结束调查期" >
+    <el-select v-model="end_time" clearable placeholder="结束调查期" >
       <el-option
         v-for="item in options_endtime"
         :key="item.value"
@@ -34,6 +23,8 @@
        >
       </el-option>
     </el-select>
+
+
     <el-select v-model="value_city" clearable placeholder="地区" >
       <el-option
         v-for="item in options_city"
@@ -124,14 +115,15 @@ export default {
       value_date:'',
       tableData:[],
       myChart:null,
-      start_time:'',
-      end_time:'',
+
 
       options_char:[],
       options_city:[],
       options_indu:[],
       options_starttime:[],
-      options_endtime:[]
+      options_endtime:[],
+      start_time:'',
+      end_time:'',
       
 
 
@@ -140,8 +132,7 @@ export default {
   },
   methods:{
     async  get_data(){
-      this.start_time = this.value_date[0]
-      this.end_time = this.value_date[1]
+ 
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_time",{
         params:{
           start_time:this.start_time,

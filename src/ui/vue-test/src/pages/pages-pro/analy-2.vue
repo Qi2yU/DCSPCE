@@ -3,22 +3,25 @@
 <template>
   <div id="user">
     <h1>对比分析</h1>
-
-    <el-date-picker
-      v-model="value_date1"
-      type="datetime"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期时间">
-    </el-date-picker>
-
-    <el-date-picker
-      v-model="value_date2"
-      type="datetime"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期时间">
-    </el-date-picker>
+    
+    <el-select v-model="start_time" clearable placeholder="起始调查期" >
+      <el-option
+        v-for="item in options_starttime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+    <el-select v-model="end_time" clearable placeholder="结束调查期" >
+      <el-option
+        v-for="item in options_endtime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
   
   
 
@@ -114,10 +117,12 @@ export default {
       options_char:[],
       options_city:[],
       options_indu:[],
+      options_starttime:[],
+      options_endtime:[],
+      start_time:'',
+      end_time:'',
       
 
-      value_date1:'',
-      value_date2:'',
      
       value_city:'',
       value_char:'',
@@ -130,6 +135,32 @@ export default {
 
   mounted() {
        this.myChart = this.$echarts.init(document.getElementById("main"));
+
+
+       this.$http.get("http://localhost:8070/government-pro/analy_tend/start_time"
+      ).then((response)=>{
+      let result = response.data
+      console.log(result)
+      this.options_starttime = []
+      result.forEach(element => {
+        this.options_starttime.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+    
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/end_time"
+      ).then((response)=>{
+        let result = response.data
+        console.log(result)
+      this.options_endtime = []
+      result.forEach(element => {
+        this.options_endtime.push({label:element.name, value:element.name})
+      });
+    }
+    )
+
+
       this.$http.get("http://localhost:8070/government-pro/analy_compare/city"
       ).then((response)=>{
       let result = response.data
@@ -166,8 +197,8 @@ export default {
    async get_data(){      
      await this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
         params:{
-          start_time:this.value_date1,
-          end_time:this.value_date2,
+          start_time:this.start_time,
+          end_time:this.end_time,
           city:this.value_city,
           character:this.value_char,
           industry:this.value_indu
