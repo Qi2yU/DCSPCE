@@ -5,6 +5,8 @@ import VueRouter from 'vue-router'
 import router from './router'
 import * as echarts from 'echarts';
 import axios from 'axios'
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
 
 Vue.prototype.$http = axios
 Vue.prototype.$echarts = echarts
