@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2>未上报</h2>
+        <h2 style="font-size: 30px;">{{city}}-未上报</h2>
         <el-table
     v-if="tag2"
     :data="tableData2"
@@ -31,18 +31,18 @@
       :data="tableData"
       :show-header="false"
       style="width: 100%">
-      <el-table-column type="expand">
-        <template slot-scope="props">
-          <el-form label-position="left" inline class="demo-table-expand">
+      <el-table-column type="expand" >
+        <template slot-scope="props" >
+          <el-form label-position="left" inline class="demo-table-expand" >
             <el-form-item label="企业名称">
               <span>{{ props.row.companyName }}</span>
             </el-form-item>
             <el-form-item label="企业编号">
               <span>{{ props.row.companyId }}</span>
             </el-form-item>
-            <el-form-item label="调查期">
+            <!-- <el-form-item label="调查期">
               <span>{{ props.row.time }}</span>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="建档期就业人数">
               <span>{{ props.row.lastNum }}</span>
             </el-form-item>
@@ -55,23 +55,16 @@
             <el-form-item label="主要原因">
               <span>{{ props.row.mainReason }}</span>
             </el-form-item>
-            <el-form-item label="主要原因说明">
-              <span>{{ props.row.mdesc }}</span>
-            </el-form-item>
+            
             <el-form-item label="次要原因">
               <span>{{ props.row.secReason }}</span>
             </el-form-item>
             <el-form-item label="次要原因说明">
               <span>{{ props.row.explain }}</span>
             </el-form-item>
-            <el-form-item label="第三原因">
-              <span>{{ props.row.treason }}</span>
-            </el-form-item>
-            <el-form-item label="第三原因说明">
-              <span>{{ props.row.tdesc }}</span>
-            </el-form-item>
+            
             <el-form-item label="退回修改建议">
-              <span>{{ props.row.adv }}</span>
+              <span>{{ props.row.info }}</span>
             </el-form-item>
           </el-form>
         </template>
@@ -104,7 +97,7 @@
       font-size: 0;
     }
     .demo-table-expand label {
-      width: 100px;
+      width: 150px;
       color: #99a9bf;
     }
     .demo-table-expand .el-form-item {

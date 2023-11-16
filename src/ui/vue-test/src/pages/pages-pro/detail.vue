@@ -6,16 +6,15 @@
         <el-descriptions title="详细信息"  :column="2" border>
             <el-descriptions-item label="企业名称">{{item.userName}}</el-descriptions-item>
             <el-descriptions-item label="企业编号">{{item.userId}}</el-descriptions-item>
-            <el-descriptions-item label="调查期">{{item.time}}</el-descriptions-item>
+            
             <el-descriptions-item label="建档期就业人数">{{ item.oldNum }}</el-descriptions-item>
             <el-descriptions-item label="调查期就业人数">{{item.nowNum}}</el-descriptions-item>
             <el-descriptions-item label="就业人数减少类型">{{item.decReason}}</el-descriptions-item>
             <el-descriptions-item label="主要原因">{{item.mainReason}}</el-descriptions-item>
-            <el-descriptions-item label="主要原因说明">{{item.mdesc}}</el-descriptions-item>
+            
             <el-descriptions-item label="次要原因">{{item.secReason}}</el-descriptions-item>
             <el-descriptions-item label="次要原因说明">{{item.explain}}</el-descriptions-item>
-            <el-descriptions-item label="第三原因">{{item.treason}}</el-descriptions-item>
-            <el-descriptions-item label="第三原因说明">{{item.tdesc}}</el-descriptions-item>
+            
         </el-descriptions>
 
         <el-row v-if="flag1==='未审核'" type="flex" justify="end">
@@ -28,7 +27,7 @@
                 type="textarea"
                 :rows="4"
                 placeholder="请输入内容"
-                v-model="textarea">
+                v-model="info">
             </el-input>
             <el-button type="info" plain style="float: right" @click="advise">提交</el-button>
             <el-button type="info" plain style="float: right" @click="quit">取消</el-button>
@@ -73,7 +72,7 @@ export default{
                 flag1:this.$route.query.flag1,
                 flag2:this.$route.query.flag2,
                 flag3:false,
-                textarea:''
+                info:''
                 
             
         }
@@ -103,6 +102,7 @@ export default{
         advise(){
             this.$http.get("/retreatbypro",{
             params:{
+                info:this.info,
                 userId: this.userID,
             }
         }).then((response)=>{});

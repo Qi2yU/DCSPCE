@@ -31,7 +31,7 @@
     </el-header>
     <el-container>
        <!-- aside部分 -->
-      <leftNav></leftNav>
+      <leftNav :userId="userId"></leftNav>
       <el-main>
          <!-- main部分 -->
         <router-view />
@@ -50,7 +50,9 @@ export default {
     leftNav
   },
   data() {
-    return {};
+    return { 
+      userId:this.$route.query.userId,
+    };
   },
   methods: {}
 };

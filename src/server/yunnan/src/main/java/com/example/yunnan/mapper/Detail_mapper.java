@@ -24,7 +24,7 @@ public interface Detail_mapper {
 
     void batchUpByPro(String tableName,String city);
 
-    void retreatByPro(String tableName,String userId);
+    void retreatByPro(String tableName,String info,String userId);
 
 //    市端
     List<DataExam> getCountOnCity(String tableName,String city);

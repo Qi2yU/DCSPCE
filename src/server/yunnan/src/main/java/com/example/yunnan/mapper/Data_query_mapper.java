@@ -14,7 +14,7 @@ public interface Data_query_mapper {
 
     List<res_time> getTable(String start_time, String end_time);
 
-    List<query_res1> getRes1(String tableName,String companyName,String userId,String character,String industry, String city, String district);
+    List<QueryDetail> getRes1(String tableName,String companyName,String userId,String character,String industry, String city, String district);
 
     QueryDetail getQueryDetail(String tableName,String userId);
 }

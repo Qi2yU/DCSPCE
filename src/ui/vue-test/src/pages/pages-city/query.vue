@@ -37,17 +37,18 @@
   </el-form>
   
   <el-form :inline="true" :model="form" class="demo-form-inline">
-    <el-form-item label="活动时间">
+    <el-form-item label="起始时间">
       <el-col :span="11">
-        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" value-format="yyyy-MM-dd" style="width: 200px;height: 50px;"></el-date-picker>
       </el-col>
-      <el-col class="line" :span="2">-</el-col>
+    </el-form-item>
+    <el-form-item label="结束时间">
       <el-col :span="11">
-        <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+        <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" value-format="yyyy-MM-dd" style="width: 200px;height: 50px;"></el-date-picker>
       </el-col>
     </el-form-item>
   </el-form>
-  <el-form>
+  <el-form style="margin-left: 68%;">
     <el-form-item>
       <el-button type="primary" @click="onSubmit">查询</el-button>
     </el-form-item>
@@ -58,7 +59,7 @@
   <script>
     export default {
       created(){
-          
+          this.getCity();
       },
       data() {
         return {
@@ -68,8 +69,28 @@
           userId:'',
           character:'',
           industry:'',
-          city:'玉溪市',
+          user:this.$route.query.userId,
+          city:'',
           district:'',
+          cityMapping: {
+                '5301': '昆明市',
+                '5303':'曲靖市',
+                '5304':'玉溪市',
+                '5305':'保山市',
+                '5306':'昭通市',
+                '5307':'丽江市',
+                '5308':'普洱市',
+                '5309':'临沧市',
+                '5323':'楚雄彝族自治州',
+                '5325':'红河哈尼族彝族自治州',
+                '5326':'文山壮族苗族自治州',
+                '5328':'西双版纳傣族自治州',
+                '5329':'大理白族自治州',
+                '5331':'德宏傣族景颇族自治州',
+                '5333':'怒江傈僳族自治州',
+                '5334':'迪庆藏族自治州'
+                
+              },
           
         form: {
             
@@ -126,8 +147,8 @@
             ]
           },
           {
-            value: '澄江市',
-            label: '澄江市',
+            value: '普洱市',
+            label: '普洱市',
             children: [
               {
                 value: '抚仙湖区',
@@ -165,9 +186,35 @@
               date1:this.form.date1,
               date2:this.form.date2
             }});
-        }
+        },
+        getCity() {
+      // 截取前4位
+      const prefix = this.user.substring(0, 4);
+
+      // 查找对照表中的映射
+      this.city = this.cityMapping[prefix] || '未知城市';
+    },
+            show(val,data){
+                console.log(val);
+                console.log(data);
+                if(data.property=="committed")
+                this.$router.push({path:'/government-city/committed',
+                  query:{city:this.city}});
+                else if(data.property=="uncommitted")
+                this.$router.push({path:'/government-city/uncommitted',
+                  query:{city:this.city}});
+            }
       }
     }
   </script> 
   
+<style>
+.el-form{
+  margin-left: 20%;
+}
+.el-input{
+  width: 200px;
+  height: 50px;
+}
+</style>
   

@@ -9,6 +9,7 @@ public class detaildata {
     private String SecReason;
     private String explain;
     private int state;
+
     private String userName;
 //    private UserInfo userinfo;
 
@@ -19,6 +20,9 @@ public class detaildata {
 //    public void setUserinfo(UserInfo userinfo) {
 //        this.userinfo = userinfo;
 //    }
+
+
+
 
     public String getUserId() {
         return userId;

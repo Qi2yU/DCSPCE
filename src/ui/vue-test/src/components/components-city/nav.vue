@@ -98,11 +98,13 @@
  <script>
  var $this = {};
  export default {
+  props:['userId'],
    data() {
-     return {};
+     return { };
    },
    beforeCreate() {
      $this = this;
+     
    },
    methods: {
      handleOpen(key, keyPath) {
@@ -130,13 +132,13 @@
         console.log("/government-city/centre-4")
          $this.$router.push("/government-city/centre-4").catch(error => error);
        } else if ((link == "dataexam")) {
-         $this.$router.push("/government-city/dataexam").catch(error => error);
+         $this.$router.push({path:"/government-city/dataexam",query:{userId:this.userId}}).catch(error => error);
          console.log("go to dataexam");
        }else if ((link == "sum")) {
          $this.$router.push("/government-city/sum").catch(error => error);
          console.log("go to sum");
        } else if ((link == "query")) {
-         $this.$router.push("/government-city/query").catch(error => error);
+         $this.$router.push({path:"/government-city/query",query:{userId:this.userId}}).catch(error => error);
          console.log("go to query");
        }else if ((link == "analy-1")) {
          $this.$router.push("/government-city/analy1").catch(error => error);
