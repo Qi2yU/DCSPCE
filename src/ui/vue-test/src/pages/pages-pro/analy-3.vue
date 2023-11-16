@@ -67,11 +67,13 @@ export default {
       myChart:null,
       option:{},
 
-      query_toggle:{},
-      
+      chancle_arry:[],
+
       flag:true,
+      change_when:false,
       query_flag : false,
-      query_change : true
+      query_change : true,
+      flagfordata: true,
     }
   },
   components:{
@@ -96,28 +98,45 @@ export default {
 
   methods: {
 
-    toggleSelection() {
-    this.multipleSelection.forEach(row => {
-      this.$refs.multipleTable.toggleRowSelection(
-        this.query_toggle.find(item => { return row.name == item.names;}
-      ),false);
-    });
-    },
+
 
     defaultSelection(){
+      
       this.$nextTick(()=>{
         this.$refs.multipleTable.toggleAllSelection()
       })
     },
-    handleSelectionChange(val) {
-        this.multipleSelection = val;
-        console.log(this.multipleSelection)
-        if(this.flag){
-          this.chartData = val
-          this.drawChart();
-        }
-        else{
 
+    handleSelectionChange(val) {
+
+        let old_size = this.multipleSelection.length
+        let new_size = val.length
+        const old_arry = this.multipleSelection.map(item=>item.name)
+        const new_arry = val.map(item=>item.name)
+
+        this.multipleSelection = val;
+        if(this.flag){
+          console.log(old_size)
+          console.log(new_size)
+          if(old_size > new_size && this.flagfordata){
+            const result = old_arry.filter(item => !new_arry.includes(item))
+            this.chancle_arry.push(result)
+            console.log(this.chancle_arry)
+            
+          }else{
+            let result = new_arry.filter(item => !old_arry.includes(item))
+            result = result.toString()
+            this.flagfordata = true
+            for(let i = 0; i < this.chancle_arry.length;i++){
+              if(this.chancle_arry[i] == result){
+                this.chancle_arry.splice(i,1)
+              }
+            }        
+            
+          }
+          this.chartData = val  
+          
+          this.drawChart();
         }
     },
     Query_fun(){
@@ -129,9 +148,24 @@ export default {
         let obj = this.tableData.filter((data_single)=>Object.values(data_single)[0]  == name)
         this.showData = obj
       }
-      this.defaultSelection()
+
+      let flag = true
+      let name = Object.values(this.showData.at(0))[0]      
+      for(let i = 0; i < this.chancle_arry.length;i++){
+          if(name == this.chancle_arry[i]){
+            flag = false
+          }
+      } 
+      if(flag){
+        this.query_change = true
+        this.defaultSelection()
+       }
+      else{
+        this.query_change = false
+      }
+      
       this.flag = false
-      this.query_change = true
+      
    
      
     },
@@ -150,15 +184,14 @@ export default {
     },
     delValue(){
       this.showData = this.tableData
-      this.flag = true
+      
       this.chartData = this.tableData
-      if(this.query_flag){
-        // let index = this.chartData.indexOf(this.query_toggle)
-        // console.log(this.showData)
-        // this.drawChart()
-      }else{
-        this.defaultSelection()
-      }
+
+
+      this.defaultSelection()
+      this.chancle_arry = []
+      this.flag = true
+      this.flagfordata = false
       this.query_flag = false
       
       this.value = "";
@@ -227,20 +260,41 @@ export default {
   },
   watch:{
     multipleSelection(new_arry,old_arry){
-      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change ){
-        console.log("取消一个") 
-        let index = this.chartData.indexOf(this.showData[0])
-        this.chartData.splice(index,1)
-        this.query_change = false
-        this.drawChart()
+      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change == true ){
+        console.log("取消一个")
+        let flag = true
+        let name = Object.values(this.showData.at(0))[0]
+        
+        for(let i = 0; i < this.chancle_arry.length;i++){
+          if(name == this.chancle_arry[i]){
+            flag = false
+          }
+        }
+        if(this.change_when){
+          flag = true
+        }
+        if(flag){
+          let index = this.chartData.indexOf(this.showData[0])
+          this.chartData.splice(index,1)
+          this.query_change = false
+          this.drawChart()
+        }
+
       }
+
       if(new_arry.length == 1 && old_arry.length == 0 && this.query_change == false){
         console.log("增加一个")
         this.query_change = true
+        this.change_when = true
         this.chartData.push(this.showData[0])
         this.drawChart()
       }
-    }
+    },
+    chancle_arry(new_arry,old_arry){
+
+  
+
+    },
   }
 }
 </script>

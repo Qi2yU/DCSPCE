@@ -33,8 +33,6 @@
         </if>
     </select>
 
-
-
     <select id="get_mounted_city" resultType="String">
         select distinct city from company_info
     </select>
@@ -46,6 +44,14 @@
 
     <select id="get_mounted_indu" resultType="String">
         select distinct company_industry from company_info
+    </select>
+
+    <select id="get_mounted_start" resultType="String">
+        select index_data_table from research_schedule
+    </select>
+
+    <select id="get_mounted_end" resultType="String">
+        select index_data_table from research_schedule
     </select>
 
 

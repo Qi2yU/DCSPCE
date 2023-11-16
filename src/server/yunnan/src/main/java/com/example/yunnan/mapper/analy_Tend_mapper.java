@@ -15,4 +15,6 @@ public interface analy_Tend_mapper {
     List<String> get_mounted_city();
     List<String> get_mounted_char();
     List<String> get_mounted_indu();
+    List<String> get_mounted_start();
+    List<String> get_mounted_end();
 }

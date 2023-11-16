@@ -17,7 +17,16 @@ import java.util.List;
 public class analy_tend {
     @Autowired
     private analy_Tend_service service;
-
+    @GetMapping("/government-pro/analy_tend/start_time")
+    public List<CompareMountedEntity> mounted_start(){
+        service.Clean_start();
+        return service.get_mounted_start();
+    }
+    @GetMapping("/government-pro/analy_tend/end_time")
+    public List<CompareMountedEntity> mounted_end(){
+        service.Clean_end();
+        return service.get_mounted_end();
+    }
     @GetMapping("/government-pro/analy_tend/city")
     public List<CompareMountedEntity> mounted_city(){
         service.Clean_city();
@@ -83,7 +92,6 @@ public class analy_tend {
         service.Clean_time();
         return service.get_time(start_time,end_time);
     }
-
 
     @GetMapping("/government-pro/analy_tend/get_data")
     public List<TendResEntity> get_data(String start_time, String end_time, String city, String character, String industry){

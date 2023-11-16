@@ -16,7 +16,24 @@
       end-placeholder="结束日期"
       >
     </el-date-picker>
-
+    <el-select v-model="value_city" clearable placeholder="起始调查期" >
+      <el-option
+        v-for="item in options_starttime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+    <el-select v-model="value_city" clearable placeholder="结束调查期" >
+      <el-option
+        v-for="item in options_endtime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
     <el-select v-model="value_city" clearable placeholder="地区" >
       <el-option
         v-for="item in options_city"
@@ -113,6 +130,9 @@ export default {
       options_char:[],
       options_city:[],
       options_indu:[],
+      options_starttime:[],
+      options_endtime:[]
+      
 
 
       
@@ -129,9 +149,8 @@ export default {
         }
       }).then(response=>{
         this.xAxislist = response.data
-  
-
       })
+      
 
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_data",{
         params:{
@@ -306,6 +325,7 @@ export default {
 
     }
     )
+
     this.$http.get("http://localhost:8070/government-pro/analy_tend/indu"
       ).then((response)=>{
       let result = response.data
@@ -316,16 +336,30 @@ export default {
 
     }
     )
-    // this.$http.get("http://localhost:8070/government-pro/analy_tend/get_x"
-    //   ).then((response)=>{
-    //   let result = response.data
-    //   this.x_axis = []
-    //   result.forEach(element => {
-    //     this.x_axis.push(element)
-    //   });
 
-    // }
-    // )
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/start_time"
+      ).then((response)=>{
+      let result = response.data
+      console.log(result)
+      this.options_starttime = []
+      result.forEach(element => {
+        this.options_starttime.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+    
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/end_time"
+      ).then((response)=>{
+        let result = response.data
+        console.log(result)
+      this.options_endtime = []
+      result.forEach(element => {
+        this.options_endtime.push({label:element.name, value:element.name})
+      });
+    }
+    )
+
 },
 }
 </script>

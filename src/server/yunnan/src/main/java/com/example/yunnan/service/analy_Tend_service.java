@@ -18,6 +18,9 @@ public class analy_Tend_service {
     private List<CompareMountedEntity> mounted_char = new ArrayList<>() ;
     private List<CompareMountedEntity> mounted_indu = new ArrayList<>();
 
+    private List<CompareMountedEntity> mounted_start = new ArrayList<>();
+    private List<CompareMountedEntity> mounted_end = new ArrayList<>();
+
     public List<CompareMountedEntity> getMounted_city() {
         return mounted_city;
     }
@@ -44,6 +47,13 @@ public class analy_Tend_service {
     public void Clean_time(){
         time_list.clear();
     }
+    public void Clean_start(){
+        mounted_start.clear();
+    }
+    public void Clean_end(){
+        mounted_end.clear();
+    }
+
     private List<List<TendEntity>> data_collection = new ArrayList<>();
     private List<String> time_list = new ArrayList<>();
 
@@ -252,6 +262,38 @@ public class analy_Tend_service {
             entity.setName(list.get(i));
             mounted_indu.add(entity);
         }
+    }
+    public List<CompareMountedEntity> get_mounted_start(){
+        List<String> list;
+        list = mapper.get_mounted_start();
+        for(int i = 0; i < list.size(); i++){
+            CompareMountedEntity entity = new CompareMountedEntity();
+            entity.setNum(String.valueOf(i));
+            StringBuffer name = new StringBuffer(list.get(i));
+            name.delete(0,5);
+            name.replace(4,4,"年");
+            name.replace(7,7,"月");
 
+            entity.setName(String.valueOf(name));
+            mounted_start.add(entity);
+        }
+       return mounted_start;
+    }
+    public List<CompareMountedEntity> get_mounted_end(){
+        List<String> list;
+        list = mapper.get_mounted_end();
+        for(int i = 0; i < list.size(); i++){
+            CompareMountedEntity entity = new CompareMountedEntity();
+            entity.setNum(String.valueOf(i));
+            StringBuffer name = new StringBuffer(list.get(i));
+            name.delete(0,5);
+            name.replace(4,5,"年");
+            name.replace(7,7,"月");
+
+
+            entity.setName(String.valueOf(name));
+            mounted_end.add(entity);
+        }
+        return mounted_end;
     }
 }
