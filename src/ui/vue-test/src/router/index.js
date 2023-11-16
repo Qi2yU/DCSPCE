@@ -164,15 +164,6 @@ export default new Router({
         name: 'File_detail',
         component: File_detail
       }, {
-        path: 'file_check',
-        name: 'FileCheck',
-        component: FileCheck,
-        children:[{
-          path: 'file_be_checked',
-          name: 'FileBeChecked', 
-          component: FileBeChecked,
-        }]
-      }, {
         path: 'sum',
         name: 'Sum',
         component: Sum

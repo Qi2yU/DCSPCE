@@ -162,7 +162,7 @@
   }
 </script> 
 
-<style>
+<style scoped>
 .el-form{
   margin-left: 20%;
   
