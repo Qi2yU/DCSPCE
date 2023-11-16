@@ -27,7 +27,7 @@ public class Data_query_controller {
     }
     @PostMapping("/dataquery")
     @ResponseBody
-    public List<query_res1> getName(@RequestBody query_form data){
+    public List<QueryDetail> getName(@RequestBody query_form data){
         String companyName=data.getCompanyName();
         String userId = data.getUserId();
         String character=data.getCharacter();
@@ -42,18 +42,18 @@ public class Data_query_controller {
 //        String tableName= list.get(0).getTableName();
 //        List<query_res1> list_res=dataQueryService.getRes1(tableName,companyName,userId,character,industry,city,district);
 //        System.out.println(list_res);
-        List<query_res1> list_all=new ArrayList<>();
+        List<QueryDetail> list_all=new ArrayList<>();
         for(int i=0;i<list.size();i++)
         {
             String tableName= list.get(i).getTableName();
-            List<query_res1> list_res=new ArrayList<>();
+            List<QueryDetail> list_res=new ArrayList<>();
             list_res=dataQueryService.getRes1(tableName,companyName,userId,character,industry,city,district);
             System.out.println(list_res);
             for(int j=0;j<list_res.size();j++)
             {
                 list_res.get(j).setStart_time(list.get(i).getStart_time());
                 list_res.get(j).setEnd_time(list.get(i).getEnd_time());
-                list_res.get(j).setTableName(list.get(i).getTableName());
+
 
             }
             list_all.addAll(list_res);

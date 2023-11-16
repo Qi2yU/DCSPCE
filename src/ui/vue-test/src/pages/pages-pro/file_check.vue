@@ -28,14 +28,19 @@
   var $this = {};
   export default {
     data() {
-      return {
-        activeIndex: '1',
-      };
+      // return {
+      //   activeIndex: '',
+      // };
     },
     beforeCreate() {
        $this = this;
      },
     methods: {
+
+      function()
+      {
+          this.activeIndex=this.$route.name;
+      },
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },

@@ -37,4 +37,26 @@ public interface company_infoMapper {
     @Select("select * from company_info where (is_valid = 1 and city = #{values})")
     public List<company_info> selectbycity3(String values);
 
+    //备案审核通过
+    @Update("update company_info set is_valid=1 where user_id=#{id}")
+    public void checkpass(String id);
+
+    //备案审核驳回
+    @Update("update company_info set is_valid=3 where user_id=#{id}")
+    public void checkback(String id);
+
+    //备案审核驳回原因
+    @Update("update company_info set backed_info = #{reason} where user_id=#{id}")
+    public void checkbackreason(String id,String reason);
+
+    //查询表名
+    @Select("select index_data_table from research_schedule where r_time_start = #{time1} and r_time_end = #{time2}")
+    String selecttablename(String time1,String time2);
+
+    //查询相关数据
+    @Select("select * from company_info where ( user_id in (select user_id from ${tablename}) and is_valid = 1)")
+    public List<company_info> ffind(String tablename);
+
+    @Select("select * from company_info where ( user_id in (select user_id from ${tablename}) and city = #{values} and is_valid = 1)")
+    public List<company_info> findbycityanddata(String values,String tablename);
 }

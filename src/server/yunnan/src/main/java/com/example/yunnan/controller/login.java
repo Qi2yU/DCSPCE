@@ -34,7 +34,7 @@ public class login {
             if (split_role == '0') {
                 return "/layout";
             } else if (split_role == '1') {
-                return "/layout";
+                return "/government-city";
             } else if (split_role == '2') {
                 return "/company";
             }

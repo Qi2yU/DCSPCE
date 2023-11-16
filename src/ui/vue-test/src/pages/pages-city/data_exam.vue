@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>数据审核</h2>
-        <h1>调查期：</h1>
+        <h1>调查期：{{ start_time }}-{{ end_time }}</h1>
         <el-table
             :data="tableData"
             stripe
@@ -35,6 +35,7 @@
       <script>
         export default {
           created(){
+            this.getCity();
             this.$http.get("/getcount",{
               params:{
                 city: this.city,
@@ -43,11 +44,37 @@
             console.log(response);
             this.tableData=response.data;
     });
+    this.$http.get("/table").then((response)=>{
+              this.start_time=response.data.start_time;
+              this.end_time=response.data.end_time;
+            })
           },
           data() {
             return {
-              city:'澄江市',
+              userId:this.$route.query.userId,
+              city:'',
+              start_time:'',
+              end_time:'',
               tableData:[],
+              cityMapping: {
+                '5301': '昆明市',
+                '5303':'曲靖市',
+                '5304':'玉溪市',
+                '5305':'保山市',
+                '5306':'昭通市',
+                '5307':'丽江市',
+                '5308':'普洱市',
+                '5309':'临沧市',
+                '5323':'楚雄彝族自治州',
+                '5325':'红河哈尼族彝族自治州',
+                '5326':'文山壮族苗族自治州',
+                '5328':'西双版纳傣族自治州',
+                '5329':'大理白族自治州',
+                '5331':'德宏傣族景颇族自治州',
+                '5333':'怒江傈僳族自治州',
+                '5334':'迪庆藏族自治州'
+                
+              },
               // tableData: [{
               //   province: '玉溪市',
               //   committed: '24',
@@ -70,6 +97,13 @@
             }
           },
           methods:{
+            getCity() {
+      // 截取前4位
+      const prefix = this.userId.substring(0, 4);
+
+      // 查找对照表中的映射
+      this.city = this.cityMapping[prefix] || '未知城市';
+    },
             show(val,data){
                 console.log(val);
                 console.log(data);

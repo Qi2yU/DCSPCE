@@ -17,6 +17,7 @@ public class company_info {
     private String post_num;
     private String fax_num;
     private String email;
+    private String backed_info;
     private int is_valid;
 
     //多表查询
@@ -150,6 +151,14 @@ public class company_info {
         return u_a;
     }
 
+    public String getBacked_info() {
+        return backed_info;
+    }
+
+    public void setBacked_info(String backed_info) {
+        this.backed_info = backed_info;
+    }
+
     @Override
     public String toString() {
         return "company_info{" +
@@ -167,6 +176,7 @@ public class company_info {
                 ", post_num='" + post_num + '\'' +
                 ", fax_num='" + fax_num + '\'' +
                 ", email='" + email + '\'' +
+                ", backed_info='" + backed_info + '\'' +
                 ", is_valid=" + is_valid +
                 ", u_a=" + u_a +
                 '}';

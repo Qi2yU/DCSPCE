@@ -10,7 +10,16 @@ public class Retreat {
     private String explain;
     private String phone;
     private String companyName;
+    private String info;
     private static final String state="退回修改";
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
     public String getState(){
         return state;

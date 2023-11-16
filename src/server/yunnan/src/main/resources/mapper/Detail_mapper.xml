@@ -52,6 +52,7 @@
         <result column="explain_reason" property="explain"/>
         <result column="state" property="state"/>
         <result column="user_name" property="userName"/>
+
 <!--        <association property="userinfo" javaType="com.example.yunnan.entity.UserInfo">-->
 <!--            <result property="user_name" column="user_name"></result>-->
 <!--            <result property="user_id" column="uid"></result>-->
@@ -70,6 +71,7 @@
             d.second_reason,
             d.explain_reason,
             d.state,
+
             u.user_name
 
             from ${tableName} d,user_accounts u
@@ -102,6 +104,7 @@
         <result column="main_reason" property="mainReason"/>
         <result column="second_reason" property="secReason"/>
         <result column="explain_reason" property="explain"/>
+        <result column="modify_info" property="info"/>
         <result column="user_name" property="userName"/>
         <result column="company_name" property="companyName"/>
     </resultMap>
@@ -114,6 +117,7 @@
         d.main_reason ,
         d.second_reason ,
         d.explain_reason ,
+        d.modify_info,
         c.company_name,
         c.phone
         from ${tableName} d,company_info c
@@ -165,7 +169,7 @@
 <!--   省退回修改更新状态 -->
     <update id="retreatByPro">
         UPDATE ${tableName} d
-        SET d.state = 0
+        SET d.state = 0, d.modify_info=#{info}
         where d.user_id =#{userId}
     </update>
 

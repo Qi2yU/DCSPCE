@@ -71,7 +71,7 @@
 </div>
 </template>
 
-<script>
+<!-- <script>
 
 import SumButton from "../../components/components-pro/sum_components/sum_buttons.vue"
 import FileSaver from "file-saver";
@@ -163,4 +163,4 @@ import XLSX from "xlsx"
 .SumTable{
  display: block;
 }
-</style>
+</style> -->
