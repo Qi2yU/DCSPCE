@@ -83,6 +83,8 @@ public class analy_tend {
         service.Clean_time();
         return service.get_time(start_time,end_time);
     }
+
+
     @GetMapping("/government-pro/analy_tend/get_data")
     public List<TendResEntity> get_data(String start_time, String end_time, String city, String character, String industry){
         int day = 0;
@@ -133,7 +135,6 @@ public class analy_tend {
 
     @GetMapping("/government-pro/analy_tend/get_table")
     public List<TendTableEntity> get_table(){
-
         return service.get_table();
     }
 }

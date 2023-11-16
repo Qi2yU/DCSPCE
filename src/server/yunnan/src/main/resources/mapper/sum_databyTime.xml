@@ -15,10 +15,11 @@
     </select>
 
 
-    <select id="get_data_City" resultMap="Time" statementType="STATEMENT">
+    <select id="get_dataCity" resultMap="Time" statementType="STATEMENT">
         select now_people_num from ${timeTableId} as  t join company_info as c
         where t.user_id = c.user_id and c.city = "${city}"
     </select>
+
     <resultMap id="City" type="SumEntity">
         <result column="now_people_num" property="num"></result>
         <result column="user_id" property="user_id"></result>
@@ -28,11 +29,6 @@
     <select id="get_datawithpro_city" resultMap="City">
         select t.now_people_num, c.city from ${timeTableId} as t join company_info as c
         where t.user_id = c.user_id
-    </select>
-
-    <select id="get_datawithpro_city_City" resultMap="City">
-        select t.now_people_num, c.city from ${timeTableId} as t join company_info as c
-        where t.user_id = c.user_id and c.city = "${city}"
     </select>
 
     <resultMap id="Character" type="SumEntity">
@@ -46,7 +42,7 @@
         where t.user_id = c.user_id
     </select>
 
-    <select id="get_datawithpro_char_City" resultMap="Character">
+    <select id="get_datawithpro_charCity" resultMap="Character">
         select t.now_people_num, c.company_character from ${timeTableId} as t join company_info as c
         where t.user_id = c.user_id and c.city = "${city}"
     </select>
@@ -59,12 +55,12 @@
 
     <select id="get_datawithpro_industry" resultMap="Industry">
         select t.now_people_num,  c.company_industry from ${timeTableId} as t join company_info as c
-        where t.user_id = c.user_id and c.city = "${city}"
+        where t.user_id = c.user_id
     </select>
 
-    <select id="get_datawithpro_industry_City" resultMap="Industry">
+    <select id="get_datawithpro_industryCity" resultMap="Industry">
         select t.now_people_num,  c.company_industry from ${timeTableId} as t join company_info as c
-        where t.user_id = c.user_id
+        where t.user_id = c.user_id and c.city = "${city}"
     </select>
     
     <resultMap id="Mounted" type="SumMountedEntity">

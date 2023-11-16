@@ -58,10 +58,10 @@
                <span>数据分析</span>
              </template>
              <el-menu-item-group>
-               <el-menu-item index="4-1"  @click="goPage('analy-1')">对比分析</el-menu-item>
+               <el-menu-item index="4-1"  @click="goPage('analy-1')">趋势分析</el-menu-item>
              </el-menu-item-group>
              <el-menu-item-group>
-               <el-menu-item index="4-2"  @click="goPage('analy-2')">趋势分析</el-menu-item>
+               <el-menu-item index="4-2"  @click="goPage('analy-2')">对比分析</el-menu-item>
              </el-menu-item-group>
            </el-submenu>
            

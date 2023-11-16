@@ -172,8 +172,20 @@ public class analy_Tend_service {
             for(TendResEntity data : data_res){
                 String name = data.getCompany_name();
                 Optional<TendEntity> data_found = data_signle.stream().filter(s -> s.getCompany_name().equals(name)).findFirst();
-                data.add_last_num(data_found.get().getLast_people_num());
-                data.add_now_num(data_found.get().getNow_people_num());
+                if(data_found.isPresent()){
+                    data.add_last_num(data_found.get().getLast_people_num());
+                    data.add_now_num(data_found.get().getNow_people_num());
+                }else {
+                    if(data.now_num_list.size() != 0){
+                        data.add_last_num(data.now_num_list.get(data.now_num_list.size() - 1));
+                    }
+                    else {
+                        data.add_now_num(0);
+                    }
+
+                    data.add_now_num(0);
+                }
+
             }
 
             data_signle.get(0).setTime(time);
@@ -193,7 +205,14 @@ public class analy_Tend_service {
             table_data.setCompany_name(data.getCompany_name());
             for(int i = 0 ; i < data.get_size(); i++){
                 int change = data.now_num_list.get(i) - data.last_num_list.get(i);
-                int percent = change * 100 / data.now_num_list.get(i);
+                int percent;
+                if(data.now_num_list.get(i) == 0){
+                    percent = 0;
+                }
+                else {
+                    percent = change * 100 / data.now_num_list.get(i);
+                }
+
                 table_data.add_table_data(String.valueOf(percent) + "%");
             }
             table_data.setTime_list(time_list);

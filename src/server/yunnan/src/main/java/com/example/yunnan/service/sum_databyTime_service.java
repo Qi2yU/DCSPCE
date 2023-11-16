@@ -140,8 +140,6 @@ public class sum_databyTime_service {
 
     public void get_datafortime(String st, String et){
         String time = new String(st);//20xx0901
-
-
         while(true){
             List<SumEntity>  data_signle = new ArrayList<>();
             StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
@@ -160,6 +158,30 @@ public class sum_databyTime_service {
             time = compute_Time(time, et);
         }
     }
+
+
+    public void get_datafortimeCity(String st, String et, String city){
+        String time = new String(st);//20xx0901
+
+        while(true){
+            List<SumEntity>  data_signle = new ArrayList<>();
+            StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
+            time_fmt.replace(6,7,"_");//20xx09_1
+            time_fmt.insert(4,"_");//20xx_09_1
+            time_fmt.insert(0,"data_");//data_20xx_09_1
+            data_signle =  sum_databyTime_mapper.get_dataCity(String.valueOf(time_fmt), city);
+            if(data_signle.size() == 0){
+                break;
+            }
+            data_signle.get(0).setKind_name(time);
+            data_collection.add(data_signle);
+            if(Integer.valueOf(time) >= Integer.valueOf(et)){
+                break;
+            }
+            time = compute_Time(time, et);
+        }
+    }
+
     public void get_dataforpro(String st, String et, int type){
         String time = new String(st);//20xx0901
 
@@ -187,7 +209,30 @@ public class sum_databyTime_service {
             time = compute_Time(time, et);
         }
     }
+    public void get_dataforproCity(String st, String et, int type, String city){
+        String time = new String(st);//20xx0901
 
+        while(true){
+            List<SumEntity>  data_signle = new ArrayList<>();
+            StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
+            time_fmt.replace(6,7,"_");//20xx09_1
+            time_fmt.insert(4,"_");//20xx_09_1
+            time_fmt.insert(0,"data_");//data_20xx_09_1
+            if(type == 1){
+                System.out.print(city);
+                data_signle =  sum_databyTime_mapper.get_datawithpro_charCity(String.valueOf(time_fmt),city);
+            }
+            else if(type == 2){
+                data_signle =  sum_databyTime_mapper.get_datawithpro_industryCity(String.valueOf(time_fmt),city);
+            }
+
+            data_collection.add(data_signle);
+            if(Integer.valueOf(time) >= Integer.valueOf(et)){
+                break;
+            }
+            time = compute_Time(time, et);
+        }
+    }
     public void sum_dataforpor(){
         for(List<SumEntity> data_single : data_collection){
             for (SumEntity data : data_single){

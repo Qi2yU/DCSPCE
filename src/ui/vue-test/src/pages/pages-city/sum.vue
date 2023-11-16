@@ -74,13 +74,14 @@
 
 <script>
 
-import SumButton from "../../components/components-pro/sum_components/sum_buttons.vue"
+import SumButton from "../../components/components-city/sum_components/sum_buttons.vue"
 import FileSaver from "file-saver";
 import XLSX from "xlsx"
 
   export default {
     data() {
       return {
+        
         city:"唐山",
         tableData: [],
         tableData_Gru:[],
@@ -88,9 +89,32 @@ import XLSX from "xlsx"
         sum_id:'',
         start_time:'',
         end_time:'',
+        userId:this.$route.query.userId,
+        cityMapping: {
+                '5301': '唐山',
+                '5303':'曲靖市',
+                '5304':'玉溪市',
+                '5305':'保山市',
+                '5306':'昭通市',
+                '5307':'丽江市',
+                '5308':'普洱市',
+                '5309':'临沧市',
+                '5323':'楚雄彝族自治州',
+                '5325':'红河哈尼族彝族自治州',
+                '5326':'文山壮族苗族自治州',
+                '5328':'西双版纳傣族自治州',
+                '5329':'大理白族自治州',
+                '5331':'德宏傣族景颇族自治州',
+                '5333':'怒江傈僳族自治州',
+                '5334':'迪庆藏族自治州'
+                
+        },
+
       }
     },
-    mounted(){
+   async mounted(){
+          await this.getCity()
+          console.log(this.city)
           this.$http.get("http://localhost:8070/government-city/sum/mounted",{
             params:{
               city:this.city
@@ -107,6 +131,13 @@ import XLSX from "xlsx"
       SumButton,
     },
     methods:{
+      getCity() {
+      // 截取前4位
+      const prefix = this.userId.substring(0, 4);
+
+      // 查找对照表中的映射
+      this.city = this.cityMapping[prefix] || '未知城市';
+      },
       Sum_fun(v1, v4){
           switch(v1){
             case('选项1'):this.choice_name = "企业性质" ,this.sum_id ="企业性质"
@@ -114,8 +145,6 @@ import XLSX from "xlsx"
             case('选项2'):this.choice_name = "所属行业",this.sum_id = "所属行业"
             break
             case('选项3'):this.choice_name = "调查期",this.sum_id = "调查期"
-            break
-            case('选项4'):this.choice_name = "企业地区",this.sum_id = "企业地区"
             break
             case('选项5'):this.choice_name = "企业季度",this.sum_id = "企业季度"
             break
@@ -138,11 +167,12 @@ import XLSX from "xlsx"
 
           console.log(this.sum_id)
         
-          this.$http.get("http://localhost:8070/government-pro/sum",{
+          this.$http.get("http://localhost:8070/government-city/sum",{
             params:{
               sum_id: this.sum_id,
               start_time:this.start_time,
               end_time:this.end_time,
+              city:this.city,
             }
           }).then((response)=>{
             this.tableData_Gru = response.data
