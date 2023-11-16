@@ -20,7 +20,7 @@
       prop="date"
       label="日期"
       width="150">
-      <template slot-scope="scope">{{ scope.row.date }}</template>
+      <template slot-scope="scope">{{ scope.row.time }}</template>
     </el-table-column>
     <el-table-column
       prop="name"
@@ -49,50 +49,21 @@
     name: 'User',
     data() {
       return {
-        tableData: [{
-          id: '1',
-          date: '2016-05-03',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '2',
-          date: '2016-05-02',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '3',
-          date: '2016-05-04',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '4',
-          date: '2016-05-01',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '5',
-          date: '2016-05-08',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '6',
-          date: '2016-05-06',
-          name: '王小虎',
-          province: '上海',
-        }, {
-          id: '7',
-          date: '2016-05-07',
-          name: '王小虎',
-          province: '上海',
-        }],
+        tableData: [],
         multipleSelection: []
       }
     },
+    created(){
 
-  methods: {
-    handleLook($index, row){
-      this.$router.push("/company/readNotice");
-    }
+      this.$http.get("/gov_notice/get_all").then((response)=>{
+        console.log(response);
+        console.log("notice 页面 初始化结束");
+      });
+    },
+    methods: {
+      handleLook($index, row){
+        this.$router.push("/company/readNotice");
+      }
     }
   }
 </script>

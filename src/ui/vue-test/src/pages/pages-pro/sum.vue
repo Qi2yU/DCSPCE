@@ -111,7 +111,7 @@ import XLSX from "xlsx"
             break
             case('选项3'):this.choice_name = "调查期",this.sum_id = "调查期"
             break
-            case('选项4'):this.choice_name = "地区",this.sum_id = "地区"
+            case('选项4'):this.choice_name = "企业地区",this.sum_id = "企业地区"
             break
             case('选项5'):this.choice_name = "企业季度",this.sum_id = "企业季度"
             break
@@ -142,6 +142,7 @@ import XLSX from "xlsx"
             }
           }).then((response)=>{
             this.tableData_Gru = response.data
+            console.log(response)
           })
          
       },

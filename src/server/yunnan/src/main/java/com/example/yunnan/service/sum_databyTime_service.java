@@ -161,6 +161,7 @@ public class sum_databyTime_service {
             time_fmt.insert(0,"data_");//data_20xx_09_1
             if(type == 0){
                 data_signle =  sum_databyTime_mapper.get_datawithpro_city(String.valueOf(time_fmt));
+                System.out.print(0);
             }
             else if(type == 1){
                 data_signle =  sum_databyTime_mapper.get_datawithpro_char(String.valueOf(time_fmt));
@@ -191,6 +192,7 @@ public class sum_databyTime_service {
             sumRes.setKind_name(key);
             sumRes.setSum_num(collect.get(key));
             data_sum_res.add(sumRes);
+
         }
 
     }
