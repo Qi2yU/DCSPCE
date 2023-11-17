@@ -49,20 +49,38 @@ public class analy_tend {
     }
     @GetMapping("/government-pro/analy_tend/get_time")
     public  List<String> get_time(String start_time, String end_time){
-        StringBuffer sbs = new StringBuffer(start_time);//2023年02月1号调查期 => 20230201
+        StringBuffer sbs = new StringBuffer(start_time);//2023年2月第1号调查期 => 20230201
         StringBuffer sbe = new StringBuffer(end_time);
+        if(sbs.length() == 13 ){
+            sbs.insert(5,"0");
+        }
+        if(sbe.length() == 13){
+            sbe.insert(5,"0");
+        }
 
-        sbs.delete(9,13);//2023年02月1
-        sbe.delete(9,13);
+        int n = Integer.valueOf(sbs.charAt(9) - '0');
+        n = n-1;
+        sbs.replace(9,10,String.valueOf(n));
+
+        int m = Integer.valueOf(sbe.charAt(9) - '0');
+        m = m-1;
+        sbe.replace(9,10,String.valueOf(m));
+
+        sbs.delete(10,14);//2023年02月第1
+        sbe.delete(10,14);
 
 
-        sbs.deleteCharAt(4);
+        sbs.deleteCharAt(4);//2023 2月第1
         sbe.deleteCharAt(4);
 
-        sbs.replace(6,7,"0");
+        //202302月第1
+        sbs.replace(6,7,"0");//2023020第1
         sbe.replace(6,7,"0");
 
+        sbs.delete(7,8);
+        sbe.delete(7,8);
 
+        System.out.print(sbs);
         start_time = String.valueOf(sbs);
         end_time = String.valueOf(sbe);
 
@@ -74,20 +92,39 @@ public class analy_tend {
     @GetMapping("/government-pro/analy_tend/get_data")
     public List<TendResEntity> get_data(String start_time, String end_time, String city, String character, String industry){
 
-        StringBuffer sbs = new StringBuffer(start_time);//2023年02月1号调查期 => 20230201
+        StringBuffer sbs = new StringBuffer(start_time);//2023年02月第1号调查期 => 20230201
         StringBuffer sbe = new StringBuffer(end_time);
 
-        sbs.delete(9,13);//2023年02月1
-        sbe.delete(9,13);
+        if(sbs.length() == 13 ){
+            sbs.insert(5,"0");
+        }
+        if(sbe.length() == 13){
+            sbe.insert(5,"0");
+        }
+
+        int n = Integer.valueOf(sbs.charAt(9) - '0');
+        n = n-1;
+        sbs.replace(9,10,String.valueOf(n));
+
+        int m = Integer.valueOf(sbe.charAt(9) - '0');
+        m = m-1;
+        sbe.replace(9,10,String.valueOf(m));
+
+        sbs.delete(10,14);//2023年02月第1
+        sbe.delete(10,14);
 
 
-        sbs.deleteCharAt(4);
+        sbs.deleteCharAt(4);//2023 2月第1
         sbe.deleteCharAt(4);
 
-        sbs.replace(6,7,"0");
+        //202302月第1
+        sbs.replace(6,7,"0");//2023020第1
         sbe.replace(6,7,"0");
 
+        sbs.delete(7,8);
+        sbe.delete(7,8);
 
+        System.out.print(sbs);
 
         start_time = String.valueOf(sbs);
         end_time = String.valueOf(sbe);

@@ -137,20 +137,35 @@ public class sum_data {
             if(flag_front){
                 System.out.print(start_time+"\n");
 
-                sbs.delete(9,13);//2023年02月1
-                sbe.delete(9,13);
+
+                if(sbs.length() == 13 ){
+                    sbs.insert(5,"0");
+                }
+                if(sbe.length() == 13){
+                    sbe.insert(5,"0");
+                }
+                int n = Integer.valueOf(sbs.charAt(9) - '0');
+                n = n-1;
+                sbs.replace(9,10,String.valueOf(n));
+
+                int m = Integer.valueOf(sbe.charAt(9) - '0');
+                m = m-1;
+                sbe.replace(9,10,String.valueOf(m));
+                sbs.delete(10,14);//2023年02月第1
+                sbe.delete(10,14);
 
 
-                sbs.deleteCharAt(4);
+                sbs.deleteCharAt(4);//2023 2月第1
                 sbe.deleteCharAt(4);
 
-                sbs.replace(6,7,"0");
+                //202302月第1
+                sbs.replace(6,7,"0");//2023020第1
                 sbe.replace(6,7,"0");
 
+                sbs.delete(7,8);
+                sbe.delete(7,8);
 
 
-                start_time = String.valueOf(sbs);
-                end_time = String.valueOf(sbe);
 
             }else {
                 int day = 0;

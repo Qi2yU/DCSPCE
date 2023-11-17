@@ -148,7 +148,11 @@ public class analy_Tend_service {
     public List<String> get_time(String start_time, String end_time){
         String time = new String(start_time);
         while (true){
-            StringBuffer sb = new StringBuffer(time);
+            StringBuffer sb = new StringBuffer(time);//20xx0301
+            int n = sb.charAt(7) - '0';
+            n = n + 1;
+            sb.replace(7,8, String.valueOf(n));
+
 
             sb.insert(8,"号调查期");
             sb.replace(6,7,"第");
@@ -268,13 +272,22 @@ public class analy_Tend_service {
         list = mapper.get_mounted_start();
         for(int i = 0; i < list.size(); i++){
             CompareMountedEntity entity = new CompareMountedEntity();
-            entity.setNum(String.valueOf(i));
+            entity.setNum(String.valueOf(i));//2023_03_0
             StringBuffer name = new StringBuffer(list.get(i));
             name.delete(0,5);
             name.insert(9,"号调查期");
-            name.replace(4,5,"年");
-            name.replace(7,7,"月");
-            name.delete(8,9);
+            name.replace(4,5,"年");//2023年03_0
+            name.delete(7,8);//2023年030
+            name.insert(7,"月第");
+
+            int n = Integer.valueOf(name.charAt(9) - '0');
+            n = n+1;
+            name.replace(9,10,String.valueOf(n));
+            //2024年02月第1号调查期
+
+            if(name.charAt(5) == '0'){
+                name.delete(5,6);
+            }
 
             entity.setName(String.valueOf(name));
             mounted_start.add(entity);
@@ -290,9 +303,18 @@ public class analy_Tend_service {
             StringBuffer name = new StringBuffer(list.get(i));
             name.delete(0,5);
             name.insert(9,"号调查期");
-            name.replace(4,5,"年");
-            name.replace(7,7,"月");
-            name.delete(8,9);
+            name.replace(4,5,"年");//2023年03_0
+            name.delete(7,8);//2023年030
+            name.insert(7,"月第");
+
+            int n = Integer.valueOf(name.charAt(9) - '0');
+            n = n+1;
+            name.replace(9,10,String.valueOf(n));
+
+            if(name.charAt(5) == '0'){
+                name.delete(5,6);
+            }
+            //2024年2月第1号调查期
 
 
 

@@ -10,7 +10,6 @@
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_tend.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/analy_tend.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/analy-1.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/analy-1.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -122,7 +122,6 @@
 
 <script>
 
-import SumButton from "../../components/components-pro/sum_components/sum_buttons.vue"
 import FileSaver from "file-saver";
 import XLSX from "xlsx"
 
@@ -209,7 +208,7 @@ import XLSX from "xlsx"
       });
     }
     )
-          this.$http.get("http://localhost:8070/government-pro/sum/mounted",{
+    this.$http.get("http://localhost:8070/government-pro/sum/mounted",{
           }).then((response)=>{ 
             this.tableData = response.data
           })
