@@ -62,12 +62,14 @@ public class sum_databyTime_service {
         }
         return data_mounted;
     }
-    String compute_Time(String time, String et){//字符串类型：20xx0901， 20xx0900，长度为8
+
+    String compute_TimewithPeriod(String time, String et, char bound){//字符串类型：20xx0901， 20xx0900，长度为8
+
         if(Integer.valueOf(time) >= Integer.valueOf(et)){
             return time;
         }
         else{
-            if(time.charAt(7) == '1'){ //调查期号：1
+            if(time.charAt(7) == bound){ //调查期号：bound 1
                 StringBuffer sb =  new StringBuffer(time);
                 char month_last = time.charAt(5);
                 char month_first = time.charAt(4);
@@ -130,14 +132,16 @@ public class sum_databyTime_service {
                 }
 
             }
-            else if(time.charAt(7) == '0'){//调查期号：0
+            else {//调查期号：0--bound-1
                 StringBuffer sb =  new StringBuffer(time);
-                return sb.replace(7,8,String.valueOf('1')).toString();
+                char next = time.charAt(7);
+                int n = next - '0';
+                n = n + 1;
+                return sb.replace(7,8,String.valueOf(n)).toString();
             }
         }
-        return time;
-    }
 
+    }
     public void get_datafortime(String st, String et){
         String time = new String(st);//20xx0901
         while(true){
@@ -155,7 +159,7 @@ public class sum_databyTime_service {
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_Time(time, et);
+            time = compute_TimewithPeriod(time, et,'0');
         }
     }
 
@@ -178,7 +182,7 @@ public class sum_databyTime_service {
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_Time(time, et);
+            time = compute_TimewithPeriod(time, et,'0');
         }
     }
 
@@ -206,7 +210,7 @@ public class sum_databyTime_service {
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_Time(time, et);
+            time = compute_TimewithPeriod(time, et,'0');
         }
     }
     public void get_dataforproCity(String st, String et, int type, String city){
@@ -230,7 +234,7 @@ public class sum_databyTime_service {
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_Time(time, et);
+            time = compute_TimewithPeriod(time, et,'0');
         }
     }
     public void sum_dataforpor(){

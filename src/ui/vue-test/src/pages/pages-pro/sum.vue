@@ -173,7 +173,7 @@ import XLSX from "xlsx"
     watch:{
       value1(new_v, old_v){
 
-        if(new_v == "选项3"){
+        if(new_v == "选项3" || new_v =="选项1"|| new_v =="选项2"|| new_v =="选项8"){
           this.show_research = true
           this.show_time = false
           this.flag = true
