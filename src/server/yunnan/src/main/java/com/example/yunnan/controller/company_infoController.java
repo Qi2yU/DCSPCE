@@ -141,61 +141,24 @@ public class company_infoController {
         return l;
     }
 
-        //按时间查询
-    @RequestMapping("/company_info/selectbycityandtime_passed")
-    public List<company_info> selectbytime(@RequestBody Map<String,Object> param)
+    //按城市查询 已通过
+    @RequestMapping("/company_info/selectbycity_passed")
+    public List searchbycity3(@RequestBody String id)
     {
-
-        String id = (String) param.get("param1");
-        if(id!=null)
-        {
-            id = id.substring(0,1);
-        }
-        System.out.println("id:"+id);
+        id = id.substring(0,1);
+        System.out.println(id);
         String values = idtovalue(id);
-
-        System.out.println(param.get("param2"));
-        String time1 = (String) param.get("param2");
-        System.out.println(param.get("param3"));
-        String time2 = (String) param.get("param3");
-        List<company_info> ll;
-        if (time1==null && time2==null && values == null)
+        List<company_info> l;
+        if(values==null)
         {
-            ll = company_infoMapper.find_passed();
-            System.out.println(ll);
-        }
-        else if(time1==null && time2==null && values != null)
-        {
-            ll = company_infoMapper.selectbycity3(values);
-            System.out.println(ll);
-        }
-        else if(time1!=null && time2!=null && values == null)
-        {
-            String tablename = company_infoMapper.selecttablename(time1,time2);
-            if(tablename == null)
-            {
-                return ll=null;
-            }
-            else
-            {
-                ll = company_infoMapper.ffind(tablename);
-                System.out.println(ll);
-            }
+            l = company_infoMapper.find_passed();
+            System.out.println(l);
         }
         else
         {
-            String tablename = company_infoMapper.selecttablename(time1,time2);
-            if(tablename == null)
-            {
-                return ll=null;
-            }
-            else
-            {
-                ll = company_infoMapper.findbycityanddata(values,tablename);
-                System.out.println(ll);
-            }
-
+            l = company_infoMapper.selectbycity3(values);
+            System.out.println(l);
         }
-        return ll;
+        return l;
     }
 }

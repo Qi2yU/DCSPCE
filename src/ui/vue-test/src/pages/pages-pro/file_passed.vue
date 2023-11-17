@@ -19,11 +19,11 @@
         </el-select>
   </el-form-item>
   <!-- 按时间选择 -->
-  <el-form-item label="选择时间" class="myselect2">
+  <!-- <el-form-item label="选择时间" class="myselect2">
     <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" class="el-data-picker" v-model="data1" type="date" placeholder="选择日期"></el-date-picker>
     <h>--</h>
     <el-date-picker format="yyyy-MM-dd" value-format="yyyy-MM-dd" class="el-data-picker" v-model="data2" type="date" placeholder="选择日期"></el-date-picker>
-  </el-form-item>
+  </el-form-item> -->
   <!-- 按关键字选择 -->
   <!-- <el-form-item class="myselect3" label="关键字">
     <el-input class="el-input" v-model="CheckValue.key" placeholder="企业名称"></el-input>
@@ -186,8 +186,8 @@ methods:{
           this.values="0";
           console.log(this.values);
         }
-        axios.post("http://localhost:8090/company_info/selectbycityandtime_passed",
-      {param1:this.values,param2:this.data1,param3:this.data2},{'Content-Type': 'text/plain'}).then((response)=>{
+        axios.post("http://localhost:8090/company_info/selectbycity_passed",
+      this.values,{'Content-Type': 'text/plain'}).then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;
       })
