@@ -151,6 +151,9 @@ public class sum_databyTime_service {
             time_fmt.insert(4,"_");//20xx_09_1
             time_fmt.insert(0,"data_");//data_20xx_09_1
             data_signle =  sum_databyTime_mapper.get_data(String.valueOf(time_fmt));
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char bc =  (char) (bound + '0');
             if(data_signle.size() == 0){
                 break;
             }
@@ -159,7 +162,8 @@ public class sum_databyTime_service {
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_TimewithPeriod(time, et,'0');
+
+            time = compute_TimewithPeriod(time, et, bc);
         }
     }
 
@@ -174,6 +178,9 @@ public class sum_databyTime_service {
             time_fmt.insert(4,"_");//20xx_09_1
             time_fmt.insert(0,"data_");//data_20xx_09_1
             data_signle =  sum_databyTime_mapper.get_dataCity(String.valueOf(time_fmt), city);
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char bc =  (char) (bound + '0');
             if(data_signle.size() == 0){
                 break;
             }
@@ -182,7 +189,7 @@ public class sum_databyTime_service {
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_TimewithPeriod(time, et,'0');
+            time = compute_TimewithPeriod(time, et,bc);
         }
     }
 
@@ -205,12 +212,14 @@ public class sum_databyTime_service {
             else if(type == 2){
                 data_signle =  sum_databyTime_mapper.get_datawithpro_industry(String.valueOf(time_fmt));
             }
-
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char bc =  (char) (bound + '0');
             data_collection.add(data_signle);
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_TimewithPeriod(time, et,'0');
+            time = compute_TimewithPeriod(time, et,bc);
         }
     }
     public void get_dataforproCity(String st, String et, int type, String city){
@@ -229,12 +238,14 @@ public class sum_databyTime_service {
             else if(type == 2){
                 data_signle =  sum_databyTime_mapper.get_datawithpro_industryCity(String.valueOf(time_fmt),city);
             }
-
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char bc =  (char) (bound + '0');
             data_collection.add(data_signle);
             if(Integer.valueOf(time) >= Integer.valueOf(et)){
                 break;
             }
-            time = compute_TimewithPeriod(time, et,'0');
+            time = compute_TimewithPeriod(time, et,bc);
         }
     }
     public void sum_dataforpor(){

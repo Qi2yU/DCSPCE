@@ -14,6 +14,10 @@
         ${timeTableId}
     </select>
 
+    <select id="get_type" resultType="Integer">
+        select type from research_schedule where index_data_table = "${timeTableId}"
+    </select>
+
 
     <select id="get_dataCity" resultMap="Time" statementType="STATEMENT">
         select now_people_num from ${timeTableId} as  t join company_info as c
