@@ -5,7 +5,7 @@
     <h1>趋势分析</h1>
 
 
-    <el-select v-model="start_time" clearable placeholder="起始调查期" >
+    <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
         :key="item.value"
@@ -14,7 +14,7 @@
        >
       </el-option>
     </el-select>
-    <el-select v-model="end_time" clearable placeholder="结束调查期" >
+    <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
       <el-option
         v-for="item in options_endtime"
         :key="item.value"
@@ -52,7 +52,7 @@
        >
       </el-option>
     </el-select>
-    <el-button type="primary"  @click = "get_data"  class = "download">查询</el-button>
+    <el-button type="primary"  @click = "get_data" :disabled="show" class = "download">查询</el-button>
     <el-table
             :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
@@ -124,6 +124,7 @@ export default {
       options_endtime:[],
       start_time:'',
       end_time:'',
+      show:false,
       
 
 
@@ -141,7 +142,7 @@ export default {
       }).then(response=>{
         this.xAxislist = response.data
       })
-      
+      //2024年2月第2号调查期
 
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_data",{
         params:{
@@ -351,6 +352,48 @@ export default {
     }
     )
 
+},
+watch:{
+  end_time(){
+      let cs = this.start_time.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+
+      let es = this.end_time.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+
+      if(cs >= es || cs.length > es.length){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+           
+      if(cs.length < es.length){
+        this.show = false
+      }
+  },
+  start_time(){
+    let cs = this.start_time.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+
+      let es = this.end_time.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+
+      if(cs >= es || cs.length > es.length){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(cs.length < es.length){
+        this.show = false
+      }
+  }
 },
 }
 </script>

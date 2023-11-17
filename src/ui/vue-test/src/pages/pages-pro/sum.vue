@@ -241,9 +241,11 @@ import XLSX from "xlsx"
           if(this.show_time){
             this.start_time = this.value4[0]
             this.end_time = this.value4[1]
+
           }else if(this.show_research){
             this.start_time = this.value_start
             this.end_time = this.value_end
+            
           }
           console.log(this.flag)
         

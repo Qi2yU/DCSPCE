@@ -53,7 +53,7 @@
       </el-option>
     </el-select>
   
-    <el-button type="primary" @click="get_data"  class = "query" >查询</el-button>
+    <el-button type="primary" @click="get_data" :disabled="disable" class = "query" >查询</el-button>
  
 
   <el-table
@@ -129,6 +129,7 @@ export default {
       value_indu:'',
       option:{},
       myChart:null,
+      disable:false,
 
     }
   },
@@ -270,7 +271,49 @@ export default {
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
     },
+   
+},
+watch:{
+    end_time(){
+      let cs = this.start_time.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+
+      let es = this.end_time.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+
+      if(cs >= es || cs.length > es.length){
+        this.disable = true
+      }
+      else{
+        this.disable = false
+      }
+           
+      if(cs.length < es.length){
+        this.disable = false
+      }
   },
+  start_time(){
+    let cs = this.start_time.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+
+      let es = this.end_time.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+
+      if(cs >= es || cs.length > es.length){
+        this.disable = true
+      }
+      else{
+        this.disable = false
+      }
+      if(cs.length < es.length){
+        this.disable = false
+      }
+  }
+    },
 
 }
 </script>
