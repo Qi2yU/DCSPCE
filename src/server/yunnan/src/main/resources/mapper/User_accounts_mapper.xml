@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.yunnan.mapper.Government_set_mapper">
+    <insert id="insertNewUser">
+        insert into user_accounts values (#{userName}, #{userId}, #{password}, #{is_record}, #{role});
+    </insert>
+
+    <insert id="insertTableSearch">
+        insert into research_schedule values (#{id}, #{rs}, #{re}, #{fs}, #{fe}, #{is_finish}, #{index_table});
+    </insert>
+
+    <update id="createNewTable">
+        <![CDATA[
+        CREATE TABLE `${index_table}` (
+            `user_id` varchar(20) NOT NULL primary key,
+            `last_people_num` int(4) NOT NULL,
+            `now_people_num` int(4) NOT NULL,
+            `decrease_reason` varchar(50) NOT NULL,
+            `main_reason` varchar(50) NOT NULL,
+            `second_reason` varchar(50) NOT NULL,
+            `explain_reason` varchar(200) NOT NULL,
+            `modify_info` varchar(100),
+            `state` int(4) NOT NULL
+        );
+        ]]>
+    </update>
+</mapper>

@@ -20,7 +20,7 @@ public class login {
     * 这个地方默认前端传的json格式的数据 */
     @PostMapping("/login")
     @ResponseBody
-    public String checklogin(@RequestBody User_login_info userLoginInfo) {
+    public UserIdResponse checklogin(@RequestBody User_login_info userLoginInfo) {
         System.out.println(userLoginInfo.getUserId());
         System.out.println(userLoginInfo.getPassword());
         String sql_password;
@@ -32,15 +32,41 @@ public class login {
         if(Objects.equals(sql_password, userLoginInfo.getPassword())) {
             System.out.println(split_role);
             if (split_role == '0') {
-                return "/layout";
+                return new UserIdResponse(userLoginInfo.getUserId(), "/government-pro");
             } else if (split_role == '1') {
-                return "/layout";
+                return new UserIdResponse(userLoginInfo.getUserId(), "/government-city");
             } else if (split_role == '2') {
-                return "/company";
+                return new UserIdResponse(userLoginInfo.getUserId(), "/company");
             }
-            return "/login";
+//            if (split_role == '0') {
+//                return "/government-pro";
+//            } else if (split_role == '1') {
+//                return "/government-city";
+//            } else if (split_role == '2') {
+//                return "/company";
+//            }
+//            return "/login";
         } else {
-            return "false";
+            return new UserIdResponse("11111111111", "/login");
+        }
+        return null;
+    }
+
+    private static class UserIdResponse {
+        private String userId;
+        private String nextRouter;
+
+        public UserIdResponse(String userId, String nextRouter) {
+            this.nextRouter = nextRouter;
+            this.userId = userId;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+
+        public String getNextRouter() {
+            return nextRouter;
         }
     }
 
