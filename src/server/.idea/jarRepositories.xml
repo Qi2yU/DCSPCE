@@ -4,11 +4,7 @@
     <remote-repository>
       <option name="id" value="central" />
       <option name="name" value="Central Repository" />
-<<<<<<< HEAD
       <option name="url" value="https://maven.aliyun.com/nexus/content/groups/public/" />
-=======
-      <option name="url" value="http://maven.aliyun.com/nexus/content/groups/public/" />
->>>>>>> 1c4ec97b79cb4069ebd900d6c2b99896cf8c0c29
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
