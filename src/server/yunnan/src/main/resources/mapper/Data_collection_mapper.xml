@@ -3,8 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.yunnan.mapper.Data_collection_mapper">
-    <insert id="test_companydata">
-        insert into data_2023_09_1 (user_id, last_people_num, now_people_num, decrease_reason, main_reason, second_reason, explain_reason, state)
-        VALUES (#{companyID}, #{docEmploymentNumber}, #{curEmploymentNumber}, #{numDecreasedReason}, #{mainReason}, #{secondReason}, #{reasonDetail}, #{status})
-    </insert>
+    <update id="test_companydata">
+        update ${tableName} SET
+            last_people_num = #{docEmploymentNumber},
+            now_people_num = #{curEmploymentNumber},
+            decrease_reason = #{numDecreasedReason},
+            main_reason = #{mainReason},
+            second_reason = #{secondReason},
+            explain_reason = #{reasonDetail},
+            state = #{status} WHERE user_id = #{companyID}
+    </update>
 </mapper>

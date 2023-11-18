@@ -31,17 +31,27 @@ public class data_collection {
     public String collect_data(@RequestBody  EmploymentDataEntry ede){
         // 当期上报的就业数据写入数据库
 
-        ede.printMyData();
-        // 写入DB
-        // ...
-//        dataCollectionService.test_companydata(ede.getCompanyID(),
-//                ede.getDocEmploymentNumber(),
-//                ede.getCurEmploymentNumber(),
-//                ede.getNumDecreasedReason(),
-//                Integer.toString(ede.getMainReason()),
-//                Integer.toString(ede.getSecondReason()),
-//                ede.getReasonDetail(),
-//                ede.getStatus());
+//        ede.printMyData();
+
+        // 获取当前时间
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String nowDate = formatter.format(date);
+//        String nowDate = "2023-10-10";
+        System.out.println(nowDate);
+
+        List<res_time> list= dataQueryService.getTable(nowDate, nowDate);
+        String tableName= list.get(0).getTableName();
+
+        dataCollectionService.test_companydata(tableName,
+                ede.getCompanyID(),
+                ede.getDocEmploymentNumber(),
+                ede.getCurEmploymentNumber(),
+                ede.getNumDecreasedReason(),
+                ede.getMainReason(),
+                ede.getSecondReason(),
+                ede.getReasonDetail(),
+                1);
 
         return "Hello SpringBoot!";
     }
