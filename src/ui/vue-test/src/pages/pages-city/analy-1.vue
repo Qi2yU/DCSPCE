@@ -95,7 +95,7 @@ export default {
 
       option:{},
 
-      userId:this.$http.userId,
+      userId:this.$http.userid,
 
       myChart:null,
       xAxislist:[],
@@ -114,6 +114,25 @@ export default {
       start_time:'',
       end_time:'',
       show:false,
+      cityMapping: {
+                '5301': '唐山',
+                '5303':'曲靖市',
+                '5304':'玉溪市',
+                '5305':'保山市',
+                '5306':'昭通市',
+                '5307':'丽江市',
+                '5308':'普洱市',
+                '5309':'临沧市',
+                '5323':'楚雄彝族自治州',
+                '5325':'红河哈尼族彝族自治州',
+                '5326':'文山壮族苗族自治州',
+                '5328':'西双版纳傣族自治州',
+                '5329':'大理白族自治州',
+                '5331':'德宏傣族景颇族自治州',
+                '5333':'怒江傈僳族自治州',
+                '5334':'迪庆藏族自治州'
+                
+        },
       
 
 
@@ -129,7 +148,7 @@ export default {
       this.city = this.cityMapping[prefix] || '未知城市';
       },
     async  get_data(){
- 
+      await this.getCity()
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_time",{
         params:{
           start_time:this.start_time,
@@ -144,7 +163,7 @@ export default {
         params:{
           start_time:this.start_time,
           end_time:this.end_time,
-          city:this.value_city,
+          city:this.city,
           character:this.value_char,
           industry:this.value_indu
         }
@@ -333,7 +352,8 @@ export default {
     },
   },
 
-  mounted() {
+ mounted() {
+    
       this.myChart = this.$echarts.init(document.getElementById("main"));
 
     this.$http.get("http://localhost:8070/government-pro/analy_tend/char"
