@@ -2,6 +2,7 @@ package com.example.yunnan.entity;
 
 public class SampleResEntity {
     String name;
+    String value;
 
     public String getName() {
         return name;
@@ -19,6 +20,6 @@ public class SampleResEntity {
         this.value = value;
     }
 
-    String value;
+
 
 }

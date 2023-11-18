@@ -95,7 +95,12 @@
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_xmlunit_xmlunit_core_2_9_1.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_30.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/company_infoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/company_infoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/controller/sum_data.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/sum_databyTime.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/mapper/sum_databyTime.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Compare_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Compare_service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/sum_databyTime.xml" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/resources/mapper/sum_databyTime.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -211,24 +216,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java</url>
-          <line>250</line>
-          <properties class="com.example.yunnan.service.sum_databyTime_service" method="sum_dataforquter">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java</url>
-          <line>316</line>
-          <properties class="com.example.yunnan.service.sum_databyTime_service" method="sum_dataforyear">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
