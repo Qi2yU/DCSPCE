@@ -7,21 +7,21 @@
             stripe
             
             @cell-click="show"
-            style="width: 65%; margin: auto;font-size: large">
+            style="width: 80%; margin: auto;font-size: large">
             <el-table-column
                 prop="province"
                 label="市"
-                width="204">
+                >
             </el-table-column>
             <el-table-column  
                 prop="committed"
                 label="已上报"
-                width="220">
+                >
             </el-table-column>
             <el-table-column
                 prop="uncommitted"
                 label="未上报"
-                width="220 ">
+                >
             </el-table-column>
         </el-table>
     </div>
