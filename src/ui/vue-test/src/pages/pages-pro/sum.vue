@@ -148,7 +148,7 @@
 </div>
 </template>
 
-<!-- <script>
+ <script>
 
 import FileSaver from "file-saver";
 import XLSX from "xlsx"
@@ -520,4 +520,4 @@ import XLSX from "xlsx"
 .SumTable{
  display: block;
 }
-</style> -->
+</style> 
