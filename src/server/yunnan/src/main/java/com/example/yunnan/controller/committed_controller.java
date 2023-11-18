@@ -2,7 +2,7 @@ package com.example.yunnan.controller;
 
 import com.example.yunnan.entity.*;
 import com.example.yunnan.service.Detail_service;
-import com.sun.xml.internal.messaging.saaj.util.CharReader;
+//import com.sun.xml.internal.messaging.saaj.util.CharReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
