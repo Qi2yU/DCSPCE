@@ -15,7 +15,7 @@
     <select id="getTable" resultMap="resTime">
     select
     r.index_data_table,
-    r.r_time_start as start,
+    r.f_time_start as start,
     r.f_time_end as end
     from research_schedule r
     where r.is_finish=0
@@ -31,7 +31,7 @@
     <select id="getCountByState" resultMap="DataExam">
         SELECT
         c.city,
-        COUNT(CASE WHEN d.state IN (0, 1, 2) THEN d.user_id ELSE NULL END) AS uncommitted,
+        COUNT(CASE WHEN d.state IN (0, 1, 2, 6, 7) THEN d.user_id ELSE NULL END) AS uncommitted,
         COUNT(CASE WHEN d.state IN (3, 4, 5) THEN d.user_id ELSE NULL END) AS committed
         FROM
         company_info c
@@ -121,7 +121,7 @@
         c.company_name,
         c.phone
         from ${tableName} d,company_info c
-        where c.city =#{city} and c.user_id =d.user_id and d.state =0 and d.now_people_num !=0
+        where c.city =#{city} and c.user_id =d.user_id and d.state =7
     </select>
 
 <!--    获取未上报企业数据-->
@@ -135,7 +135,7 @@
         c.company_name,
         c.phone
         from ${tableName} d,company_info c
-        where c.city =#{city} and c.user_id =d.user_id and ((d.state =0 and d.now_people_num =0)
+        where c.city =#{city} and c.user_id =d.user_id and (d.state =0 or d.state=6
         or d.state=1 or d.state =2)
     </select>
 
@@ -169,7 +169,7 @@
 <!--   省退回修改更新状态 -->
     <update id="retreatByPro">
         UPDATE ${tableName} d
-        SET d.state = 0, d.modify_info=#{info}
+        SET d.state = 7, d.modify_info=#{info}
         where d.user_id =#{userId}
     </update>
 
@@ -180,8 +180,8 @@
     <select id="getCountOnCity" resultMap="DataExam">
         select
         c.city,
-        COUNT(CASE WHEN d.state = 0 THEN d.user_id ELSE NULL END) AS uncommitted,
-        COUNT(CASE WHEN d.state IN (1, 2, 3) THEN d.user_id ELSE NULL END) AS committed
+        COUNT(CASE WHEN d.state IN (0, 6, 7) THEN d.user_id ELSE NULL END) AS uncommitted,
+        COUNT(CASE WHEN d.state IN (1, 2, 3, 4, 5) THEN d.user_id ELSE NULL END) AS committed
         FROM
         company_info c
         LEFT JOIN
@@ -198,8 +198,25 @@
         c.company_name,
         c.phone
         from ${tableName} d,company_info c
-        where c.city =#{city} and c.user_id =d.user_id and (d.state =0 and d.now_people_num =0)
+        where c.city =#{city} and c.user_id =d.user_id and d.state =0
 
+    </select>
+
+<!--  获取退回数据  -->
+    <select id="getRetreatOnCity" resultMap="Retreat">
+        select
+        d.user_id ,
+        d.last_people_num ,
+        d.now_people_num ,
+        d.decrease_reason ,
+        d.main_reason ,
+        d.second_reason ,
+        d.explain_reason ,
+        d.modify_info,
+        c.company_name,
+        c.phone
+        from ${tableName} d,company_info c
+        where c.city =#{city} and c.user_id =d.user_id and (d.state =6 or d.state=7)
     </select>
 
 <!-- 获取已上报概览数据   -->
@@ -209,7 +226,7 @@
         c.company_name,
         d.state
         from ${tableName} d,company_info c
-        where c.city =#{city} and c.user_id =d.user_id and (d.state =1 or d.state=2 or d.state=3)
+        where c.city =#{city} and c.user_id =d.user_id and (d.state =1 or d.state=2 or d.state=3 or d.state=4 or d.state = 5)
     </select>
 
 <!--  市审核通过  -->
@@ -239,7 +256,12 @@
         );
     </update>
 
-
+<!--市退回-->
+    <update id="retreatByCity">
+        UPDATE ${tableName} d
+        SET d.state = 6, d.modify_info=#{info}
+        where d.user_id =#{userId}
+    </update>
 
 
 </mapper>

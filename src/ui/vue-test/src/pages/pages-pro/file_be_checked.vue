@@ -8,14 +8,22 @@
   <el-form-item class="myselect" label="选择地区">
         <el-select clearable @change="submit" class="el-select" v-model="values" placeholder="请选择地区">
             <el-option value="0" label="全部" >全部</el-option>
-            <el-option value="1" label="昆明市">昆明市</el-option>
-            <el-option value="2" label="曲靖市">曲靖市</el-option>
-            <el-option value="3" label="玉溪市">玉溪市</el-option>
-            <el-option value="4" label="丽江市">丽江市</el-option>
-            <el-option value="5" label="普洱市">普洱市</el-option>
-            <el-option value="6" label="保山市">保山市</el-option>
-            <el-option value="7" label="邵通市">邵通市</el-option>
-            <el-option value="8" label="临沧市">临沧市</el-option>
+            <el-option value="01" label="昆明市">昆明市</el-option>
+            <el-option value="02" label="曲靖市">曲靖市</el-option>
+            <el-option value="03" label="玉溪市">玉溪市</el-option>
+            <el-option value="04" label="丽江市">丽江市</el-option>
+            <el-option value="05" label="普洱市">普洱市</el-option>
+            <el-option value="06" label="保山市">保山市</el-option>
+            <el-option value="07" label="邵通市">邵通市</el-option>
+            <el-option value="08" label="临沧市">临沧市</el-option>
+            <el-option value="09" label="楚雄彝族自治州">楚雄彝族自治州</el-option>
+            <el-option value="10" label="红河哈尼族彝族自治州">红河哈尼族彝族自治州</el-option>
+            <el-option value="11" label="文山壮族苗族自治州">文山壮族苗族自治州</el-option>
+            <el-option value="12" label="西双版纳傣族自治州">西双版纳傣族自治州</el-option>
+            <el-option value="13" label="大理白族自治州">大理白族自治州</el-option>
+            <el-option value="14" label="德宏傣族景颇族自治州">德宏傣族景颇族自治州</el-option>
+            <el-option value="15" label="怒江傈僳族自治州">怒江傈僳族自治州</el-option>
+            <el-option value="16" label="迪庆藏族自治州">迪庆藏族自治州</el-option>
         </el-select>
   </el-form-item>
   <!-- 按时间选择

@@ -93,6 +93,16 @@ export default{
                 userId: this.userID,
             }
         }).then((response)=>{});
+            this.$http.post("/country",{
+                userName:this.item.userName,
+                userId:this.item.userId,
+                oldNum:this.item.oldNum,
+                nowNum:this.item.nowNum,
+                decReason:this.item.decReason,
+                mainReason:this.item.mainReason,
+                secReason:this.item.secReason,
+                explain:this.item.explain
+            }).then((response)=>{});
             this.flag2='已上报';
         },
         retreat(){

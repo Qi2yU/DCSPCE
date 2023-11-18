@@ -10,15 +10,17 @@ public class Data_collection_service {
     @Autowired
     private Data_collection_mapper dataCollectionMapper;
 
-    public void test_companydata(String companyID,
+    public void test_companydata(String tableName,
+                                 String companyID,
                                  int docEmploymentNumber,
                                  int curEmploymentNumber,
-                                 int numDecreasedReason,
+                                 String numDecreasedReason,
                                  String mainReason,
                                  String secondReason,
                                  String reasonDetail,
                                  int status) {
-        dataCollectionMapper.test_companydata(companyID,
+        dataCollectionMapper.test_companydata(tableName,
+                companyID,
                 docEmploymentNumber,
                 curEmploymentNumber,
                 numDecreasedReason,
