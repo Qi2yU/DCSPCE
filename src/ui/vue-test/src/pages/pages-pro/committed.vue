@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h2>已上报</h2>
+        <h2 style="font-size: 30px;">{{city}}-已上报</h2>
+        
         <el-button type="primary" size="medium" style="float: right" @click="commit">批量上报</el-button>
         <el-table
         :data="tableData"

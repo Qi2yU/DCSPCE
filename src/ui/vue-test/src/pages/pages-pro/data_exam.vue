@@ -1,13 +1,13 @@
 <template>
     <div>
         <h2>数据审核</h2>
-        <h1>调查期：</h1>
+        <h1>调查期：{{ start_time }}-{{ end_time }}</h1>
         <el-table
             :data="tableData"
             stripe
             
             @cell-click="show"
-            style="width: 65%">
+            style="width: 65%; margin: auto;font-size: large">
             <el-table-column
                 prop="province"
                 label="市"
@@ -34,9 +34,16 @@
             this.$http.get("/count").then((response)=>{
             this.tableData=response.data;
     });
+            this.$http.get("/table").then((response)=>{
+              this.start_time=response.data.start_time;
+              this.end_time=response.data.end_time;
+            })
           },
+
           data() {
             return {
+              start_time:'',
+              end_time:'',
               tableData:[],
               // tableData: [{
               //   province: '玉溪市',

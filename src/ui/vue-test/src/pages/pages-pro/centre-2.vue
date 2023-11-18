@@ -48,6 +48,11 @@
         </el-form>
       </el-col>
     </el-row>
+    <el-table :data="userList" style="width: 100%;">
+      <el-table-column label="用户名称" prop="user_name"></el-table-column>
+      <el-table-column label="用户ID" prop="user_id"></el-table-column>
+      <el-table-column label="用户密码" prop="password"></el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -60,8 +65,12 @@
           userName: '',
           userId: '',
           password: ''
-        }
+        },
+        userList: [],
       };
+    },
+    mounted() {
+      this.fetchUserList();
     },
     methods: {
       addNewUser() {
@@ -85,6 +94,29 @@
         });
         // this.go_back_centre2();
       },
+      fetchUserList() {
+        this.$http({
+          url: '/government-pro/setUserList',
+          method: 'get',
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => {
+          this.userList=response.data;
+          console.log(this.userList);
+          this.$forceUpdate();
+        });
+      },
+      // async fetchUserList() {
+      //   try {
+      //     const response = await this.$axios.get('/government-pro/setUserList');
+      //     this.userList = response.data;
+      //     console.log(this.userList);
+      //   } catch(error) {
+      //     console.log("error in fetchUserList", error);
+      //   }
+      // },
       // go_back_centre2() {
       //   console.log("$router",this.$router);
       //   $this.$router.push("/government-pro").catch(error => error);

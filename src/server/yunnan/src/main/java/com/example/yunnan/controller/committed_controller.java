@@ -18,6 +18,12 @@ public class committed_controller {
     private Detail_service detailService;
 
 
+    @GetMapping("/table")
+    @ResponseBody
+    public res_time getTable()
+    {
+        return detailService.getTable();
+    }
 
     @GetMapping("/detail")
     @ResponseBody
@@ -111,9 +117,9 @@ public class committed_controller {
 
     @GetMapping("/retreatbypro")
     @ResponseBody
-    public void retreatByPro(String userId){
+    public void retreatByPro(String info,String userId){
         String tableName=detailService.getTable().getTableName();
-        detailService.retreatByPro(tableName,userId);
+        detailService.retreatByPro(tableName,info,userId);
     }
 
 

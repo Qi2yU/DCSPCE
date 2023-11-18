@@ -117,7 +117,8 @@
           // 全局变量userId的赋值！！！
           const return_router = return_value.nextRouter;
 
-          this.$router.push(return_router);
+          this.$router.push({path:return_router,
+            query:{userId:this.loginForm.username}});
         });
       },
       // submitForm(formName) {

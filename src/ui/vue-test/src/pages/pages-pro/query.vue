@@ -32,22 +32,24 @@
     v-model="cas_val"
     :options="options"
     :props="{ checkStrictly: true }"
+    style="width: 200px;height: 50px;"
     clearable></el-cascader>
 </el-form-item>
 </el-form>
 
 <el-form :inline="true" :model="form" class="demo-form-inline">
-  <el-form-item label="活动时间">
+  <el-form-item label="起始时间">
     <el-col :span="11">
-      <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+      <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" value-format="yyyy-MM-dd" style="width: 200px;height: 50px;"></el-date-picker>
     </el-col>
-    <el-col class="line" :span="2">-</el-col>
+   </el-form-item> 
+  <el-form-item label="终止时间">
     <el-col :span="11">
-      <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+      <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" value-format="yyyy-MM-dd" style="width: 200px;height: 50px;"></el-date-picker>
     </el-col>
   </el-form-item>
 </el-form>
-<el-form>
+<el-form style="margin-left: 68%;">
   <el-form-item>
     <el-button type="primary" @click="onSubmit">查询</el-button>
   </el-form-item>
@@ -100,8 +102,8 @@
           }]
         },
         {
-          value:'澄江市',
-          label:'澄江市',
+          value:'普洱市',
+          label:'普洱市',
           children:[{
             value:'抚仙湖区',
             label:'抚仙湖区'
@@ -160,3 +162,14 @@
   }
 </script> 
 
+<style scoped>
+.el-form{
+  margin-left: 20%;
+  
+}
+.el-input{
+  width: 200px;
+  height: 50px;
+}
+
+</style>

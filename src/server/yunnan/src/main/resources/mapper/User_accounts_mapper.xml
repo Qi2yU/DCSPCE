@@ -8,7 +8,7 @@
     </insert>
 
     <insert id="insertTableSearch">
-        insert into research_schedule values (#{id}, #{rs}, #{re}, #{fs}, #{fe}, #{is_finish}, #{index_table});
+        insert into research_schedule values (#{id}, #{rs}, #{re}, #{fs}, #{fe}, #{type}, #{is_finish}, #{index_table});
     </insert>
 
     <update id="createNewTable">
@@ -26,4 +26,12 @@
         );
         ]]>
     </update>
+
+    <select id="findalluser" resultType="com.example.yunnan.entity.UserInfo_set_entity">
+        select user_name, user_id, password from user_accounts;
+    </select>
+
+    <select id="findalltable" resultType="com.example.yunnan.entity.searchtableInfo_entity">
+        select id, r_time_start, r_time_end, is_finish, type from research_schedule;
+    </select>
 </mapper>

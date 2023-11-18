@@ -58,6 +58,21 @@
         </el-form>
       </el-col>
     </el-row>
+    <el-table :data="searchtableList" style="width: 100%;">
+      <el-table-column label="调查期编号" prop="id"></el-table-column>
+      <el-table-column label="调查期开始时间" prop="r_time_start"></el-table-column>
+      <el-table-column label="调查期结束时间" prop="r_time_end"></el-table-column>
+      <el-table-column label="调查期是否结束">
+        <template slot-scope="scope">
+          {{ formatIsFinished(scope.row.is_finished) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="调查期类型">
+        <template slot-scope="scope">
+          {{ formatType(scope.row.type) }}
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
 </template>
 
@@ -71,10 +86,20 @@
           r_time_end: '',
           f_time_start: '',
           f_time_end: '',
-        }
+        },
+        searchtableList: [],
       };
     },
+    mounted() {
+      this.fetchSearchList();
+    },
     methods: {
+      formatIsFinished(value) {
+        return value === 0 ? '进行中' : '已结束';
+      },
+      formatType(value) {
+        return value === 1 ? '按月报' : (2 ? '按半月报' : '按日报');
+      },
       addTableSearch() {
         console.log(this.tableSearch);
         this.$http({
@@ -93,6 +118,20 @@
         }).then(response => {
           const return_value = response.data;
           console.log(return_value);
+        });
+      },
+      fetchSearchList() {
+        this.$http({
+          url: '/government-pro/setSearchList',
+          method: 'get',
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => {
+          this.searchtableList = response.data;
+          console.log(this.searchtableList);
+          this.$forceUpdate();
         });
       },
     }

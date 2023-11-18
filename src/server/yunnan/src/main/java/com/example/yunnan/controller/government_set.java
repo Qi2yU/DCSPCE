@@ -1,9 +1,13 @@
 package com.example.yunnan.controller;
 
+import com.example.yunnan.entity.UserInfo_set_entity;
+import com.example.yunnan.entity.searchtableInfo_entity;
 import com.example.yunnan.msg.AddUserInfo;
 import com.example.yunnan.service.Government_set_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -29,6 +33,20 @@ public class government_set {
         return "/government-pro/centre-2";
     }
 
+    @GetMapping ("/government-pro/setUserList")
+    public List<UserInfo_set_entity> setUserList () {
+        List<UserInfo_set_entity> userList = governmentSetService.find_all_user();
+        System.out.println(userList);
+        return userList;
+    }
+
+    @GetMapping("/government-pro/setSearchList")
+    public List<searchtableInfo_entity> setSearchtableList() {
+        List<searchtableInfo_entity> tablelist = governmentSetService.findalltable();
+        System.out.println(tablelist);
+        return tablelist;
+    }
+
 
     @PostMapping("/government-pro/setTable")
     public String addTableSearch (@RequestBody TableSearchInfo tableSearchInfo) {
@@ -43,10 +61,11 @@ public class government_set {
         String f_time_e = tableSearchInfo.f_time_end;
         String id = r_time_s.replaceAll("[^0-9]", "");
         int is_finish = 0;
-        String index_data_table = "data_"+id.substring(0, 4)+'_'+id.substring(4, 6)+'_'+id.substring(6, 8);
+        int type = tableSearchInfo.theType();
+        String index_data_table = "data_"+id.substring(0, 4)+'_'+id.substring(4, 6)+"_0";
         System.out.println(index_data_table);
 //        sql完成添加调查期然后创建一个表
-        governmentSetService.insertNewTableSearch(id, r_time_s, r_time_e, f_time_s, f_time_e, is_finish, index_data_table);
+        governmentSetService.insertNewTableSearch(id, r_time_s, r_time_e, f_time_s, f_time_e, type,  is_finish, index_data_table);
         governmentSetService.createNewTable(index_data_table);
 //        现在得初始化这个调查期的表；先读取当前有什么企业用户在table1中；
 //        然后在上一个调查期中获取数据初始化能初始化的表；
@@ -65,6 +84,12 @@ public class government_set {
             this.r_time_end = r_time_end;
             this.f_time_start = f_time_start;
             this.f_time_end = f_time_end;
+        }
+
+        public int theType() {
+            int s_day = Integer.parseInt(this.r_time_start.substring(8, 10));
+            int e_day = Integer.parseInt(this.r_time_end.substring(8, 10));
+            return (e_day-s_day)>15?1:((e_day-s_day)>1?2:3);
         }
 
         public String getF_time_end() {
