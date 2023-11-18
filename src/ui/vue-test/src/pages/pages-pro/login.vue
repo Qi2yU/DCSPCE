@@ -110,11 +110,16 @@
             'Content-Type': 'application/json'
           }
         }).then(response => {
-          const return_router = response.data;
+          const return_value= response.data;
 
-          console.log(return_router)
+          console.log(return_value)
 
-          // const targetRoute = return_router.targetRoute;
+          // 登陆成功后，把对应的userid赋给 axios
+          this.$http.userid = return_value.userId
+          console.log(this.$http.userid)
+
+          // 全局变量userId的赋值！！！
+          const return_router = return_value.nextRouter;
 
           this.$router.push({path:return_router,
             query:{userId:this.loginForm.username}});

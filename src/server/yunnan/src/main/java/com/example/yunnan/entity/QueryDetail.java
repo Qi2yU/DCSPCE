@@ -129,6 +129,27 @@ public class QueryDetail {
         this.state = state;
     }
 
+    @Override
+    public String toString() {
+        return "QueryDetail{" +
+                "userId='" + userId + '\'' +
+                ", start_time='" + start_time + '\'' +
+                ", end_time='" + end_time + '\'' +
+                ", character='" + character + '\'' +
+                ", industry='" + industry + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", oldNum=" + oldNum +
+                ", nowNum=" + nowNum +
+                ", decReason='" + decReason + '\'' +
+                ", mainReason='" + mainReason + '\'' +
+                ", SecReason='" + SecReason + '\'' +
+                ", explain='" + explain + '\'' +
+                ", state=" + state +
+                ", companyName='" + companyName + '\'' +
+                '}';
+    }
+
     public String getCompanyName() {
         return companyName;
     }

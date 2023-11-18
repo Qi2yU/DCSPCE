@@ -145,8 +145,16 @@
       $this = this;
     },
     created:function(){
-      this.$http.get("/get_company_collection_data").then((response)=>{
-        // console.log(response);
+      this.userid = this.$http.userid
+      console.log(this.$http.userid)
+      this.$http.get("/get_company_collection_data",{
+        params: {
+          userid: this.userid
+        }
+      }).then((response)=>{
+        console.log(response)
+        console.log(response.data)
+        console.log(response.data.docEmploymentNumber)
         this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
         this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
         this.comCurData.numDecreasedReason = response.data.numDecreasedReason > 0? response.data.numDecreasedReason: '';
@@ -155,6 +163,7 @@
         this.comCurData.reasonDetail = response.data.reasonDetail;
         // console.log("初始化结束");
       });
+      // console.log("被创建");
     },
     methods: {
       updateEmployData(){
@@ -169,7 +178,7 @@
                          method:'post',
                          //发送格式为json
                          data:JSON.stringify({
-                              companyID : '11111',    // todo 这个后面换成当前用户的id
+                              companyID : this.$http.userid,    // todo 这个后面换成当前用户的id
                               docEmploymentNumber : this.comCurData.docEmploymentNumber,
                               curEmploymentNumber : this.comCurData.curEmploymentNumber,
                               numDecreasedReason : this.comCurData.numDecreasedReason,
@@ -181,7 +190,11 @@
                         {
                           'Content-Type': 'application/json'
                         }
-                       }).then(console.log(return_value));
+                       }).then((response)=>{
+                        console.log(response)
+                        this.$message.success('上报就业数据成功')
+                        this.go_back_collection()
+                      });
         this.go_back_collection();
       },
       go_back_collection(){

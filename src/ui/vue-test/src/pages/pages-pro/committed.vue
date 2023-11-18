@@ -6,7 +6,7 @@
         <el-table
         :data="tableData"
         border
-        style="width: 100%">
+        style="width: 80%; margin:auto" >
             <el-table-column
                 prop="companyId"
                 label="企业编号"
