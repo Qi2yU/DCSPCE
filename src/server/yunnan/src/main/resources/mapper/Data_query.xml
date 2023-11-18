@@ -17,14 +17,21 @@
         select
         r.index_data_table,
         r.r_time_start as start,
-        r.f_time_end as end
+        r.r_time_end as end
         from research_schedule r
-        where (r.r_time_start &gt;= #{start_time} and r.f_time_end &lt;= #{end_time})
-        or (r.r_time_start &lt; #{start_time} and r.f_time_end &gt; #{start_time})
-        or (r.r_time_start &lt; #{end_time} and r.f_time_end &gt; #{end_time})
+        where (r.r_time_start &gt;= #{start_time} and r.r_time_end &lt;= #{end_time})
+        or (r.r_time_start &lt; #{start_time} and r.r_time_end &gt; #{start_time})
+        or (r.r_time_start &lt; #{end_time} and r.r_time_end &gt; #{end_time})
     </select>
 
-
+    <select id="getTableByMonth" resultMap="resTime">
+        select
+        r.index_data_table,
+        r.r_time_start as start,
+        r.r_time_end as end
+        from research_schedule r
+        where (r.index_data_table &gt;=  #{start_date} and r.index_data_table  &lt;= #{end_date})
+    </select>
 
 
     <resultMap id="DetailMap" type="com.example.yunnan.entity.QueryDetail">

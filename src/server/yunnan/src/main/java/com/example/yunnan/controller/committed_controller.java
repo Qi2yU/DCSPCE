@@ -17,6 +17,12 @@ public class committed_controller {
     @Autowired
     private Detail_service detailService;
 
+    @PostMapping("/country")
+    @ResponseBody
+    public void commitToCountry(@RequestBody countryData data)
+    {
+        System.out.println(data);
+    }
 
     @GetMapping("/table")
     @ResponseBody
@@ -142,6 +148,14 @@ public class committed_controller {
         return list;
     }
 
+    @GetMapping("/retreatoncity")
+    @ResponseBody
+    public List<Retreat> getRetreatOnCity(String city){
+        String tableName=detailService.getTable().getTableName();
+        List<Retreat> list =detailService.getRetreatOnCity(tableName,city);
+        System.out.println(list);
+        return list;
+    }
     @GetMapping("/getcommittedoncity")
     @ResponseBody
     public List<CommittedTrans> getCommittedOnCity2(String city){
@@ -163,10 +177,11 @@ public class committed_controller {
                 data.setFlag1("已审核");
                 data.setFlag2("未上报");
             }
-            else if(originlist.get(i).getState()==3){
+            else {
                 data.setFlag1("已审核");
                 data.setFlag2("已上报");
             }
+
             newlist.add(data);
             System.out.println(newlist);
         }
@@ -196,4 +211,10 @@ public class committed_controller {
         detailService.batchUpByCity(tableName,city);
     }
 
+    @GetMapping("/retreatbycity")
+    @ResponseBody
+    public void retreatByCity(String info,String userId){
+        String tableName=detailService.getTable().getTableName();
+        detailService.retreatByCity(tableName,info,userId);
+    }
 }

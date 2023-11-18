@@ -24,4 +24,6 @@ public class Data_query_service {
     }
 
     public QueryDetail getQueryDetail(String tableName,String userId) {return dataQueryMapper.getQueryDetail(tableName, userId);}
+
+    public List<res_time> getTableByMonth(String start_date, String end_date) {return dataQueryMapper.getTableByMonth(start_date, end_date);}
 }

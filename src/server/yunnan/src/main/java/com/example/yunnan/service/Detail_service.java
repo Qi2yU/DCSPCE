@@ -39,6 +39,7 @@ public class Detail_service {
 
     public List<Uncommitted> getUncommittedOnCity(String tableName,String city) {return detailMapper.getUncommittedOnCity(tableName,city);}
 
+    public List<Retreat> getRetreatOnCity(String tableName,String city) {return detailMapper.getRetreatOnCity(tableName,city);}
     public List<Committed> getCommittedOnCity2(String tableName,String city) {return detailMapper.getCommittedOnCity2(tableName,city);}
 
     public void passByCity(String tableName,String userId) { detailMapper.passByCity(tableName,userId);}
@@ -47,6 +48,6 @@ public class Detail_service {
 
     public void batchUpByCity(String tableName,String city) {detailMapper.batchUpByCity(tableName,city);}
 
-
+    public void retreatByCity(String tableName,String info,String userId) {detailMapper.retreatByCity(tableName,info,userId);}
 
 }

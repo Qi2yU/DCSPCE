@@ -23,7 +23,7 @@
               <span>{{ props.row.time }}</span>
             </el-form-item> -->
             <el-form-item label="建档期就业人数">
-              <span>{{ props.row.lastNum }}</span>
+              <span>{{ props.row.oldNum }}</span>
             </el-form-item>
             <el-form-item label="调查期就业人数">
               <span>{{ props.row.nowNum }}</span>
@@ -63,11 +63,11 @@
         prop="district">
       </el-table-column>
       <el-table-column
-        label="调查期起始时间"
+        label="起始时间"
         prop="start_time">
       </el-table-column>
       <el-table-column
-        label="调查期结束时间"
+        label="结束时间"
         prop="end_time">
       </el-table-column>
     </el-table>
@@ -118,21 +118,36 @@
       created(){
         console.log("来了")
         console.log(this.date1);
-        this.$http.post("/dataquery",{
+    //     this.$http.post("/dataquery",{
             
-                companyName:this.companyName,
-                userId:this.userId,
-                character:this.character,
-                industry:this.industry,
-                city:this.city,
-                district:this.district,
-                start_time:this.date1,
-                end_time:this.date2
+    //             companyName:this.companyName,
+    //             userId:this.userId,
+    //             character:this.character,
+    //             industry:this.industry,
+    //             city:this.city,
+    //             district:this.district,
+    //             start_time:this.date1,
+    //             end_time:this.date2
             
-        }).then((response)=>{
-            console.log(response);
-            this.tableData=response.data;
-    });
+    //     }).then((response)=>{
+    //         console.log(response);
+    //         this.tableData=response.data;
+    // });
+    this.$http.post("/query2",{
+            
+            companyName:this.companyName,
+            userId:this.userId,
+            character:this.character,
+            industry:this.industry,
+            city:this.city,
+            district:this.district,
+            start_date:this.date1,
+            end_date:this.date2
+        
+    }).then((response)=>{
+        console.log(response);
+        this.tableData=response.data;
+});
       },
       data() {
         return {

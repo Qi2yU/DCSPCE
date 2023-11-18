@@ -1,50 +1,7 @@
  
  <template>
   <div>
-    <el-select v-model="value1" placeholder="汇总字段">
-      <el-option
-        v-for="item in options1"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-        :disabled="item.disabled">
-      </el-option>
-    </el-select>
-  
-    <el-select v-model="value2" placeholder="汇总项">
-      <el-option
-        v-for="item in options2"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-        :disabled="item.disabled">
-      </el-option>
-    </el-select>
-  
-    <el-select v-model="value3" placeholder="汇总方式">
-      <el-option
-        v-for="item in options3"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-        :disabled="item.disabled">
-      </el-option>
-    </el-select>
 
-    <el-date-picker
-      v-model="value4"
-      type="datetimerange"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      align="right"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      >
-    </el-date-picker>
-
-    <el-button type="success"  @click = "SumHandler">汇总</el-button>
   </div>
 
 
