@@ -113,9 +113,10 @@ export default {
       options_endtime:[],
       start_time:'',
       end_time:'',
+      
       show:false,
       cityMapping: {
-                '5301': '唐山',
+                '5301': '昆明市',
                 '5303':'曲靖市',
                 '5304':'玉溪市',
                 '5305':'保山市',

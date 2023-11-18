@@ -3,22 +3,25 @@
 <template>
   <div id="user">
     <h1>对比分析</h1>
-
-    <el-date-picker
-      v-model="value_date1"
-      type="datetime"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期时间">
-    </el-date-picker>
-
-    <el-date-picker
-      v-model="value_date2"
-      type="datetime"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期时间">
-    </el-date-picker>
+    
+    <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
+      <el-option
+        v-for="item in options_starttime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+    <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
+      <el-option
+        v-for="item in options_endtime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
   
   
 
@@ -42,13 +45,14 @@
       </el-option>
     </el-select>
   
-    <el-button type="primary" @click="get_data"  class = "query" >查询</el-button>
- 
+    <el-button type="primary" @click="get_data" :disabled="disable" class = "query" >查询</el-button>
+    <div id="main" style="width: 1500px; height: 400px"></div>
 
   <el-table
     :data="tableData"
     class="Table"
     border
+    height="250"
     style="width: 100%">
     <el-table-column
       prop="name"
@@ -84,7 +88,7 @@
     </el-table-column>
   </el-table>
 
-  <div id="main" style="width: 600px; height: 400px"></div>
+  
 
     
     <el-button type="primary" @click = download class = "download">导出折线图</el-button>
@@ -102,24 +106,25 @@ export default {
     return{
       chartData:[],
       tableData:[],
-
+      userId:this.$http.userid,
       options_char:[],
-      options_city:[],
+   
       options_indu:[],
-      
+      options_starttime:[],
+      options_endtime:[],
+      start_time:'',
+      end_time:'',
+      city:'',
 
-      value_date1:'',
-      value_date2:'',
      
-      value_city:"唐山",
+     
       value_char:'',
       value_indu:'',
       option:{},
       myChart:null,
-
-      userId:this.$route.query.userId,
-        cityMapping: {
-                '5301': '唐山',
+      disable:false,
+      cityMapping: {
+                '5301': '昆明市',
                 '5303':'曲靖市',
                 '5304':'玉溪市',
                 '5305':'保山市',
@@ -141,10 +146,44 @@ export default {
     }
   },
 
-async  mounted() {
-      await this.getCity()
-      this.myChart = this.$echarts.init(document.getElementById("main"));
+  mounted() {
+       this.myChart = this.$echarts.init(document.getElementById("main"));
 
+
+       this.$http.get("http://localhost:8070/government-pro/analy_tend/start_time"
+      ).then((response)=>{
+      let result = response.data
+      console.log(result)
+      this.options_starttime = []
+      result.forEach(element => {
+        this.options_starttime.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+    
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/end_time"
+      ).then((response)=>{
+        let result = response.data
+        console.log(result)
+      this.options_endtime = []
+      result.forEach(element => {
+        this.options_endtime.push({label:element.name, value:element.name})
+      });
+    }
+    )
+
+
+      this.$http.get("http://localhost:8070/government-pro/analy_compare/city"
+      ).then((response)=>{
+      let result = response.data
+      this.options_city = []
+      result.forEach(element => {
+        this.options_city.push({label:element.name, value:element.name})
+      });
+  
+    }
+    )
     this.$http.get("http://localhost:8070/government-pro/analy_compare/char"
       ).then((response)=>{
       let result = response.data
@@ -174,12 +213,13 @@ async  mounted() {
       // 查找对照表中的映射
       this.city = this.cityMapping[prefix] || '未知城市';
       },
-   async get_data(){      
+   async get_data(){   
+    await this.getCity()   
      await this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
         params:{
-          start_time:this.value_date1,
-          end_time:this.value_date2,
-          city:this.value_city,
+          start_time:this.start_time,
+          end_time:this.end_time,
+          city:this.city,
           character:this.value_char,
           industry:this.value_indu
         }
@@ -250,7 +290,49 @@ async  mounted() {
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
     },
+   
+},
+watch:{
+  end_time(){
+      let cs = this.start_time.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
+
+      let es = this.end_time.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //202381
+      es = parseInt(es)
+
+      if(cs >= es ){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+   
+
+      
   },
+  start_time(){
+    let cs = this.start_time.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+      
+      let es = this.end_time.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+
+      if(cs >= es ){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+   
+
+  }
+    },
 
 }
 </script>

@@ -587,7 +587,7 @@ public class sum_databyTime_service {
                 }
                 ite.next();
             }
-            for(int i = 0; i < 12 - month; i++){
+            for(int i = 0; i < 12 - month + 1; i++){
                 if(!ite.hasNext()){
                     break;
                 }
