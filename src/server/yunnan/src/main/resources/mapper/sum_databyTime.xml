@@ -91,5 +91,13 @@
         select index_data_table from research_schedule where is_finish =0
     </select>
 
+    <select id="get_mounted_start" resultType="TimeidEntity">
+        select index_data_table, type from research_schedule
+    </select>
+
+    <select id="get_mounted_end" resultType="TimeidEntity">
+        select index_data_table, type from research_schedule
+    </select>
+
 
 </mapper>

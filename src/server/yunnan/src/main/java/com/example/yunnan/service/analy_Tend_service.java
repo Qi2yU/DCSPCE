@@ -5,6 +5,7 @@ import com.example.yunnan.entity.TendEntity;
 import com.example.yunnan.entity.TendResEntity;
 import com.example.yunnan.entity.TendTableEntity;
 import com.example.yunnan.mapper.analy_Tend_mapper;
+import com.example.yunnan.mapper.sum_databyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import java.util.Optional;
 
 @Service
 public class analy_Tend_service {
+    @Autowired
+    private sum_databyTime sum_databyTime_mapper ;
     private List<CompareMountedEntity> mounted_city = new ArrayList<>();
     private List<CompareMountedEntity> mounted_char = new ArrayList<>() ;
     private List<CompareMountedEntity> mounted_indu = new ArrayList<>();
@@ -152,24 +155,43 @@ public class analy_Tend_service {
     public List<String> get_time(String start_time, String end_time){
         String time = new String(start_time);
         while (true){
-            StringBuffer sb = new StringBuffer(time);//20xx0301
+            System.out.print(time+"\n");
+            StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
+            time_fmt.replace(6,7,"_");//20xx09_1
+            time_fmt.insert(4,"_");//20xx_09_1
+            time_fmt.insert(0,"data_");//data_20xx_09_1
+
+            StringBuffer sb = new StringBuffer(time);//20231001
             int n = sb.charAt(7) - '0';
             n = n + 1;
+
+
             sb.replace(7,8, String.valueOf(n));
 
-
             sb.insert(8,"号调查期");
-            sb.replace(6,7,"第");
+            if(sb.charAt(6) == '0'){
+                sb.replace(6,7,"第");
+            }
+            else {
+                sb.insert(5,"第");
+            }
             sb.insert(6,"月");
             sb.insert(4,"年");
-            sb.deleteCharAt(5);
+            if(sb.charAt(5) == '0'){
+                sb.deleteCharAt(5);
+            }
+
 
             time_list.add(String.valueOf(sb));//20xx0301
 
             if(Integer.valueOf(time) >= Integer.valueOf(end_time)){
                 break;
             }
-            time = compute_TimewithPeriod(time, end_time,'0');
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char bc =  (char) (bound + '0');
+
+            time = compute_TimewithPeriod(time, end_time,bc);
         }
 
         return time_list;
@@ -211,7 +233,11 @@ public class analy_Tend_service {
             if(Integer.valueOf(time) >= Integer.valueOf(end_time)){
                 break;
             }
-            time = compute_TimewithPeriod(time, end_time,'0');
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char bc =  (char) (bound + '0');
+
+            time = compute_TimewithPeriod(time, end_time,bc);
         }
 
     }

@@ -53,6 +53,9 @@
       </el-option>
     </el-select>
     <el-button type="primary"  @click = "get_data" :disabled="show" class = "download">查询</el-button>
+    <div id="main" style="width: 1000px; height: 600px"></div>
+    
+    
     <el-table
             :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
@@ -79,8 +82,8 @@
 
 
     
-    <div id="main" style="width: 600px; height: 400px"></div>
-    <el-button type="primary" @click = download class = "download">导出折线图</el-button>
+   
+    <el-button type="primary" @click = exportExcel class = "download">导出折线图</el-button>
     <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
   </div>
 
@@ -91,6 +94,7 @@
 import FileSaver from "file-saver"
 import XLSX from "xlsx"
 import html2canvas from 'html2canvas'
+import ExcelJS from 'exceljs'; 
 
 export default {
   name: 'User',
@@ -105,12 +109,7 @@ export default {
       myChart:null,
       xAxislist:[],
       legend:[],
-      // series:{
-      //   type:Array,
-      //   default(){
-      //     return [];
-      //   },
-      // },
+
       series:[],
       value_date:'',
       tableData:[],
@@ -132,6 +131,7 @@ export default {
     }
   },
   methods:{
+
     async  get_data(){
  
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_time",{
@@ -170,8 +170,36 @@ export default {
         });
 
         let option = {
+          tooltip: {
+          trigger: 'axis',
+          formatter:function(params){
+            let res = params[0].axisValueLabel;
+
+            function getHtml(param){
+                let str = '<div style="float: left"><span style="background: '+param.color+'; width: 11px; height: 11px; border-radius: 11px;float: left; margin: 5px 3px;"></span>'+
+                param.seriesName+':'+param.data+'&emsp;&emsp;</div>';
+                return str;
+            }
+
+            let flag=false;
+            res += '<div style="clear: both">';
+            for (let i = 0; i < params.length; i++) {
+                res += getHtml(params[i]);
+                if (params.length>11 && i%2==1){
+                    res += '</div><div style="clear: both">';
+                }
+                if (params.length <=11){
+                    res += '</div><div style="clear: both">';
+                }
+            }
+            res += "</div>";
+            return res;
+        }
+          },
+
           legend: {//顶部每条折线的标识的配置项
            icon: "circle",   //    改变它的icon circle，rect ，roundRect，triangle
+           type: 'scroll',
            itemWidth:8,  // 设置它的宽度
            itemHeight:8, // 设置它的高度
            itemGap:20, // 设置它的间距
@@ -184,14 +212,13 @@ export default {
           // }
         },
           xAxis:{
+            name: "调查期",
             type:'category',
             data:this.xAxislist,
             axisLabel:{
               show: true,
               interval: 0,//使x轴文字显示全
-              textStyle: {
-               
-              },
+              textStyle: {},
               formatter: function(params) {
               var newParamsName = "";
               var paramsNameNumber = params.length;
@@ -214,8 +241,6 @@ export default {
               }
               return newParamsName;
             }
-
-
             }
           },
           yAxis:{
@@ -251,7 +276,6 @@ export default {
       })
     },
     DownloadHandler(){
-        
         let time = new Date();
         let year = time.getFullYear();
         let month = time.getMonth() + 1;
@@ -267,17 +291,35 @@ export default {
           bookSST: true,
           type: "array"
         });
-        try {
           //  name+'.xlsx'表示导出的excel表格名字
-          FileSaver.saveAs(
-            new Blob([wbout], { type: "application/octet-stream" }),
+        FileSaver.saveAs(
+            new Blob([wbout],  { type: "application/octet-stream" }),
             name + ".xlsx"
-          );
-        } catch (e) {
-          if (typeof console !== "undefined") console.log(e, wbout);
-        }
+        );
+    
         return wbout;
         },  
+    exportExcel() {
+      const workbook = new ExcelJS.Workbook(); // 创建工作簿
+      const worksheet = workbook.addWorksheet('Sheet1'); // 添加工作表
+
+      const chart = echarts.getInstanceByDom(this.$refs.myChart) // 获取图表实例
+      const base64Image = chart.getDataURL({
+        pixelRatio: 2, // 导出图片的分辨率比例，默认为1，即图片的分辨率为屏幕分辨率的一倍
+        backgroundColor: '#fff' // 导出图片的背景色
+      })
+      let image= workbook.addImage({ // 添加图片
+          base64: base64Image, // 图片的base64编码
+          extension: 'png'  // 图片的扩展名
+        });
+      worksheet.addImage(image, 'A1:J20'); // 将图片添加到工作表中
+      workbook.xlsx.writeBuffer().then(function (buffer) { // 生成excel文件的二进制数据
+      saveAs.saveAs(new Blob([buffer], {  // 生成Blob对象
+          type: 'application/octet-stream'  // 指定文件的MIME类型
+        }), 
+        'xchart.xlsx');  // 指定文件名
+      });
+    },
     download() {
       // 图表转换成canvas
       html2canvas(document.getElementById("main")).then(function (canvas) {

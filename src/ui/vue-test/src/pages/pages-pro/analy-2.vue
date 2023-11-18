@@ -54,12 +54,13 @@
     </el-select>
   
     <el-button type="primary" @click="get_data" :disabled="disable" class = "query" >查询</el-button>
- 
+    <div id="main" style="width: 1500px; height: 400px"></div>
 
   <el-table
     :data="tableData"
     class="Table"
     border
+    height="250"
     style="width: 100%">
     <el-table-column
       prop="name"
@@ -95,7 +96,7 @@
     </el-table-column>
   </el-table>
 
-  <div id="main" style="width: 600px; height: 400px"></div>
+  
 
     
     <el-button type="primary" @click = download class = "download">导出折线图</el-button>

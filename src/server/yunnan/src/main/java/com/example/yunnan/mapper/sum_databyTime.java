@@ -2,6 +2,7 @@ package com.example.yunnan.mapper;
 
 import com.example.yunnan.entity.SumEntity;
 import com.example.yunnan.entity.SumMountedEntity;
+import com.example.yunnan.entity.TimeidEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -26,6 +27,10 @@ public interface sum_databyTime {
     List<SumMountedEntity> get_datamounted_city(String timeTableId, String city);
 
     Integer get_type(String timeTableId);
+    List<TimeidEntity> get_mounted_start();
+    List<TimeidEntity> get_mounted_end();
+
+
 
 
 

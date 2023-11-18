@@ -1,9 +1,7 @@
 package com.example.yunnan.service;
-import com.example.yunnan.entity.SumEntity;
-import com.example.yunnan.entity.SumMountedEntity;
+import com.example.yunnan.entity.*;
 import com.example.yunnan.mapper.sum_databyTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.example.yunnan.entity.SumResEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,8 +14,20 @@ import java.util.stream.Collectors;
 @Service
 public class sum_databyTime_service {
     @Autowired
-    private sum_databyTime sum_databyTime_mapper ;
-    private int researh_period = 2;
+    private sum_databyTime sum_databyTime_mapper;
+    String start_year_time ;
+    String end_year_time ;
+    public List<TimeidEntity> start_time_list = new ArrayList<>();
+    public List<TimeidEntity> end_time_list = new ArrayList<>();
+
+    public List<TimeidEntity> start_year_list = new ArrayList<>();
+    public List<TimeidEntity> end_year_list = new ArrayList<>();
+
+    public List<CompareMountedEntity> start_month = new ArrayList<>();
+    public List<CompareMountedEntity> end_month = new ArrayList<>();
+
+    public List<CompareMountedEntity> start_year = new ArrayList<>();
+    public List<CompareMountedEntity> end_year = new ArrayList<>();
 
 
     private List<List<SumEntity>> data_collection = new ArrayList<>();
@@ -28,9 +38,7 @@ public class sum_databyTime_service {
 
     private List<SumMountedEntity> data_mounted = new ArrayList<>();
 
-    public int getResearh_period() {
-        return researh_period;
-    }
+
     public List<SumMountedEntity> retData_mounted() {
         return data_mounted;
     }
@@ -46,26 +54,57 @@ public class sum_databyTime_service {
 
     public void get_datamounted(){
         String time = sum_databyTime_mapper.get_timeTableId();
-        System.out.print(time);
+
+        StringBuffer name = new StringBuffer(time);
+        name.delete(0,5);//2023_10_0
+
+
+        name.insert(9,"号调查期");
+        name.replace(4,5,"年");//2023年03_0
+        name.delete(7,8);//2023年030
+        name.insert(7,"月第");
+
+        int n = Integer.valueOf(name.charAt(9) - '0');
+        n = n+1;
+        name.replace(9,10,String.valueOf(n));
+        //2024年02月第1号调查期
+        if(name.charAt(5) == '0'){
+            name.delete(5,6);
+        }
         data_mounted = sum_databyTime_mapper.get_datamounted(time);
         for(SumMountedEntity data : data_mounted){
-            data.setTime(time);
+            data.setTime(String.valueOf(name));
         }
     }
 
     public List<SumMountedEntity> get_datamounted_city(String city){
         String time = sum_databyTime_mapper.get_timeTableId();
-        System.out.print(time);
+        StringBuffer name = new StringBuffer(time);
+        name.delete(0,5);//2023_10_0
+
+        name.insert(9,"号调查期");
+        name.replace(4,5,"年");//2023年03_0
+        name.delete(7,8);//2023年030
+        name.insert(7,"月第");
+
+        int n = Integer.valueOf(name.charAt(9) - '0');
+        n = n+1;
+        name.replace(9,10,String.valueOf(n));
+        //2024年02月第1号调查期
+
+        if(name.charAt(5) == '0'){
+            name.delete(5,6);
+        }
         data_mounted = sum_databyTime_mapper.get_datamounted_city(time, city);
         for(SumMountedEntity data : data_mounted){
-            data.setTime(time);
+            data.setTime(String.valueOf(name));
         }
         return data_mounted;
     }
 
     String compute_TimewithPeriod(String time, String et, char bound){//字符串类型：20xx0901， 20xx0900，长度为8
 
-        if(Integer.valueOf(time) >= Integer.valueOf(et)){
+        if(Integer.valueOf(time) >= Integer.valueOf(et) ){
             return time;
         }
         else{
@@ -146,14 +185,16 @@ public class sum_databyTime_service {
         String time = new String(st);//20xx0901
         while(true){
             List<SumEntity>  data_signle = new ArrayList<>();
-            StringBuffer time_fmt = new StringBuffer(time);//data_20xx_09_1
+            StringBuffer time_fmt = new StringBuffer(time);//20xx0901
             time_fmt.replace(6,7,"_");//20xx09_1
             time_fmt.insert(4,"_");//20xx_09_1
             time_fmt.insert(0,"data_");//data_20xx_09_1
+
             data_signle =  sum_databyTime_mapper.get_data(String.valueOf(time_fmt));
             int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
             bound = bound - 1 ;
             char bc =  (char) (bound + '0');
+
             if(data_signle.size() == 0){
                 break;
             }
@@ -177,6 +218,7 @@ public class sum_databyTime_service {
             time_fmt.replace(6,7,"_");//20xx09_1
             time_fmt.insert(4,"_");//20xx_09_1
             time_fmt.insert(0,"data_");//data_20xx_09_1
+
             data_signle =  sum_databyTime_mapper.get_dataCity(String.valueOf(time_fmt), city);
             int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
             bound = bound - 1 ;
@@ -281,14 +323,20 @@ public class sum_databyTime_service {
         }
     }
     public void sum_dataformonth(){
-
-        char last_char = (char)(researh_period - 1 + '0');
         Iterator<List<SumEntity>> ite =  data_collection.iterator();
         while (ite.hasNext()){
 
             List<SumEntity> data_single = ite.next();
 
             SumResEntity sum_res = new SumResEntity();
+
+            StringBuffer time_fmt = new StringBuffer(data_single.get(0).getKind_name());//data_20xx_09_1
+            time_fmt.replace(6,7,"_");//20xx09_1
+            time_fmt.insert(4,"_");//20xx_09_1
+            time_fmt.insert(0,"data_");//data_20xx_09_1
+            int bound = sum_databyTime_mapper.get_type(String.valueOf(time_fmt));
+            bound = bound - 1 ;
+            char last_char =  (char) (bound + '0');
             if(data_single.get(0).getKind_name().charAt(7) == last_char ){//20xx09xx
                 sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,4)+"_"+data_single.get(0).getKind_name().substring(4,6));
                 int sum = 0;
@@ -304,7 +352,7 @@ public class sum_databyTime_service {
                     sum += data.getNum();
                 }
                 int last_num = data_single.get(0).getKind_name().charAt(7) - '0';
-                for(int i = 0; i < researh_period - last_num - 1  ; i++){
+                for(int i = 0; i < bound - last_num   ; i++){
                     if(!ite.hasNext()){
                         break;
                     }
@@ -390,16 +438,20 @@ public class sum_databyTime_service {
         while (ite.hasNext()){
             int sum = 0;
            SumResEntity sum_year = ite.next();
-           sum_year.setKind_name(sum_year.getKind_name().substring(0,4));
-           int month = Integer.valueOf(sum_year.getKind_name().substring(5));
+           String name = sum_year.getKind_name();
+           sum_year.setKind_name(name.substring(0,4));
+           System.out.print(name);
+           int quter = Integer.valueOf(name.charAt(6)) - '0';
+           System.out.print(quter);
            sum += sum_year.getSum_num();
-           for(int i = 0; i < 12 - month; i++){
+           for(int i = 0; i < 4 - quter; i++){
                if(!ite.hasNext()){
                    break;
                }
                SumResEntity sum_year_next = ite.next();
                sum += sum_year_next.getSum_num();
            }
+           sum_year.setSum_num(sum);
            data_sum_res_year.add(sum_year);
         }
     }
@@ -423,6 +475,124 @@ public class sum_databyTime_service {
 
     }
 
+    public void get_start_month(){
+      start_time_list =   sum_databyTime_mapper.get_mounted_start();//data_2023_07_0
+      Iterator<TimeidEntity> ite = start_time_list.iterator();
+      while (ite.hasNext()){
+          CompareMountedEntity entity = new CompareMountedEntity();
+          TimeidEntity time = ite.next();
+          int step = time.getType();
+          String name = time.getName();
+          StringBuffer sb = new StringBuffer(name);
+          sb.delete(0,5);
+          sb.deleteCharAt(sb.length()-1);
+          sb.deleteCharAt(sb.length()-1);//2023_07
+          entity.setName(String.valueOf(sb));
+          entity.setNum(String.valueOf(step));
+          for(int j = 0; j < step - 1; j++){
+              if(!ite.hasNext()){
+                  break;
+              }
+              ite.next();
+          }
+          start_month.add(entity);
+      }
+
+    }
+    public void get_end_month(){
+        end_time_list =   sum_databyTime_mapper.get_mounted_start();//data_2023_07_0
+        Iterator<TimeidEntity> ite = end_time_list.iterator();
+        while (ite.hasNext()){
+            CompareMountedEntity entity = new CompareMountedEntity();
+            TimeidEntity time = ite.next();
+            int step = time.getType();
+            String name = time.getName();
+            StringBuffer sb = new StringBuffer(name);
+            sb.delete(0,5);
+            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length()-1);//2023_07
+            entity.setName(String.valueOf(sb));
+            entity.setNum(String.valueOf(step));
+            for(int j = 0; j < step - 1; j++){
+                if(!ite.hasNext()){
+                    break;
+                }
+                ite.next();
+            }
+            end_month.add(entity);
+        }
+    }
+
+    public void get_start_year(){
+        start_year_list =   sum_databyTime_mapper.get_mounted_start();//data_2023_07_0
+        Iterator<TimeidEntity> ite = start_year_list.iterator();
+        while (ite.hasNext()){
+            CompareMountedEntity entity = new CompareMountedEntity();
+            TimeidEntity time = ite.next();
+            int step = time.getType();
+            String name = time.getName();
+            StringBuffer sb = new StringBuffer(name);
+            sb.delete(0,5);//2023_07_0
+            int month;
+            if(sb.charAt(5) == '0'){
+                 month = sb.charAt(6) - '0';
+            }else {
+                 month = sb.charAt(6) - '0' + 10;
+            }
+            sb.delete(4,9);
+
+            entity.setName(String.valueOf(sb));
+            entity.setNum(String.valueOf(step));
+            for(int j = 0; j < step - 1; j++){
+                if(!ite.hasNext()){
+                    break;
+                }
+                ite.next();
+            }
+            for(int i = 0; i < 12 - month; i++){
+                if(!ite.hasNext()){
+                    break;
+                }
+                ite.next();
+            }
+            start_year.add(entity);
+        }
+    }
+    public void get_end_year(){
+        end_year_list =   sum_databyTime_mapper.get_mounted_start();//data_2023_07_0
+        Iterator<TimeidEntity> ite = end_year_list.iterator();
+        while (ite.hasNext()){
+            CompareMountedEntity entity = new CompareMountedEntity();
+            TimeidEntity time = ite.next();
+            int step = time.getType();
+            String name = time.getName();
+            StringBuffer sb = new StringBuffer(name);
+            sb.delete(0,5);//2023_07_0
+            int month;
+            if(sb.charAt(5) == '0'){
+                month = sb.charAt(6) - '0';
+            }else {
+                month = sb.charAt(6) - '0' + 10;
+            }
+            sb.delete(4,9);
+
+            entity.setName(String.valueOf(sb));
+            entity.setNum(String.valueOf(step));
+            for(int j = 0; j < step - 1; j++){
+                if(!ite.hasNext()){
+                    break;
+                }
+                ite.next();
+            }
+            for(int i = 0; i < 12 - month; i++){
+                if(!ite.hasNext()){
+                    break;
+                }
+                ite.next();
+            }
+            end_year.add(entity);
+        }
+    }
 
 
     public List<SumResEntity> give_res(int type, int flag){

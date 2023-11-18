@@ -4,6 +4,7 @@ import com.example.yunnan.entity.CompareEntity;
 import com.example.yunnan.entity.CompareMountedEntity;
 import com.example.yunnan.entity.Compare_lineEntity;
 import com.example.yunnan.entity.Compare_tableEntity;
+import com.example.yunnan.mapper.sum_databyTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.yunnan.mapper.analy_Compare_mapper;
@@ -15,7 +16,7 @@ import static java.lang.Math.abs;
 
 @Service
 public class analy_Compare_service {
-
+    private sum_databyTime sum_databyTime_mapper ;
     private List<CompareEntity> start_data = new ArrayList<>();
     private List<CompareEntity> end_data = new ArrayList<>();
 

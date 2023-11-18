@@ -19,19 +19,7 @@
       </el-option>
     </el-select>
   
-    <el-date-picker
-      v-model="value4"
-      v-if = show_time
-      type="datetimerange"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      align="right"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      >
-    </el-date-picker>
+
 
 
     <el-select v-if = show_research v-model="value_start" clearable placeholder="起始调查期" >
@@ -53,7 +41,47 @@
       </el-option>
     </el-select>
 
-    <el-button type="success"  @click = "Sum_fun">汇总</el-button>
+
+    <el-select v-if = show_month v-model="value_startmonth" clearable placeholder="起始月份" >
+      <el-option
+        v-for="item in options_startmonth"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+    <el-select  v-if = show_month v-model="value_endmonth" clearable placeholder="结束月份" >
+      <el-option
+        v-for="item in options_endmonth"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+
+    <el-select v-if = show_year v-model="value_startyear" clearable placeholder="起始年份" >
+      <el-option
+        v-for="item in options_startyear"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+    <el-select  v-if = show_year v-model="value_endyear" clearable placeholder="结束年份" >
+      <el-option
+        v-for="item in options_endyear"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+
+
+    <el-button type="success" :disabled="show" @click = "Sum_fun">汇总</el-button>
     
 
 
@@ -139,7 +167,7 @@ import XLSX from "xlsx"
           label: '调查期'
         }, {
             value: '选项4',
-            label: '地区'
+            label: '企业地区'
           },{
           value: '选项5',
           label: '企业季度',
@@ -152,6 +180,13 @@ import XLSX from "xlsx"
         }],
         options_starttime:[],
         options_endtime:[],
+        options_startmonth:[],
+        options_endmonth:[],
+        options_startyear:[],
+        options_endyear:[],
+
+
+
         tableData: [],
         tableData_Gru:[],
         choice_name:'汇总项',
@@ -164,26 +199,150 @@ import XLSX from "xlsx"
 
         value_start:'',
         value_end:'',
+        value_endmonth:'',
+        value_startmonth:'',
+        value_startyear:'',
+        value_endyear:'',
 
-        show_time:false,
+        show_month:false,
         show_research:false,
-        flag : true,
+        show_quter:false,
+        show_year:false,
+
+        flag:0,
+        show:false,
       }
     },
     watch:{
       value1(new_v, old_v){
 
-        if(new_v == "选项3" || new_v =="选项1"|| new_v =="选项2"|| new_v =="选项8"){
+        if(new_v == "选项3" || new_v =="选项1" ||new_v =="选项4" || new_v =="选项2"|| new_v =="选项8"){
           this.show_research = true
-          this.show_time = false
-          this.flag = true
+          this.show_month = false
+          this.show_year = false
+          this.flag = 0
         }
-        else if(new_v =="选项5" || new_v =="选项6" ||new_v =="选项7" ){
+        else if(new_v =="选项6" || new_v =="选项5"){
           this.show_research = false
-          this.show_time = true
-          this.flag = false
+          this.show_month = true
+          this.show_year = false
+          this.flag = 1
         }
+        else if(new_v =="选项7"  ){
+          this.show_research = false
+          this.show_month = false
+          this.show_year = true
+          this.flag = 3
+        }
+
+        
+      },
+      value_end(){
+      
+      let cs = this.value_start.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+
+      let es = this.value_end.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+    
+      if(cs > es || cs.length > es.length){
+        this.show = true
       }
+      else{
+        this.show = false
+      }
+           
+      if(cs.length < es.length){
+        this.show = false
+      }
+      },
+      value_start(){
+    let cs = this.value_start.replace("年","")
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+
+      let es = this.value_end.replace("年","")
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","")
+
+      if(cs > es || cs.length > es.length){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(cs.length < es.length){
+        this.show = false
+      }
+      },
+      value_startyear(){
+    let cs = this.value_startyear
+
+      let es = this.value_endyear
+
+      if(cs > es){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(cs.length < es.length){
+        this.show = false
+      }
+      },
+      value_endyear(){
+    let cs = this.value_startyear
+
+      let es = this.value_endyear
+
+      if(cs > es){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(cs.length < es.length){
+        this.show = false
+      }
+      },
+      value_startmonth(){//2023_08
+    let cs = this.value_startmonth.replace("_","")
+
+      let es = this.value_endmonth.replace("_","")
+
+      if(cs > es || cs.length > es.length){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(cs.length < es.length){
+        this.show = false
+      }
+      },
+      value_endmonth(){//2023_08
+    let cs = this.value_startmonth.replace("_","")
+
+      let es = this.value_endmonth.replace("_","")
+
+      if(cs > es || cs.length > es.length){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(cs.length < es.length){
+        this.show = false
+      }
+      },
+
     },
     mounted(){
       this.$http.get("http://localhost:8070/government-pro/analy_tend/start_time"
@@ -208,6 +367,55 @@ import XLSX from "xlsx"
       });
     }
     )
+
+    this.$http.get("http://localhost:8070/government-pro/sum/start_month"
+      ).then((response)=>{
+      let result = response.data
+  
+      this.options_startmonth = []
+      result.forEach(element => {
+        this.options_startmonth.push({label:element.name, value:element.name})
+      });
+    }
+    )
+    this.$http.get("http://localhost:8070/government-pro/sum/end_month"
+      ).then((response)=>{
+      let result = response.data
+  
+      this.options_endmonth = []
+      result.forEach(element => {
+        this.options_endmonth.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+
+
+
+
+    this.$http.get("http://localhost:8070/government-pro/sum/start_year"
+      ).then((response)=>{
+      let result = response.data
+  
+      this.options_startyear = []
+      result.forEach(element => {
+        this.options_startyear.push({label:element.name, value:element.name})
+      });
+    }
+    )
+    this.$http.get("http://localhost:8070/government-pro/sum/end_year"
+      ).then((response)=>{
+      let result = response.data
+  
+      this.options_endyear = []
+      result.forEach(element => {
+        this.options_endyear.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+
+
     this.$http.get("http://localhost:8070/government-pro/sum/mounted",{
           }).then((response)=>{ 
             this.tableData = response.data
@@ -238,16 +446,24 @@ import XLSX from "xlsx"
             case('选项8'):this.choice_name = "企业性质",this.sum_id = "企业性质"
             break
           }
-          if(this.show_time){
-            this.start_time = this.value4[0]
-            this.end_time = this.value4[1]
+          if(this.show_month){
+            this.start_time = this.value_startmonth
+            this.end_time = this.value_endmonth
 
           }else if(this.show_research){
             this.start_time = this.value_start
             this.end_time = this.value_end
             
           }
-          console.log(this.flag)
+          else if(this.show_year){
+            let month = this.options_endmonth[this.options_endmonth.length - 1].label.substring(5,7)
+            let month1 = this.options_endmonth[0].label.substring(5,7)
+            this.start_time = this.value_startyear + month1
+            this.end_time = this.value_endyear + month
+            console.log(this.end_time)
+            console.log(this.start_time)
+          }
+        
         
           this.$http.get("http://localhost:8070/government-pro/sum",{
             params:{
