@@ -6,7 +6,7 @@
         <el-table
         :data="tableData"
         border
-        style="width: 100%">
+        style="width: 80%; margin:auto" >
             <el-table-column
                 prop="companyId"
                 label="企业编号"
@@ -29,7 +29,7 @@
             </el-table-column>
             <el-table-column
                  label="操作"
-                 width="100">
+                 >
                 <template slot-scope="scope">
                     <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
                 </template>

@@ -114,6 +114,10 @@
 
           console.log(return_value)
 
+          // 登陆成功后，把对应的userid赋给 axios
+          this.$http.userid = return_value.userId
+          console.log(this.$http.userid)
+
           // 全局变量userId的赋值！！！
           const return_router = return_value.nextRouter;
 

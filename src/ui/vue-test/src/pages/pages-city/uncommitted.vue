@@ -112,7 +112,7 @@
     created(){
       
   
-  this.$http.get("/retreat",{
+  this.$http.get("/retreatoncity",{
           params:{
               city: this.city,
           }
