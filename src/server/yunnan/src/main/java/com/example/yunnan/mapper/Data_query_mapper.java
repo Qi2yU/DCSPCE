@@ -17,4 +17,6 @@ public interface Data_query_mapper {
     List<QueryDetail> getRes1(String tableName,String companyName,String userId,String character,String industry, String city, String district);
 
     QueryDetail getQueryDetail(String tableName,String userId);
+
+    List<res_time> getTableByMonth(String start_date, String end_date);
 }

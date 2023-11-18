@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       form: {
-        region: '丽江市', // 你需要填充企业所属地区的数据
+        region: '', // 你需要填充企业所属地区的数据
         organizationCode: '',
         companyName: '',
         companyType: '',

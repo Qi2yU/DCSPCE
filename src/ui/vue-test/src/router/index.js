@@ -136,9 +136,6 @@ export default new Router({
       name: 'GovermentPro',
       component: Government_Pro,
       children: [{
-        path:"",
-        redirect:"file_be_checked"
-      },{
         path: 'file_check',
         name: 'File_check',
         component: File_check,

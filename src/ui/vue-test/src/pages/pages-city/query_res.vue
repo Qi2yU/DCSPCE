@@ -23,7 +23,7 @@
             <span>{{ props.row.time }}</span>
           </el-form-item> -->
           <el-form-item label="建档期就业人数">
-            <span>{{ props.row.lastNum }}</span>
+            <span>{{ props.row.oldNum }}</span>
           </el-form-item>
           <el-form-item label="调查期就业人数">
             <span>{{ props.row.nowNum }}</span>
@@ -118,7 +118,7 @@ import * as XLSX from 'xlsx';
     created(){
       console.log("来了")
       console.log(this.date1);
-      this.$http.post("/dataquery",{
+      this.$http.post("/query2",{
           
               companyName:this.companyName,
               userId:this.userId,
@@ -126,8 +126,8 @@ import * as XLSX from 'xlsx';
               industry:this.industry,
               city:this.city,
               district:this.district,
-              start_time:this.date1,
-              end_time:this.date2
+              start_date:this.date1,
+              end_date:this.date2
           
       }).then((response)=>{
           console.log(response);

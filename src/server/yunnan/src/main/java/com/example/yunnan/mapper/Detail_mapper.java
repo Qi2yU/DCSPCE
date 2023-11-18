@@ -31,6 +31,7 @@ public interface Detail_mapper {
 
     List<Uncommitted> getUncommittedOnCity(String tableName,String city);
 
+    List<Retreat> getRetreatOnCity(String tableName,String city);
     List<Committed> getCommittedOnCity2(String tableName,String city);
 
     void passByCity(String tableName,String userId);
@@ -39,4 +40,5 @@ public interface Detail_mapper {
 
     void batchUpByCity(String tableName,String city);
 
+    void retreatByCity(String tableName,String info,String userId);
 }
