@@ -140,24 +140,6 @@
           <properties class="java.lang.NullPointerException" package="java.lang" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java</url>
-          <line>250</line>
-          <properties class="com.example.yunnan.service.sum_databyTime_service" method="sum_dataforquter">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java</url>
-          <line>316</line>
-          <properties class="com.example.yunnan.service.sum_databyTime_service" method="sum_dataforyear">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="4" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

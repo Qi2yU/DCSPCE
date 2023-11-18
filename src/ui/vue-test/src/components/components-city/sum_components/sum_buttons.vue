@@ -1,5 +1,4 @@
  
- 
  <template>
   <div>
     <el-select v-model="value1" placeholder="汇总字段">
@@ -31,6 +30,20 @@
         :disabled="item.disabled">
       </el-option>
     </el-select>
+
+    <el-date-picker
+      v-model="value4"
+      type="datetimerange"
+      format="yyyy-MM-dd "
+      value-format="yyyy_MM_dd"
+      align="right"
+      unlink-panels
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      >
+    </el-date-picker>
+
     <el-button type="success"  @click = "SumHandler">汇总</el-button>
   </div>
 
@@ -51,9 +64,6 @@
           value: '选项3',
           label: '调查期'
         }, {
-            value: '选项4',
-            label: '地区'
-          },{
           value: '选项5',
           label: '企业季度',
         }, {
@@ -63,6 +73,7 @@
           value: '选项7',
           label: '企业年度'
         }],
+
         options2:[{
           value: '选项1',
           label: '就业人数'
@@ -83,11 +94,13 @@
         value1:"",
         value2:"",
         value3:"",
+        value4:"",
       }
     },
     methods:{
       SumHandler(){
-        this.$emit("sum-event", this.value1, this.value2, this.value3);
+
+        this.$emit("sum-event", this.value1, this.value4);
       },
     }
   }
