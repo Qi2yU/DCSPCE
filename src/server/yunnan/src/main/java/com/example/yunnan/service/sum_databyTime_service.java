@@ -527,6 +527,7 @@ public class sum_databyTime_service {
         start_year_list =   sum_databyTime_mapper.get_mounted_start();//data_2023_07_0
         Iterator<TimeidEntity> ite = start_year_list.iterator();
         while (ite.hasNext()){
+
             CompareMountedEntity entity = new CompareMountedEntity();
             TimeidEntity time = ite.next();
             int step = time.getType();
@@ -540,16 +541,18 @@ public class sum_databyTime_service {
                  month = sb.charAt(6) - '0' + 10;
             }
             sb.delete(4,9);
-
+            System.out.print(month+"\n");
             entity.setName(String.valueOf(sb));
             entity.setNum(String.valueOf(step));
+
             for(int j = 0; j < step - 1; j++){
                 if(!ite.hasNext()){
                     break;
                 }
                 ite.next();
             }
-            for(int i = 0; i < 12 - month; i++){
+
+            for(int i = 0; i < 12 - month +1; i++){
                 if(!ite.hasNext()){
                     break;
                 }

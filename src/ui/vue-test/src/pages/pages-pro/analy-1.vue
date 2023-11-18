@@ -123,7 +123,7 @@ export default {
       options_endtime:[],
       start_time:'',
       end_time:'',
-      show:false,
+      show:true,
       
 
 
@@ -132,6 +132,13 @@ export default {
   },
   methods:{
 
+    getCity() {
+      // 截取前4位
+      const prefix = this.userId.substring(0, 4);
+
+      // 查找对照表中的映射
+      this.city = this.cityMapping[prefix] || '未知城市';
+      },
     async  get_data(){
  
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_time",{
@@ -142,7 +149,7 @@ export default {
       }).then(response=>{
         this.xAxislist = response.data
       })
-      //2024年2月第2号调查期
+      
 
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_data",{
         params:{
@@ -397,44 +404,70 @@ export default {
 },
 watch:{
   end_time(){
-      let cs = this.start_time.replace("年","")
+      let cs
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
 
-      let es = this.end_time.replace("年","")
+      let es
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","")
-
-      if(cs >= es || cs.length > es.length){
+      es = es.replace("号调查期","") //2024011 2023111
+      
+      es = parseInt(es)
+  
+      if(cs >= es ){
         this.show = true
       }
       else{
         this.show = false
       }
-           
-      if(cs.length < es.length){
-        this.show = false
-      }
+   
+
+      
   },
   start_time(){
-    let cs = this.start_time.replace("年","")
+      let cs 
+      if(this.start_time.length == 12){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
 
-      let es = this.end_time.replace("年","")
-      es = es.replace("月第", "")
-      es = es.replace("号调查期","")
 
-      if(cs >= es || cs.length > es.length){
+      let es 
+      if(this.end_time.length == 12){
+        let es = this.end_time.replace("年","0")
+      }
+      else{
+        let es = this.end_time.replace("年","")
+      }
+
+      if(cs >= es ){
         this.show = true
       }
       else{
         this.show = false
       }
+   
 
-      if(cs.length < es.length){
-        this.show = false
-      }
   }
 },
 }
