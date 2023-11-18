@@ -47,6 +47,7 @@ public class analy_tend {
         service.get_mounted_indu();
         return service.getMounted_indu();
     }
+
     @GetMapping("/government-pro/analy_tend/get_time")
     public  List<String> get_time(String start_time, String end_time){
         StringBuffer sbs = new StringBuffer(start_time);//2023年2月第1号调查期 => 20230201

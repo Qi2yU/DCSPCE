@@ -4,7 +4,7 @@
   <div id="user">
     <h1>对比分析</h1>
     
-    <el-select v-model="start_time" clearable placeholder="起始调查期" >
+    <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
         :key="item.value"
@@ -13,7 +13,7 @@
        >
       </el-option>
     </el-select>
-    <el-select v-model="end_time" clearable placeholder="结束调查期" >
+    <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
       <el-option
         v-for="item in options_endtime"
         :key="item.value"
@@ -275,44 +275,44 @@ export default {
    
 },
 watch:{
-    end_time(){
+  end_time(){
       let cs = this.start_time.replace("年","")
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
 
       let es = this.end_time.replace("年","")
       es = es.replace("月第", "")
-      es = es.replace("号调查期","")
+      es = es.replace("号调查期","") //202381
+      es = parseInt(es)
 
-      if(cs >= es || cs.length > es.length){
-        this.disable = true
+      if(cs >= es ){
+        this.show = true
       }
       else{
-        this.disable = false
+        this.show = false
       }
-           
-      if(cs.length < es.length){
-        this.disable = false
-      }
+   
+
+      
   },
   start_time(){
     let cs = this.start_time.replace("年","")
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
-
+      
       let es = this.end_time.replace("年","")
       es = es.replace("月第", "")
       es = es.replace("号调查期","")
 
-      if(cs >= es || cs.length > es.length){
-        this.disable = true
+      if(cs >= es ){
+        this.show = true
       }
       else{
-        this.disable = false
+        this.show = false
       }
-      if(cs.length < es.length){
-        this.disable = false
-      }
+   
+
   }
     },
 
