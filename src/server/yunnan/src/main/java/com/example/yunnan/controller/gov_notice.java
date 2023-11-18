@@ -32,9 +32,8 @@ public class gov_notice {
         int day = currenttime.getDayOfMonth();
         String msg_time = String.format("%4d-%2d-%2d", year, month,day);
 
-        String userId = "53000000000";
-        String msg_num = userId.substring(0,4)+String.format("%4d%2d%2d",year,month,day);
-        String gov_which = CityMap.mapTocity(userId.substring(0,4));
+        String msg_num = noticeAddInfo.userId.substring(0,4)+String.format("%4d%2d%2d",year,month,day);
+        String gov_which = CityMap.mapTocity(noticeAddInfo.userId.substring(0,4));
         System.out.println("msg_num:"+msg_num+"\nmsg_time:"+msg_time);
 
         String msg_to_where = (noticeAddInfo.where==null) ? "5300" : noticeAddInfo.where;
@@ -76,7 +75,9 @@ public class gov_notice {
 
     @PostMapping("/gov_notice/editNotice")
     public String editNotice(@RequestBody NoticeEditInfo noticeEditInfo) {
-        String userId = "53000000000";
+        String userId = noticeEditInfo.userId;
+        System.out.println("当前操作用户："+userId);
+        System.out.println("修改后发布地："+noticeEditInfo.msg_to_where);
         String gov_which = CityMap.mapTocity(userId.substring(0,4));
 
         LocalDate currenttime = LocalDate.now();
@@ -87,7 +88,7 @@ public class gov_notice {
 
         govNoticeService.editNotice(gov_which, noticeEditInfo.msg_title,
                 noticeEditInfo.msg_content, msg_time,
-                noticeEditInfo.where, noticeEditInfo.msg_num);
+                noticeEditInfo.msg_to_where, noticeEditInfo.msg_num);
         return "success";
     }
 
@@ -113,18 +114,19 @@ public class gov_notice {
     }
 
     public static class NoticeEditInfo {
-        //        private String userId;
+        String userId;
         String msg_title;
         String msg_content;
 
-        String where;
+        String msg_to_where;
 
         String msg_num;
 
-        public NoticeEditInfo(String ti, String cont, String where, String id) {
+        public NoticeEditInfo(String userId, String ti, String cont, String where, String id) {
+            this.userId=userId;
             this.msg_title=ti;
             this.msg_content=cont;
-            this.where=where;
+            this.msg_to_where=where;
             this.msg_num=id;
         }
 
@@ -133,7 +135,7 @@ public class gov_notice {
         }
 
         public String getWhere() {
-            return where;
+            return msg_to_where;
         }
 
         public String getMsg_content() {
@@ -146,16 +148,21 @@ public class gov_notice {
     }
 
     public static class NoticeAddInfo {
-//        private String userId;
+        String userId;
         String msg_title;
         String msg_content;
 
         String where;
 
-        public NoticeAddInfo(String ti, String cont, String where) {
+        public NoticeAddInfo(String id,String ti, String cont, String where) {
+            this.userId=id;
             this.msg_title=ti;
             this.msg_content=cont;
             this.where=where;
+        }
+
+        public String getUserId() {
+            return userId;
         }
 
         public String getWhere() {
@@ -171,16 +178,4 @@ public class gov_notice {
         }
     }
 
-    //    @RequestMapping(value="",method= RequestMethod.POST)
-//    public String collect_data(@RequestBody EmploymentDataEntry ede){
-//        //
-//
-//        ede.printMyData();
-//        // 写入DB
-//        // ...
-//
-//
-//
-//        return "Hello SpringBoot!";
-//    }
 }

@@ -3,6 +3,11 @@
 <template>
   <div id="user">
     <h1>查看通知</h1><br/>
+    <div style="margin-top: 20px">
+      <el-button type="success" @click="jump_add()">发布新通知</el-button>
+      <!-- <el-button @click="toggleSelection()">取消选择</el-button> -->
+      <!-- <el-button type="danger" @click="toggleSelection_deleteRow(tableData)">删除</el-button> -->
+    </div><br/>
     <el-table
     ref="multipleTable"
     :data="tableData"
@@ -53,11 +58,7 @@
   
   </el-table>
   
-    <div style="margin-top: 20px">
-      <el-button type="success" @click="jump_add()">发布新通知</el-button>
-      <!-- <el-button @click="toggleSelection()">取消选择</el-button> -->
-      <!-- <el-button type="danger" @click="toggleSelection_deleteRow(tableData)">删除</el-button> -->
-    </div>
+    
   </div>
 </template>
 

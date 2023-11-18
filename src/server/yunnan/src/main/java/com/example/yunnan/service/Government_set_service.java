@@ -1,6 +1,8 @@
 package com.example.yunnan.service;
 
+import com.example.yunnan.controller.government_set;
 import com.example.yunnan.entity.UserInfo_set_entity;
+import com.example.yunnan.entity.is_end_entity;
 import com.example.yunnan.entity.searchtableInfo_entity;
 import com.example.yunnan.mapper.Government_set_mapper;
 import com.example.yunnan.msg.AddUserInfo;
@@ -33,5 +35,25 @@ public class Government_set_service {
 
     public List<searchtableInfo_entity> findalltable() {
         return Government_Set_Mapper.findalltable();
+    }
+
+    public List<is_end_entity> schedule_notend() {
+        return Government_Set_Mapper.schedule_notend();
+    }
+
+    public void change_finish(String id) {
+        Government_Set_Mapper.change_finish(id);
+    }
+
+    public List<String> get_companyList() {
+        return Government_Set_Mapper.get_companyList();
+    }
+
+    public Integer get_lastnum(String id, String table) {
+        return Government_Set_Mapper.get_lastnum(id, table);
+    }
+
+    public void insertNum(String id, int num, int state, String table) {
+        Government_Set_Mapper.insertNum(id, num, state, table);
     }
 }

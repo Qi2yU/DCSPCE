@@ -65,6 +65,7 @@
           url: '/gov_notice/addnotice',
           method: 'post',
           data:JSON.stringify({
+            userId: this.$http.userid,
             msg_title: this.msg_title,
             msg_content: this.msg_content,
             msg_to_where: this.values,

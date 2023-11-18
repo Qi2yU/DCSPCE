@@ -70,10 +70,12 @@ export default {
   },
   methods:{
     jump(){
+      console.log(this.$http.userId);
       this.$http({
         url: '/gov_notice/editNotice',
         method: 'post',
         data: JSON.stringify({
+          userId: this.$http.userid,
           msg_title: this.editData.msg_title,
           msg_content: this.editData.msg_content,
           msg_to_where: this.values,
