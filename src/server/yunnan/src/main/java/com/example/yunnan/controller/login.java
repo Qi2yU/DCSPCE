@@ -32,7 +32,7 @@ public class login {
         if(Objects.equals(sql_password, userLoginInfo.getPassword())) {
             System.out.println(split_role);
             if (split_role == '0') {
-                return "/layout";
+                return "/government-pro";
             } else if (split_role == '1') {
                 return "/government-city";
             } else if (split_role == '2') {

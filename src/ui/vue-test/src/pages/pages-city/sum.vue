@@ -82,7 +82,7 @@ import XLSX from "xlsx"
     data() {
       return {
         
-        city:"唐山",
+        city:this.$http.userId,
         tableData: [],
         tableData_Gru:[],
         choice_name:'汇总项',
