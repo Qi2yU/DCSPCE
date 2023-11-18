@@ -146,8 +146,16 @@
       $this = this;
     },
     created:function(){
-      this.$http.get("/get_company_collection_data").then((response)=>{
-        // console.log(response);
+      this.userid = this.$http.userid
+      console.log(this.$http.userid)
+      this.$http.get("/get_company_collection_data",{
+        params: {
+          userid: this.userid
+        }
+      }).then((response)=>{
+        console.log(response)
+        console.log(response.data)
+        console.log(response.data.docEmploymentNumber)
         this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
         this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
         this.comCurData.numDecreasedReason = response.data.numDecreasedReason > 0? response.data.numDecreasedReason: '';

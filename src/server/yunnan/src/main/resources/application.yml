@@ -1,5 +1,5 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test_sqldoc
+    url: jdbc:mysql://localhost:3306/yunnan_data_test
     username: root
     password: NozomiSuzuhara111.
