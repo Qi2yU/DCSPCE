@@ -118,6 +118,7 @@
         }).then(response => {
           const return_value = response.data;
           console.log(return_value);
+          this.fetchSearchList();
         });
       },
       fetchSearchList() {

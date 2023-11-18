@@ -1,58 +1,186 @@
 package com.example.yunnan.controller;
 
-import com.example.yunnan.entity.EmploymentDataEntry;
-import com.example.yunnan.entity.NoticeDetailEntry;
-import com.example.yunnan.entity.NoticeEntry;
+import com.example.yunnan.entity.notice_show_entity;
+import com.example.yunnan.msg.CityMap;
+import com.example.yunnan.service.Gov_notice_service;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin
 public class gov_notice {
+    @Autowired
+    Gov_notice_service govNoticeService;
 
+    @PostMapping("/gov_notice/addnotice")
+    public String addNotice(@RequestBody NoticeAddInfo noticeAddInfo) {
+        System.out.println(noticeAddInfo.msg_title);
+        System.out.println(noticeAddInfo.msg_content);
 
-    @RequestMapping(value="",method= RequestMethod.POST)
-    public String collect_data(@RequestBody EmploymentDataEntry ede){
-        //
+        LocalDate currenttime = LocalDate.now();
+        int year = currenttime.getYear();
+        int month = currenttime.getMonthValue();
+        int day = currenttime.getDayOfMonth();
+        String msg_time = String.format("%4d-%2d-%2d", year, month,day);
 
-        ede.printMyData();
-        // 写入DB
-        // ...
+        String userId = "53000000000";
+        String msg_num = userId.substring(0,4)+String.format("%4d%2d%2d",year,month,day);
+        String gov_which = CityMap.mapTocity(userId.substring(0,4));
+        System.out.println("msg_num:"+msg_num+"\nmsg_time:"+msg_time);
 
-
-
-        return "Hello SpringBoot!";
+        String msg_to_where = (noticeAddInfo.where==null) ? "5300" : noticeAddInfo.where;
+        System.out.println("地区:"+msg_to_where);
+        govNoticeService.addNotice(gov_which, noticeAddInfo.msg_title,
+                noticeAddInfo.msg_content, msg_time, msg_to_where);
+        return "success";
     }
 
-    @RequestMapping(value="/gov_notice/get_all",method= RequestMethod.GET)
-    public String get_all_notice(String gov_id) throws JsonProcessingException {
-
-        // 现根据 gov_id 判断一下是省还是市，是哪个市，再到对应的表中去找。
-        // 从DB读入
-        // getNotice(cid);
-
-        // 这里先抓一个默认的数据
-        NoticeEntry n1 = new NoticeEntry("000","省", "省第一条通知",
-                "2023/11/2",0, "11");
-        NoticeEntry n2 = new NoticeEntry("001","省", "省第二条通知",
-                "2023/11/2",0, "11");
-        NoticeEntry n3 = new NoticeEntry("002","市", "市第一条通知",
-                "2023/11/2",0, "11");
-
-        ArrayList<NoticeEntry> an = new ArrayList<>();
-        an.add(n1);
-        an.add(n2);
-        an.add(n3);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-
-
-        System.out.println(gov_id);
-        System.out.println("返回了默认的通知列表项数据");
-        // 返回为json格式
-        return objectMapper.writeValueAsString(an);
+    @PostMapping ("/gov_notice/get_all")
+    public List<notice_show_entity> get_all_notice(@RequestBody UserId userId){
+        String id = userId.userId.substring(0, 4);
+        System.out.println(userId+"---"+id);
+        List<notice_show_entity> resultlist;
+        if(Objects.equals(id, "5300")) {
+            resultlist = govNoticeService.fetchAllNotice();
+            System.out.println("省用户查询");
+        } else {
+            resultlist = govNoticeService.fetchNotice(id);
+        }
+        System.out.println(resultlist);
+        return resultlist;
     }
+
+    @PostMapping("/gov_notice/deleteNotice")
+    public void deleteNotice(@RequestBody deleteInfo deleteinfo) {
+        System.out.println(deleteinfo.msg_time);
+        govNoticeService.deletenotice(deleteinfo.gov_which, deleteinfo.msg_title,
+                deleteinfo.msg_content, deleteinfo.msg_time);
+    }
+
+    @PostMapping("/gov_notice/findOne")
+    public int findOne(@RequestBody deleteInfo deleteinfo) {
+        int id = govNoticeService.findOne(deleteinfo.gov_which, deleteinfo.msg_title,
+                deleteinfo.msg_content, deleteinfo.msg_time);
+        System.out.println(id);
+        return id;
+    }
+
+    @PostMapping("/gov_notice/editNotice")
+    public String editNotice(@RequestBody NoticeEditInfo noticeEditInfo) {
+        String userId = "53000000000";
+        String gov_which = CityMap.mapTocity(userId.substring(0,4));
+
+        LocalDate currenttime = LocalDate.now();
+        int year = currenttime.getYear();
+        int month = currenttime.getMonthValue();
+        int day = currenttime.getDayOfMonth();
+        String msg_time = String.format("%4d-%2d-%2d", year, month,day);
+
+        govNoticeService.editNotice(gov_which, noticeEditInfo.msg_title,
+                noticeEditInfo.msg_content, msg_time,
+                noticeEditInfo.where, noticeEditInfo.msg_num);
+        return "success";
+    }
+
+    public static class deleteInfo {
+        String gov_which;
+        String msg_title;
+        String msg_content;
+        String msg_time;
+        public deleteInfo(String gov_which, String msg_title, String msg_content, String msg_time) {
+            this.gov_which=gov_which;
+            this.msg_title=msg_title;
+            this.msg_content=msg_content;
+            this.msg_time=msg_time;
+        }
+    }
+
+    public static class UserId {
+        private String userId;
+        @JsonCreator
+        public UserId(@JsonProperty("userId") String id) {
+            this.userId = id;
+        }
+    }
+
+    public static class NoticeEditInfo {
+        //        private String userId;
+        String msg_title;
+        String msg_content;
+
+        String where;
+
+        String msg_num;
+
+        public NoticeEditInfo(String ti, String cont, String where, String id) {
+            this.msg_title=ti;
+            this.msg_content=cont;
+            this.where=where;
+            this.msg_num=id;
+        }
+
+        public String getMsg_num() {
+            return msg_num;
+        }
+
+        public String getWhere() {
+            return where;
+        }
+
+        public String getMsg_content() {
+            return msg_content;
+        }
+
+        public String getMsg_title() {
+            return msg_title;
+        }
+    }
+
+    public static class NoticeAddInfo {
+//        private String userId;
+        String msg_title;
+        String msg_content;
+
+        String where;
+
+        public NoticeAddInfo(String ti, String cont, String where) {
+            this.msg_title=ti;
+            this.msg_content=cont;
+            this.where=where;
+        }
+
+        public String getWhere() {
+            return where;
+        }
+
+        public String getMsg_content() {
+            return msg_content;
+        }
+
+        public String getMsg_title() {
+            return msg_title;
+        }
+    }
+
+    //    @RequestMapping(value="",method= RequestMethod.POST)
+//    public String collect_data(@RequestBody EmploymentDataEntry ede){
+//        //
+//
+//        ede.printMyData();
+//        // 写入DB
+//        // ...
+//
+//
+//
+//        return "Hello SpringBoot!";
+//    }
 }

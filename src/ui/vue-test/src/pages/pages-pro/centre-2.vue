@@ -90,7 +90,8 @@
         }).then(response => {
           const return_value = response.data;
           console.log(return_value);
-          this.$router.push(return_value).catch(error=>error);
+          this.fetchUserList();
+          // this.$router.push(return_value).catch(error=>error);
         });
         // this.go_back_centre2();
       },
