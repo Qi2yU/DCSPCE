@@ -100,7 +100,7 @@ export default{
             this.flag3=true;
         },
         advise(){
-            this.$http.get("/retreatbypro",{
+            this.$http.get("/retreatbycity",{
             params:{
                 info:this.info,
                 userId: this.userID,
