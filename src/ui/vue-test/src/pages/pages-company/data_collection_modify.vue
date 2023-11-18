@@ -116,9 +116,9 @@
                 <el-input
                   type="textarea"
                   :rows="5"
-                   
                   placeholder=""
-                  v-model="comCurData.reasonDetail">
+                  v-model="comCurData.reasonDetail"
+                  resize = none>
                 </el-input>
               </el-col>
             </el-form-item>
@@ -158,20 +158,16 @@
     },
     created:function(){
       this.userid = this.$http.userid
-      console.log(this.$http.userid)
       this.$http.get("/get_company_collection_data",{
         params: {
           userid: this.userid
         }
       }).then((response)=>{
-        console.log(response)
-        console.log(response.data)
-        console.log(response.data.docEmploymentNumber)
         this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
         this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
-        this.comCurData.numDecreasedReason = response.data.numDecreasedReason > 0? response.data.numDecreasedReason: '';
-        this.comCurData.mainReason = response.data.mainReason > 0? response.data.mainReason: '';
-        this.comCurData.secondReason = response.data.secondReason > 0? response.data.secondReason: '';
+        this.comCurData.numDecreasedReason =  response.data.numDecreasedReason;
+        this.comCurData.mainReason =  response.data.mainReason;
+        this.comCurData.secondReason = response.data.secondReason;
         this.comCurData.reasonDetail = response.data.reasonDetail;
         // console.log("初始化结束");
       });

@@ -65,7 +65,7 @@ public class data_collection {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String nowDate = formatter.format(date);
-//        String nowDate = "2023-10-10";
+//        String nowDate = "2023-12-11";
         System.out.println(nowDate);
 
         List<res_time> list= dataQueryService.getTable(nowDate, nowDate);

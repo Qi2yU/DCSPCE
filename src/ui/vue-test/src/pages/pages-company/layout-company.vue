@@ -51,7 +51,22 @@ export default {
   },
   data() {
     return {};
-  },
+  },created:function(){
+      this.userid = this.$http.userid
+      this.$http.get("/get_refused_info",{
+        params: {
+          userid: this.userid
+        }
+      }).then((response)=>{
+        console.log(response)
+        console.log(response.data)
+        if(! response.data.is_refused) return ;
+        if(response.data.comInfoRefused != null) this.$message.error("您的审核备案已被驳回，请及时查看。(附驳回理由：" + response.data.comInfoRefused +")");
+        else this.$message.error("您当期上报的数据已被驳回，请及时查看。(附驳回理由：" + response.data.emplInfoRefused +")");
+        
+      });
+
+    },
   methods: {}
 };
 </script>

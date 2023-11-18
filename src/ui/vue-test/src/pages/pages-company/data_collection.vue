@@ -9,6 +9,31 @@
       </el-col>
       <el-col :span="6"></el-col>
     </el-row>
+    <template v-if="!isincollection()">
+      <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
+        当前不处于调查期！
+      </el-row>
+    </template>
+    <template v-if="isrefused()">
+      <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
+        您提交的就业数据被驳回，请重新填报后上交。驳回的理由为：
+      </el-row>
+      <el-row width="50%" type="flex" class="row-bg row-two" justify="center" align="top">
+        <el-col :span="0"></el-col>
+        <el-col :span="12">
+          <el-input
+            type="textarea"
+            disabled
+            :rows="2"
+            size = small 
+            v-model="refusedData.emplRefusedInfo"
+            resize=none
+            color=#b30e0e>
+          </el-input>
+        </el-col>
+      </el-row>
+    </template>
+    <template v-if="isincollection()">
     <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
       <el-col :span="5"></el-col>
       <el-col :span="20">
@@ -118,7 +143,8 @@
                   :rows="5"
                   disabled 
                   placeholder=""
-                  v-model="comCurData.reasonDetail">
+                  v-model="comCurData.reasonDetail"
+                  resize = none>
                 </el-input>
               </el-col>
             </el-form-item>
@@ -129,12 +155,13 @@
 
             <el-button type="primary" @click="modify_collection_data">修改</el-button>
             <el-button >确定</el-button>
-    
+            本期调查期持续时间：{{ collectionData.start_time }}-{{ collectionData.end_time }}
           </el-form-item>
         </el-form>
       </el-col>
       <el-col :span="1"></el-col>
     </el-row>
+    </template>
   </div>
 </template>
 
@@ -149,8 +176,17 @@
           numDecreasedReason: '',
           mainReason: '',
           secondReason: '',
-          reasonDetail: ''
-        }
+          reasonDetail: '',
+          iscollected: '',
+        },
+        refusedData: {
+          isRefused: '',
+          emplRefusedInfo: '',
+        },
+        collectionData:{
+          start_time:'',
+          end_time:'',
+        },
       };
     },
     beforeCreate() {
@@ -158,29 +194,47 @@
     },
     created:function(){
       this.userid = this.$http.userid
-      console.log(this.$http.userid)
       this.$http.get("/get_company_collection_data",{
+        params: {
+          userid: this.userid
+        }
+      }).then((response)=>{
+        console.log(response.data)
+        this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
+        this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
+        this.comCurData.numDecreasedReason =  response.data.numDecreasedReason;
+        this.comCurData.mainReason =  response.data.mainReason;
+        this.comCurData.secondReason = response.data.secondReason;
+        this.comCurData.reasonDetail = response.data.reasonDetail;
+        this.comCurData.iscollected = response.data.valid;
+      });
+      this.$http.get("/get_refused_info",{
         params: {
           userid: this.userid
         }
       }).then((response)=>{
         console.log(response)
         console.log(response.data)
-        console.log(response.data.docEmploymentNumber)
-        this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
-        this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
-        this.comCurData.numDecreasedReason = response.data.numDecreasedReason > 0? response.data.numDecreasedReason: '';
-        this.comCurData.mainReason = response.data.mainReason > 0? response.data.mainReason: '';
-        this.comCurData.secondReason = response.data.secondReason > 0? response.data.secondReason: '';
-        this.comCurData.reasonDetail = response.data.reasonDetail;
-        // console.log("初始化结束");
+        this.refusedData.isRefused = response.data.is_refused;
+        this.refusedData.emplRefusedInfo = response.data.emplInfoRefused;
       });
+      this.$http.get("/table").then((response)=>{
+        this.collectionData.start_time=response.data.start_time;
+        this.collectionData.end_time=response.data.end_time;
+      });
+
       // console.log("被创建");
     },
     methods: {
       modify_collection_data(){
         $this.$router.push("/company/data_collection_modify").catch(error => error);
         // console.log("go to data_collection_modify");
+      },  
+      isincollection(){
+        return (this.comCurData.iscollected == 0) 
+      },
+      isrefused(){
+        return (this.refusedData.isRefused == 1) 
       },
       isdecreased(){
         if(this.comCurData.docEmploymentNumber != ''  
@@ -223,6 +277,17 @@
     .toolbar .el-form--inline .reasonClass div.el-input{
       width: 10px;
     }
+  }
+
+
+  input::-webkit-input-placeholder {
+    color: #b30e0e;
+  }
+  input::-moz-input-placeholder {
+    color: #b30e0e;
+  }
+  input::-ms-input-placeholder {
+    color: #b30e0e;
   }
 
 </style>
