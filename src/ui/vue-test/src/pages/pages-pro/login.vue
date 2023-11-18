@@ -110,11 +110,12 @@
             'Content-Type': 'application/json'
           }
         }).then(response => {
-          const return_router = response.data;
+          const return_value= response.data;
 
-          console.log(return_router)
+          console.log(return_value)
 
-          // const targetRoute = return_router.targetRoute;
+          // 全局变量userId的赋值！！！
+          const return_router = return_value.nextRouter;
 
           this.$router.push({path:return_router,
             query:{userId:this.loginForm.username}});
