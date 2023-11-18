@@ -6,8 +6,6 @@
  * @Description: In User Settings Edit
  * @FilePath: \vueTest\houtai\src\page\main.vue
  -->
- <style>
-</style>
 <template>
     <div class="line">
     <h1>备案审核</h1>
@@ -36,6 +34,11 @@
        $this = this;
      },
     methods: {
+
+      // function()
+      // {
+      //     this.activeIndex=this.$route.name;
+      // },
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },

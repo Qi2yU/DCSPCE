@@ -116,7 +116,8 @@
 
           // const targetRoute = return_router.targetRoute;
 
-          this.$router.push(return_router);
+          this.$router.push({path:return_router,
+            query:{userId:this.loginForm.username}});
         });
       },
       // submitForm(formName) {

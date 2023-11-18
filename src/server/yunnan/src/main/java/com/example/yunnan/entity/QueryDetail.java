@@ -2,6 +2,8 @@ package com.example.yunnan.entity;
 
 public class QueryDetail {
     private String userId;
+    private String start_time;
+    private String end_time;
     private String character;
     private String industry;
     private String city;
@@ -14,6 +16,22 @@ public class QueryDetail {
     private String explain;
     private int state;
     private String companyName;
+
+    public String getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(String start_time) {
+        this.start_time = start_time;
+    }
+
+    public String getEnd_time() {
+        return end_time;
+    }
+
+    public void setEnd_time(String end_time) {
+        this.end_time = end_time;
+    }
 
     public String getCharacter() {
         return character;

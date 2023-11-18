@@ -31,7 +31,7 @@ public class Detail_service {
 
     public void batchUpByPro(String tableName,String city) {detailMapper.batchUpByPro(tableName,city);}
 
-    public void retreatByPro(String tableName,String userId) {detailMapper.retreatByPro(tableName,userId);}
+    public void retreatByPro(String tableName,String info,String userId) {detailMapper.retreatByPro(tableName,info,userId);}
 
 
 //    市端

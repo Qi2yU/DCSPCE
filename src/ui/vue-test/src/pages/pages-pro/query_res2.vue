@@ -19,13 +19,28 @@
             <el-descriptions-item label="次要原因说明">{{item.explain}}</el-descriptions-item>
             
         </el-descriptions>
-
+        <download-excel
+          class="export-btn"
+          :data="item"
+          :fields="jsonFields"
+          type="xls"
+          header="测试"
+          name="数据导出列表.xls"
+        >
+          导出
+        </download-excel>
        
     </div>
 </template>
 
 <script>
+import JsonExcel from "vue-json-excel";
+
+
 export default{
+    components: {
+    DownloadExcel: JsonExcel,
+  },
     created(){
         this.$http.get("/querydetail",{
             params:{
@@ -37,9 +52,17 @@ export default{
     });
    
     },
+    
     data()
     {
         return{
+            jsonFields: {  //导出Excel表格的表头设置
+              '企业编号': 'userId',
+              '企业名称': 'companyName',
+              '建档期就业人数': 'oldNum',
+              '调查期就业人数': 'nowNum',
+              '就业人数减少类型': 'decReason',
+          },
                   item:{},
             //    item: {
             //         useruserName:"c1",

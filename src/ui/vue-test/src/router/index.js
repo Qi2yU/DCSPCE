@@ -161,15 +161,6 @@ export default new Router({
         name: 'File_detail',
         component: File_detail
       }, {
-        path: 'file_check',
-        name: 'FileCheck',
-        component: FileCheck,
-        children:[{
-          path: 'file_be_checked',
-          name: 'FileBeChecked', 
-          component: FileBeChecked,
-        }]
-      }, {
         path: 'sum',
         name: 'Sum',
         component: Sum
@@ -237,122 +228,103 @@ export default new Router({
         path: 'centre-4',
         name: 'Centre4',
         component: Centre4
-      },{
-        path: 'queryres2',
-        name: 'Queryres2',
-        component: Queryres2
       }
-
        ]
     }, 
 
     {
       path: '/government-city',
-      name: 'Goverment__City',
+      name: 'Goverment_City',
       component: Government_City,
       children: [{
         path: 'file_check',
-        name: 'File_check_City_City',
+        name: 'File_check_City',
         component: File_check_City,
         children:[{
           path: 'file_passed',
-          name: 'File_passed_City_City',
+          name: 'File_passed_City',
         component: File_passed_City,
         },{
           path: 'file_be_checked',
-        name: 'File_be_checked_City_City',
+        name: 'File_be_checked_City',
         component: File_be_checked_City,
         },{
           path: 'file_backed',
-        name: 'File_backed_City_City',
+        name: 'File_backed_City',
         component: File_backed_City,
         },{
           path: 'file_no_uploaded',
-        name: 'File_no_uploaded_City_City',
+        name: 'File_no_uploaded_City',
         component: File_no_uploaded_City,
         }]
       },{
         path: 'file_detail',
-        name: 'File_detail_City_City',
+        name: 'File_detail_City',
         component: File_detail_City
-      }, {
-        path: 'file_check',
-        name: 'FileCheck_City_City',
-        component: FileCheck_City,
-        children:[{
-          path: 'file_be_checked',
-          name: 'FileBeChecked_City_City', 
-          component: FileBeChecked_City,
-        }]
-      }, {
+      },  {
         path: 'sum',
-        name: 'Sum_City_City',
+        name: 'Sum_City',
         component: Sum_City
       }, {
         path: 'query',
-        name: 'Query_City_City',
+        name: 'Query_City',
         component: Query_City
       }, {
         path: 'analy1',
-        name: 'Analy1_City_City',
+        name: 'Analy1_City',
         component: Analy1_City
       }, {
         path: 'analy2',
-        name: 'Analy2_City_City',
+        name: 'Analy2_City',
         component: Analy2_City
       }, {
         path: 'dataexam',
-        name: 'DataExam_City_City',
+        name: 'DataExam_City',
         component: DataExam_City
       },{
         path: 'committed',
-        name: 'Committed_City_City',
+        name: 'Committed_City',
         component: Committed_City
       },{
         path: 'uncommitted',
-        name: 'Uncommitted_City_City',
+        name: 'Uncommitted_City',
         component: Uncommitted_City
       },{
         path: 'detail',
-        name: 'Detail_City_City',
+        name: 'Detail_City',
         component: Detail_City
       },{
         path: 'queryres',
-        name: 'Queryres_City_City',
+        name: 'Queryres_City',
         component: Queryres_City
       },{
         path: 'notice',
-        name: 'NOtice_pro_City_City',
+        name: 'NOtice_pro_City',
         component: Notice_pro_City
       },{
         path: 'addNotice',
-        name: 'AddNotice_City_City',
+        name: 'AddNotice_City',
         component: AddNotice_City
       },{
         path: 'editNotice',
-        name: 'EditNotice_City_City',
+        name: 'EditNotice_City',
         component: EditNotice_City
       },{
         path: 'centre-1',
-        name: 'Centre1_City_City',
+        name: 'Centre1_City',
         component: Centre1_City
       },{
         path: 'centre-2',
-        name: 'Centre2_City_City',
+        name: 'Centre2_City',
         component: Centre2_City
       },{
         path: 'centre-3',
-        name: 'Centre3_City_City',
+        name: 'Centre3_City',
         component: Centre3_City
       },{
         path: 'centre-4',
-        name: 'Centre4_City_City',
+        name: 'Centre4_City',
         component: Centre4_City
-      },{
-        path: 'queryres2',
-        name: 'Queryres2',
-        component: Queryres2_City
-
       }
        ]
     }

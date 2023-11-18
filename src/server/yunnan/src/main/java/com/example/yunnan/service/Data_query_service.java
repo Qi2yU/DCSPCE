@@ -18,7 +18,7 @@ public class Data_query_service {
 
     public List<res_time> getTable(String start_time, String end_time) {return dataQueryMapper.getTable(start_time, end_time);}
 
-    public List<query_res1> getRes1(String tableName,String companyName,String userId,String character,String industry, String city, String district)
+    public List<QueryDetail> getRes1(String tableName,String companyName,String userId,String character,String industry, String city, String district)
     {
         return dataQueryMapper.getRes1(tableName,companyName, userId, character, industry, city, district);
     }
