@@ -79,11 +79,14 @@
     <div id="main" style="width: 1500px; height: 400px; text-align: center;"></div>
 
   <el-table
-    :data="tableData"
-    class="Table"
-    border
-    height="250"
-    style="width: 100%">
+  :data="tableData"
+            :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
+            :cell-style="{ height: '44px', padding: '0px' }"
+            style="width: 100%"
+            class="Table"
+            max-height="550"
+            border
+            small>
     <el-table-column
       prop="name"
       label="企业名"
@@ -94,24 +97,19 @@
       label="调查期A岗位变化数"
       width="180">
     </el-table-column>
-    <el-table-column
-      prop="a_less"
-      label="调查期A岗位减少数">
-    </el-table-column>
-    <el-table-column
-      prop="b_change_num"
-      label="调查期B岗位变化数"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="b_less"
-      label="调查期B岗位减少数">
-    </el-table-column>
+
     <el-table-column
       prop="a_change_precent"
       label="调查期A岗位变化占比"
       width="180">
     </el-table-column>
+    
+    <el-table-column
+      prop="b_change_num"
+      label="调查期B岗位变化数"
+      width="180">
+    </el-table-column>
+
     <el-table-column
       prop="b_change_precent"
       label="调查期B岗位变化占比">

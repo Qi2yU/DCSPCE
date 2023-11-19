@@ -79,6 +79,7 @@
             :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
             :cell-style="{ height: '44px', padding: '0px' }"
+            
             style="width: 100%"
             class="Table"
             max-height="550"
@@ -287,6 +288,7 @@ export default {
             
           },
           series:this.series,
+          
         }
         this.myChart.setOption(option)
     })
@@ -305,7 +307,7 @@ export default {
           }
           obj.company_name = element.company_name
           for(let i = 0; i < len; i++){
-            let time = element.time_list[i]
+            let time = element.time_list[i] 
             let data = element.table_percent_list[i]
             obj[time] = data
           }
@@ -324,8 +326,16 @@ export default {
         /* generate workbook object from table */
         //  .table要导出的是哪一个表格
 
+      let fix = document.querySelector('.el-table__fixed');
+      let wb;
+      if(fix){ //判断要导出的节点中是否有fixed的表格，如果有，转换excel时先将该dom移除，然后append回去
+        wb = XLSX.utils.table_to_book(document.querySelector('.Table').removeChild(fix));
+        document.querySelector('.Table').appendChild(fix);
+      }else{
+        wb = XLSX.utils.table_to_book(document.querySelector('.Table'));
+      }
 
-        var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
+
         /* get binary string as output */
         var wbout = XLSX.write(wb, {
           bookType: "xlsx",

@@ -16,7 +16,8 @@
       </el-option>
     </el-select>
     <el-button type="success"  @click = "Query_fun()">查询</el-button>
-
+    
+    <div id="main" style="width: 600px; height: 400px"></div>
     <el-table
     ref="multipleTable"
     :data="showData"
@@ -43,9 +44,9 @@
 
 
 
-  <div id="main" style="width: 600px; height: 400px"></div>
-  <el-button type="primary"  @click = "download"  class = "download">导出饼图</el-button>
-  <el-button type="primary"  @click = "DownloadHandler"  class = "download">导出表格</el-button>
+  <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
   </div>
   
 </template>
@@ -238,6 +239,10 @@ export default {
         creatIMg.click();
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
+    },
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
     },
     drawChart(){
       // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
