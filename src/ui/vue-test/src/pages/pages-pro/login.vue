@@ -120,9 +120,15 @@
 
           // 全局变量userId的赋值！！！
           const return_router = return_value.nextRouter;
-
-          this.$router.push({path:return_router,
+          
+          if(return_router !== "/login") {
+            this.$message.success('登录成功！')
+            this.$router.push({path:return_router,
             query:{userId:this.loginForm.username}});
+          } else {
+            this.$message.error('登录失败！');
+          }
+          
         });
       },
       // submitForm(formName) {

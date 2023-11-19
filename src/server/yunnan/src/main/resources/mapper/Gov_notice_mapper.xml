@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.yunnan.mapper.Gov_notice_mapper">
+    <insert id="addNotice">
+        insert into msg_gov (gov_which, msg_title, msg_content, msg_time, msg_to_where) values (#{gov_which}, #{msg_title}, #{msg_content}, #{msg_time}, #{msg_to_where});
+    </insert>
+
+    <select id="fetchNotice" resultType="com.example.yunnan.entity.notice_show_entity">
+        select gov_which, msg_title, msg_content, msg_time from msg_gov where msg_to_where="${id}" or msg_to_where="5300";
+    </select>
+
+    <select id="fetchAllNotice" resultType="com.example.yunnan.entity.notice_show_entity">
+        select gov_which, msg_title, msg_content, msg_time from msg_gov;
+    </select>
+
+    <delete id="deletenotice">
+        delete from msg_gov where gov_which="${gov}" and msg_title="${title}" and msg_content="${content}" and msg_time="${time}";
+    </delete>
+
+    <select id="findOne" resultType="int">
+        select msg_num from msg_gov where gov_which="${gov}" and msg_title="${title}" and msg_content="${content}" and msg_time="${time}";
+    </select>
+
+    <update id="editNotice">
+        update msg_gov
+        set gov_which="${gov}", msg_title="${title}", msg_content="${content}", msg_time="${time}", msg_to_where="${where}" where msg_num="${msg_num}";
+    </update>
+</mapper>

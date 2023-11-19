@@ -16,11 +16,11 @@
         CREATE TABLE `${index_table}` (
             `user_id` varchar(20) NOT NULL primary key,
             `last_people_num` int(4) NOT NULL,
-            `now_people_num` int(4) NOT NULL,
-            `decrease_reason` varchar(50) NOT NULL,
-            `main_reason` varchar(50) NOT NULL,
-            `second_reason` varchar(50) NOT NULL,
-            `explain_reason` varchar(200) NOT NULL,
+            `now_people_num` int(4),
+            `decrease_reason` varchar(50),
+            `main_reason` varchar(50),
+            `second_reason` varchar(50),
+            `explain_reason` varchar(200),
             `modify_info` varchar(100),
             `state` int(4) NOT NULL
         );
@@ -34,4 +34,24 @@
     <select id="findalltable" resultType="com.example.yunnan.entity.searchtableInfo_entity">
         select id, r_time_start, r_time_end, is_finish, type from research_schedule;
     </select>
+
+    <select id="schedule_notend" resultType="com.example.yunnan.entity.is_end_entity">
+        select id, f_time_end from research_schedule where is_finish=0;
+    </select>
+
+    <update id="change_finish">
+        update research_schedule set is_finish=1 where id="${id}";
+    </update>
+
+    <select id="get_companyList" resultType="java.lang.String">
+        select user_id from company_info where is_valid=1;
+    </select>
+
+    <select id="get_lastnum" resultType="java.lang.Integer">
+        select now_people_num from ${table} where user_id="${user_id}";
+    </select>
+
+    <insert id="insertNum">
+        insert into ${table} (user_id, last_people_num, state) values (#{user_id}, #{last_num}, #{state});
+    </insert>
 </mapper>

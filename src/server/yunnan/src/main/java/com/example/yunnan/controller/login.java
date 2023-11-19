@@ -38,16 +38,9 @@ public class login {
             } else if (split_role == '2') {
                 return new UserIdResponse(userLoginInfo.getUserId(), "/company");
             }
-//            if (split_role == '0') {
-//                return "/government-pro";
-//            } else if (split_role == '1') {
-//                return "/government-city";
-//            } else if (split_role == '2') {
-//                return "/company";
-//            }
-//            return "/login";
         } else {
-            return new UserIdResponse("11111111111", "/login");
+//           根据nextRouter来判断是否登录成功
+            return new UserIdResponse("", "/login");
         }
         return null;
     }
