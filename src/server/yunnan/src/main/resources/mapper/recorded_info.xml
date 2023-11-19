@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.yunnan.mapper.Recorded_info_mapper">
+    <resultMap id="recMap" type="com.example.yunnan.entity.UserInfo">
+        <result column="user_name" property="user_name"/>
+        <result column="user_id" property="user_id"/>
+        <result column="password" property="password"/>
+        <result column="is_record" property="is_record"/>
+        <result column="role" property="role"/>
+    </resultMap>
+
+    <select id="getRecorded_info" resultMap="recMap">
+        select
+        d.user_name,
+        d.user_id,
+        d.password,
+        d.is_record,
+        d.role
+        from user_accounts d
+        <where>
+            d.user_id = #{userId}
+        </where>
+    </select>
+
+</mapper>

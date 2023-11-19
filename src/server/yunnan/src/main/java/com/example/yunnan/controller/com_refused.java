@@ -39,21 +39,18 @@ public class com_refused {
         List<res_time> list= dataQueryService.getTable(nowDate, nowDate);
 
         Refused_info ri = new Refused_info();
-
+        //默认没有驳回信息
+        ri.setIs_refused(0);
         if (list.toArray().length == 1){
             // 对当前表进行修改，查询是否存在驳回信息，如果存在就加入
             String tableName= list.get(0).getTableName();
             List<empInfoRefused> empinfo = new ArrayList<>();
             empinfo = refused_info_service.getEmpInfoRefused(tableName, cid.getUserid());
             if(empinfo.toArray().length == 1){
-                ri.setIs_refused(1);
-                ri.setEmplInfoRefused(empinfo.toArray()[0].toString());
-            } else {
-                ri.setIs_refused(0);
-            }
 
-        } else {
-            ri.setIs_refused(0);
+                ri.setEmplInfoRefused(empinfo.toArray()[0].toString());
+                if(!ri.getEmplInfoRefused().isEmpty()) ri.setIs_refused(1);
+            }
         }
         System.out.println(ri.toString());
         return ri;

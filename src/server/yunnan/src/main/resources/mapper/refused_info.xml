@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.yunnan.mapper.refused_info_mapper">
+<mapper namespace="com.example.yunnan.mapper.Refused_info_mapper">
     <resultMap id="empMap" type="com.example.yunnan.entity.empInfoRefused">
         <result column="modify_info" property="info"/>
     </resultMap>
