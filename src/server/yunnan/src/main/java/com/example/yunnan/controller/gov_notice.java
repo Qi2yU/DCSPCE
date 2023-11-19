@@ -23,8 +23,10 @@ public class gov_notice {
 
     @PostMapping("/gov_notice/addnotice")
     public String addNotice(@RequestBody NoticeAddInfo noticeAddInfo) {
+        System.out.println(noticeAddInfo.userId);
         System.out.println(noticeAddInfo.msg_title);
         System.out.println(noticeAddInfo.msg_content);
+        System.out.println(noticeAddInfo.msg_to_where);
 
         LocalDate currenttime = LocalDate.now();
         int year = currenttime.getYear();
@@ -35,8 +37,8 @@ public class gov_notice {
         String msg_num = noticeAddInfo.userId.substring(0,4)+String.format("%4d%2d%2d",year,month,day);
         String gov_which = CityMap.mapTocity(noticeAddInfo.userId.substring(0,4));
         System.out.println("msg_num:"+msg_num+"\nmsg_time:"+msg_time);
-
-        String msg_to_where = (noticeAddInfo.where==null) ? "5300" : noticeAddInfo.where;
+        System.out.println("msg_to_where"+noticeAddInfo.msg_to_where);
+        String msg_to_where = (noticeAddInfo.msg_to_where==null) ? "5300" : noticeAddInfo.msg_to_where;
         System.out.println("地区:"+msg_to_where);
         govNoticeService.addNotice(gov_which, noticeAddInfo.msg_title,
                 noticeAddInfo.msg_content, msg_time, msg_to_where);
@@ -45,6 +47,7 @@ public class gov_notice {
 
     @PostMapping ("/gov_notice/get_all")
     public List<notice_show_entity> get_all_notice(@RequestBody UserId userId){
+
         String id = userId.userId.substring(0, 4);
         System.out.println(userId+"---"+id);
         List<notice_show_entity> resultlist;
@@ -111,6 +114,10 @@ public class gov_notice {
         public UserId(@JsonProperty("userId") String id) {
             this.userId = id;
         }
+
+        public String getUserId() {
+            return userId;
+        }
     }
 
     public static class NoticeEditInfo {
@@ -134,7 +141,7 @@ public class gov_notice {
             return msg_num;
         }
 
-        public String getWhere() {
+        public String getMsg_to_where() {
             return msg_to_where;
         }
 
@@ -152,21 +159,25 @@ public class gov_notice {
         String msg_title;
         String msg_content;
 
-        String where;
+        String msg_to_where;
 
-        public NoticeAddInfo(String id,String ti, String cont, String where) {
+        public NoticeAddInfo() {
+
+        }
+
+        public NoticeAddInfo(String id,String ti, String cont, String msg_to_where) {
             this.userId=id;
             this.msg_title=ti;
             this.msg_content=cont;
-            this.where=where;
+            this.msg_to_where=msg_to_where;
         }
 
         public String getUserId() {
             return userId;
         }
 
-        public String getWhere() {
-            return where;
+        public String getMsg_to_where() {
+            return msg_to_where;
         }
 
         public String getMsg_content() {

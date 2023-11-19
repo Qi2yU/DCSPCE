@@ -19,7 +19,7 @@
       maxlength="2000"
       show-word-limit>
     </el-input>
-    <el-select @change="selectCity" class="el-select" v-model="values" placeholder="发布地区">
+    <el-select @change="selectCity" class="el-select" v-model="msg_to_where" placeholder="发布地区">
       <el-option value="5300" label="全省">全省</el-option>
       <el-option value="5301" label="昆明市">昆明市</el-option>
       <el-option value="5303" label="曲靖市">曲靖市</el-option>
@@ -54,7 +54,7 @@
         },
         msg_title: '',
         msg_content: '',
-        values: '',
+        msg_to_where: '',
       };
     },
     methods: {
@@ -81,7 +81,7 @@
         });
       },
       selectCity() {
-        console.log(this.values);
+        console.log(this.msg_to_where);
       },
     },
   };

@@ -77,11 +77,12 @@
   },
   methods: {
       fetchAllNotice() {
+        console.log(this.$http.userid);
         this.$http({
           url: '/gov_notice/get_all',
           method: 'post',
           data:JSON.stringify({
-            userId: "53000000000"
+            userId: this.$http.userid,
           }),
           headers:
           {
@@ -122,14 +123,6 @@
           },
         });
         });
-        // this.$router.push({
-        //   path: '/government-pro/editNotice',
-        //   query: {
-        //     msg_title: row.msg_title,
-        //     msg_content: row.msg_content,
-        //     id: this.id,
-        //   },
-        // });
       },
       deleteEdit(index, row) {
         this.$http({
