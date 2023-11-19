@@ -1,9 +1,26 @@
 <style>
+.title_main{
+  color: #409EFF;
+  font-size: 20px Extra large;
+  text-align: center;
+}
+.choice{
+  text-align: center;
+}
+.button-container{
+  text-align: center;
+}
+.button-container_down{
+  text-align: center;
+}
+
+
 </style>
 <template>
-  <div id="user">
-    <h1>对比分析</h1>
-    
+  <div id="pro">
+    <h1 class="title_main">对比分析</h1>
+
+  <div class="choice">
     <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
@@ -52,9 +69,14 @@
        >
       </el-option>
     </el-select>
+  </div>
+
   
-    <el-button type="primary" @click="get_data" :disabled="disable" class = "query" >查询</el-button>
-    <div id="main" style="width: 1500px; height: 400px"></div>
+  <div class="button-container">
+    <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
+  </div>
+    
+    <div id="main" style="width: 1500px; height: 400px; text-align: center;"></div>
 
   <el-table
     :data="tableData"
@@ -98,9 +120,9 @@
 
   
 
-    
-    <el-button type="primary" @click = download class = "download">导出折线图</el-button>
-    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
+  <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
   </div>
 </template>
 
@@ -130,7 +152,7 @@ export default {
       value_indu:'',
       option:{},
       myChart:null,
-      disable:false,
+      show:true,
 
     }
   },
@@ -212,6 +234,60 @@ export default {
       await  this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{
         this.option = {
+          title:{
+        show:true,//false
+        text:"就业人数",//主标题文本
+
+
+        textAlign:'auto',//整体（包括 text 和 subtext）的水平对齐
+        textVerticalAlign:'auto',//整体（包括 text 和 subtext）的垂直对齐
+        padding:0,//[5,10] | [ 5,6, 7, 8] ,标题内边距
+        left:100,//'5' | '5%'，title 组件离容器左侧的距离
+        right:'auto',//'title 组件离容器右侧的距离
+        top:10,//title 组件离容器上侧的距离
+        bottom:'auto',//title 组件离容器下侧的距离
+
+        },
+          tooltip: {
+          trigger: 'axis',
+          formatter:function(params){
+            let res = params[0].axisValueLabel;
+
+            function getHtml(param){
+                let str = '<div style="float: left"><span style="background: '+param.color+'; width: 11px; height: 11px; border-radius: 11px;float: left; margin: 5px 3px;"></span>'+param.data+'&emsp;&emsp;</div>';
+                return str;
+            }
+
+            let flag=false;
+            res += '<div style="clear: both">';
+            for (let i = 0; i < params.length; i++) {
+                res += getHtml(params[i]);
+                if (params.length>11 && i%2==1){
+                    res += '</div><div style="clear: both">';
+                }
+                if (params.length <=11){
+                    res += '</div><div style="clear: both">';
+                }
+            }
+            res += "</div>";
+            return res;
+        }
+          },
+
+          legend: {//顶部每条折线的标识的配置项
+           icon: "circle",   //    改变它的icon circle，rect ，roundRect，triangle
+           type: 'scroll',
+           itemWidth:8,  // 设置它的宽度
+           itemHeight:8, // 设置它的高度
+           itemGap:20, // 设置它的间距
+          // orient: 'vertical',  //vertical是竖着显示 ，默认是横着
+          // left: '70%',   //距离左边70%，也可用left,center,right
+           y: '1%',   //距离顶部的距离，也可以用center
+          // textStyle:{    //icon后面的文字设置
+          //   fontSize: 18,//字体大小
+          //   color: '#ffffff'//字体颜色
+          // }
+        },
             xAxis: {
                type: 'category',
                data: ['建档期A', '调查期A', '建档期B', '调查期B']
@@ -257,6 +333,10 @@ export default {
         }
         return wbout;
         },  
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
     download() {
       // 图表转换成canvas
       html2canvas(document.getElementById("main")).then(function (canvas) {
@@ -276,16 +356,30 @@ export default {
 },
 watch:{
   end_time(){
-      let cs = this.start_time.replace("年","")
+      let cs
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
       cs = parseInt(cs)
 
-      let es = this.end_time.replace("年","")
+      let es
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","") //202381
+      es = es.replace("号调查期","") //2024011 2023111
+      
       es = parseInt(es)
-
+  
       if(cs >= es ){
         this.show = true
       }
@@ -297,13 +391,29 @@ watch:{
       
   },
   start_time(){
-    let cs = this.start_time.replace("年","")
+      let cs 
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
-      
-      let es = this.end_time.replace("年","")
+      cs = parseInt(cs)
+
+
+      let es 
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
 
       if(cs >= es ){
         this.show = true

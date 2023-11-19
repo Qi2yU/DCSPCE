@@ -1,10 +1,24 @@
 <style>
+.title_main{
+  color: #409EFF;
+  font-size: 20px Extra large;
+  text-align: center;
+}
+.choice{
+  text-align: center;
+}
+.button-container{
+  text-align: center;
+}
+.button-container_down{
+  text-align: center;
+}
 </style>
 <template>
   <div id="user">
-    <h1>趋势分析</h1>
+    <h1 class="title_main">趋势分析</h1>
 
-
+  <div class="choice">
     <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
@@ -52,8 +66,13 @@
        >
       </el-option>
     </el-select>
-    <el-button type="primary"  @click = "get_data" :disabled="show" class = "download">查询</el-button>
-    <div id="main" style="width: 1000px; height: 600px"></div>
+  </div>
+
+  <div class="button-container">
+    <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
+  </div>
+
+    <div id="main" style="width: 1500px; height: 600px; text-align: center;"></div>
     
     
     <el-table
@@ -83,8 +102,10 @@
 
     
    
-    <el-button type="primary" @click = exportExcel class = "download">导出折线图</el-button>
-    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
+  <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
+ 
   </div>
 
 </template>
@@ -132,13 +153,6 @@ export default {
   },
   methods:{
 
-    getCity() {
-      // 截取前4位
-      const prefix = this.userId.substring(0, 4);
-
-      // 查找对照表中的映射
-      this.city = this.cityMapping[prefix] || '未知城市';
-      },
     async  get_data(){
  
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_time",{
@@ -177,6 +191,23 @@ export default {
         });
 
         let option = {
+          
+
+
+          dataZoom: [
+          {
+            type: "slider",
+            show: true,
+            xAxisIndex: [0],
+            start: 0,
+            end: 49,
+            textStyle:{
+              color:"#ccd7d7"
+            }
+          },
+        ],
+
+  
           tooltip: {
           trigger: 'axis',
           formatter:function(params){
@@ -253,6 +284,7 @@ export default {
           yAxis:{
             type:'value',
             scale:true,
+            
           },
           series:this.series,
         }
@@ -291,6 +323,8 @@ export default {
         console.log(name)
         /* generate workbook object from table */
         //  .table要导出的是哪一个表格
+
+
         var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
         /* get binary string as output */
         var wbout = XLSX.write(wb, {
@@ -319,13 +353,19 @@ export default {
           base64: base64Image, // 图片的base64编码
           extension: 'png'  // 图片的扩展名
         });
+
       worksheet.addImage(image, 'A1:J20'); // 将图片添加到工作表中
       workbook.xlsx.writeBuffer().then(function (buffer) { // 生成excel文件的二进制数据
-      saveAs.saveAs(new Blob([buffer], {  // 生成Blob对象
+      FileSaver.saveAs(new Blob([buffer], {  // 生成Blob对象
           type: 'application/octet-stream'  // 指定文件的MIME类型
         }), 
         'xchart.xlsx');  // 指定文件名
       });
+      return buffer;
+    },
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
     },
     download() {
       // 图表转换成canvas
@@ -425,9 +465,9 @@ watch:{
       }
       es = es.replace("月第", "")
       es = es.replace("号调查期","") //2024011 2023111
-      
       es = parseInt(es)
-  
+
+    
       if(cs >= es ){
         this.show = true
       }
@@ -440,7 +480,7 @@ watch:{
   },
   start_time(){
       let cs 
-      if(this.start_time.length == 12){
+      if(this.start_time.length == 13){
          cs = this.start_time.replace("年","0")
       }
       else{
@@ -453,12 +493,16 @@ watch:{
 
 
       let es 
-      if(this.end_time.length == 12){
-        let es = this.end_time.replace("年","0")
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
       }
       else{
-        let es = this.end_time.replace("年","")
+         es = this.end_time.replace("年","")
       }
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
+
 
       if(cs >= es ){
         this.show = true

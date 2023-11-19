@@ -1,9 +1,24 @@
 <style>
+.title_main{
+  color: #409EFF;
+  font-size: 20px Extra large;
+  text-align: center;
+}
+.choice{
+  text-align: center;
+}
+.button-container{
+  text-align: center;
+}
+.button-container_down{
+  text-align: center;
+}
 </style>
 <template>
   <div id="user">
-    <h1>趋势分析</h1>
+    <h1 class="title_main">趋势分析</h1>
 
+    <div class="choice">
 
     <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
@@ -42,7 +57,12 @@
        >
       </el-option>
     </el-select>
-    <el-button type="primary"  @click = "get_data" :disabled="show" class = "download">查询</el-button>
+
+    </div>
+
+    <div class="button-container">
+      <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
+   </div>
     <div id="main" style="width: 1000px; height: 600px"></div>
     
     
@@ -72,9 +92,10 @@
 
 
     
-   
-    <el-button type="primary" @click = exportExcel class = "download">导出折线图</el-button>
-    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
+    
+    <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+    </div>
   </div>
 
 </template>
@@ -186,6 +207,21 @@ export default {
         });
 
         let option = {
+
+
+          dataZoom: [
+          {
+            type: "slider",
+            show: true,
+            xAxisIndex: [0],
+            start: 0,
+            end: 49,
+            textStyle:{
+              color:"#ccd7d7"
+            }
+          },
+          ],
+          
           tooltip: {
           trigger: 'axis',
           formatter:function(params){
@@ -315,6 +351,11 @@ export default {
     
         return wbout;
         },  
+
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
     exportExcel() {
       const workbook = new ExcelJS.Workbook(); // 创建工作簿
       const worksheet = workbook.addWorksheet('Sheet1'); // 添加工作表
@@ -453,13 +494,18 @@ watch:{
       cs = parseInt(cs)
 
 
-      let es 
-      if(this.end_time.length == 12){
-        let es = this.end_time.replace("年","0")
+      let es
+      if(this.value_end.length == 13){
+         es = this.value_end.replace("年","0")
       }
       else{
-        let es = this.end_time.replace("年","")
+         es = this.value_end.replace("年","")
       }
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //2024011 2023111
+      
+      es = parseInt(es)
+  
 
       if(cs >= es ){
         this.show = true
