@@ -1,10 +1,25 @@
 <style>
+.title_main{
+  color: #409EFF;
+  font-size: 20px Extra large;
+  text-align: center;
+}
+.choice{
+  text-align: center;
+}
+.button-container{
+  text-align: center;
+}
+.button-container_down{
+  text-align: center;
+}
 </style>
+
 <template>
-  <div id="user">
-    <h1>对比分析</h1>
-    
-    <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
+  <div id="coty">
+    <h1 class="title_main">对比分析</h1>
+    <div class="choice">
+      <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
         :key="item.value"
@@ -12,8 +27,8 @@
         :value="item.value"
        >
       </el-option>
-    </el-select>
-    <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
+      </el-select>
+      <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
       <el-option
         v-for="item in options_endtime"
         :key="item.value"
@@ -21,12 +36,8 @@
         :value="item.value"
        >
       </el-option>
-    </el-select>
-  
-  
-
-
-    <el-select v-model="value_char"  clearable placeholder="企业性质" >
+      </el-select>
+      <el-select v-model="value_char"  clearable placeholder="企业性质" >
       <el-option
         v-for="item in options_char"
         :key="item.value"
@@ -34,8 +45,8 @@
         :value="item.value"
        >
       </el-option>
-    </el-select>
-    <el-select v-model="value_indu" clearable placeholder="所属行业" >
+      </el-select>
+      <el-select v-model="value_indu" clearable placeholder="所属行业" >
       <el-option
         v-for="item in options_indu"
         :key="item.value"
@@ -43,12 +54,14 @@
         :value="item.value"
        >
       </el-option>
-    </el-select>
-  
-    <el-button type="primary" @click="get_data" :disabled="disable" class = "query" >查询</el-button>
-    <div id="main" style="width: 1500px; height: 400px"></div>
+      </el-select>
+   </div>
+   <div class="button-container">
+      <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
+   </div>
+   <div id="main" style="width: 1500px; height: 400px"></div>
 
-  <el-table
+   <el-table
     :data="tableData"
     class="Table"
     border
@@ -86,13 +99,11 @@
       prop="b_change_precent"
       label="调查期B岗位变化占比">
     </el-table-column>
-  </el-table>
-
-  
-
+   </el-table>
     
-    <el-button type="primary" @click = download class = "download">导出折线图</el-button>
-    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
+   <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
   </div>
 </template>
 
@@ -122,7 +133,7 @@ export default {
       value_indu:'',
       option:{},
       myChart:null,
-      disable:false,
+      show:true,
       cityMapping: {
                 '5301': '昆明市',
                 '5303':'曲靖市',
@@ -275,6 +286,10 @@ export default {
         }
         return wbout;
         },  
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
     download() {
       // 图表转换成canvas
       html2canvas(document.getElementById("main")).then(function (canvas) {
@@ -294,16 +309,30 @@ export default {
 },
 watch:{
   end_time(){
-      let cs = this.start_time.replace("年","")
+      let cs
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
       cs = parseInt(cs)
 
-      let es = this.end_time.replace("年","")
+      let es
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","") //202381
+      es = es.replace("号调查期","") //2024011 2023111
+      
       es = parseInt(es)
-
+  
       if(cs >= es ){
         this.show = true
       }
@@ -315,13 +344,29 @@ watch:{
       
   },
   start_time(){
-    let cs = this.start_time.replace("年","")
+      let cs 
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
-      
-      let es = this.end_time.replace("年","")
+      cs = parseInt(cs)
+
+
+      let es 
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
 
       if(cs >= es ){
         this.show = true
@@ -329,7 +374,6 @@ watch:{
       else{
         this.show = false
       }
-   
 
   }
     },
