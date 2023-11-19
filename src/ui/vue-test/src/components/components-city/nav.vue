@@ -151,7 +151,7 @@
          console.log("go to analy-3");
        }else if ((link == "notice")) {
          $this.$router.push("/government-city/notice").catch(error => error);
-         console.log("go to notice");
+         console.log("go to city notice");
        }
      }
    }
