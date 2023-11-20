@@ -114,7 +114,6 @@
      handleClose(key, keyPath) {
        console.log(key, keyPath);
      },
- 
      //跳转到某个导航页
      goPage(link) {
       if (link == "file_check") {

@@ -21,6 +21,9 @@
 .el-container {
   height: 100%;
 }
+.p{
+  
+}
 </style>
 
  <template>
@@ -33,8 +36,13 @@
        <!-- aside部分 -->
       <leftNav></leftNav>
       <el-main>
+        
+        <p v-if="show">欢迎使用省端企业就业管理系统</p>
+        <el-divider></el-divider>
+        <check v-if="show"></check>
          <!-- main部分 -->
        <router-view />
+       
       </el-main>
     </el-container>
   </el-container>
@@ -44,15 +52,24 @@
  <script>
 import navtop from "@/components/components-pro/nav-top.vue";
 import leftNav from "@/components/components-pro/nav.vue";
+import check from "@/pages/pages-pro/data_exam.vue"
 export default {
   components: {
     navtop,
-    leftNav
+    leftNav,
+    check,
   },
   data() {
-    return {};
+    return {
+      show:true,
+    };
   },
-  methods: {}
+  methods: {},
+  updated(){
+    console.log("update")
+    this.show = false 
+  }
+
 };
 </script>
 
