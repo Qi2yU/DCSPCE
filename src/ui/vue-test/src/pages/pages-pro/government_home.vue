@@ -34,7 +34,7 @@
       <leftNav></leftNav>
       <el-main>
          <!-- main部分 -->
-        <router-view />
+       <router-view />
       </el-main>
     </el-container>
   </el-container>
