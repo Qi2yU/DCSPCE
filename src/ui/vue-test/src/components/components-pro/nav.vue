@@ -24,7 +24,7 @@
      <el-row class="tac">
        <el-col>
          <el-menu
-           
+     
            class="el-menu-vertical-demo"
            @open="handleOpen"
            @close="handleClose"
@@ -72,6 +72,7 @@
              <i class="el-icon-s-order"></i>
              <span slot="title">通知界面</span>
            </el-menu-item>
+
 
 
            <el-submenu index="1">
