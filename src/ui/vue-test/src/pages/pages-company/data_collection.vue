@@ -15,7 +15,7 @@
       </el-row>
     </template>
     <template v-if="isrefused()">
-      <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
+      <el-row type="flex" class="row-bg row-two" justify="center" align="top">
         您提交的就业数据被驳回，请重新填报后上交。驳回的理由为：
       </el-row>
       <el-row width="50%" type="flex" class="row-bg row-two" justify="center" align="top">
@@ -31,6 +31,15 @@
             color=#b30e0e>
           </el-input>
         </el-col>
+      </el-row>
+    </template>
+    <template v-if="!isable2Modify()">
+      <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
+        <template v-if="getstatus()==0" >当前就业信息上报状态为：未上报数据</template>
+        <template v-else-if="getstatus()==1" >当前就业信息上报状态为：已上报未审核</template>
+        <template v-else-if="getstatus()==2 || getstatus()==3" >当前就业信息上报状态为：市审核完毕</template>
+        <template v-else-if="getstatus()==4 || getstatus()==5" >当前就业信息上报状态为：省审核完毕</template>
+        <template v-else>当前就业信息上报状态为：被驳回未修改</template>
       </el-row>
     </template>
     <template v-if="isincollection()">
@@ -152,8 +161,8 @@
           <el-form-item>
             <!-- <el-button type="primary" @click="addDomain">修改</el-button>
             <el-button @click="addDomain">确定</el-button> -->
-
-            <el-button type="primary" @click="modify_collection_data">修改</el-button>
+            <el-button v-if="!isable2Modify()" disabled type="primary">修改</el-button>
+            <el-button v-else type="primary" @click="modify_collection_data">修改</el-button>
             <el-button >确定</el-button>
             本期调查期持续时间：{{ collectionData.start_time }}-{{ collectionData.end_time }}
           </el-form-item>
@@ -178,6 +187,7 @@
           secondReason: '',
           reasonDetail: '',
           iscollected: '',
+          status: '',
         },
         refusedData: {
           isRefused: '',
@@ -199,7 +209,7 @@
           userid: this.userid
         }
       }).then((response)=>{
-        console.log(response.data)
+        // console.log(response.data)
         this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
         this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
         this.comCurData.numDecreasedReason =  response.data.numDecreasedReason;
@@ -207,14 +217,15 @@
         this.comCurData.secondReason = response.data.secondReason;
         this.comCurData.reasonDetail = response.data.reasonDetail;
         this.comCurData.iscollected = response.data.valid;
+        this.comCurData.status = response.data.status;
       });
       this.$http.get("/get_refused_info",{
         params: {
           userid: this.userid
         }
       }).then((response)=>{
-        console.log(response)
-        console.log(response.data)
+        // console.log(response)
+        // console.log(response.data)
         this.refusedData.isRefused = response.data.is_refused;
         this.refusedData.emplRefusedInfo = response.data.emplInfoRefused;
       });
@@ -232,6 +243,13 @@
       },  
       isincollection(){
         return (this.comCurData.iscollected == 0) 
+      },
+      isable2Modify(){
+        var flag = this.status == 0 || this.status == 1 || this.status == 6 || this.status == 7
+        return flag
+      },
+      getstatus(){
+        return this.comCurData.status;
       },
       isrefused(){
         return (this.refusedData.isRefused == 1) 

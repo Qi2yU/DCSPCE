@@ -13,14 +13,14 @@
       <el-col :span="5"></el-col>
       <el-col :span="20">
         <el-form :model="comCurData" ref="comCurData" label-width="150px" class="demo-dynamic">
-          <el-form-item
+          <el-form-item 
             label="建档期就业人数"
             :rules="[
               { required: true, message: '请输入建档期就业人数', trigger: 'blur' }
             ]"
           >
             <el-col :span="15">
-            <el-input  v-model="comCurData.docEmploymentNumber"></el-input>
+            <el-input disabled v-model="comCurData.docEmploymentNumber"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item
@@ -149,7 +149,9 @@
           numDecreasedReason: '',
           mainReason: '',
           secondReason: '',
-          reasonDetail: ''
+          reasonDetail: '',
+          iscollected: '',
+          status: '',
         }
       };
     },
@@ -169,6 +171,11 @@
         this.comCurData.mainReason =  response.data.mainReason;
         this.comCurData.secondReason = response.data.secondReason;
         this.comCurData.reasonDetail = response.data.reasonDetail;
+        this.comCurData.iscollected = response.data.valid;
+        this.comCurData.status = response.data.status;
+        if(!this.isincollection() || !this.isable2Modify()){
+          this.go_back_collection();
+        }
         // console.log("初始化结束");
       });
       // console.log("被创建");
@@ -214,6 +221,13 @@
             && this.comCurData.curEmploymentNumber != ''
             && this.comCurData.docEmploymentNumber > this.comCurData.curEmploymentNumber) return true;
         else return false;
+      },
+      isincollection(){
+        return (this.comCurData.iscollected == 0) 
+      },
+      isable2Modify(){
+        var flag = this.status == 0 || this.status == 1 || this.status == 6 || this.status == 7
+        return flag
       },
       isnaturallyDecreased(){
         if(this.comCurData.mainReason == "自然减员") return true;
