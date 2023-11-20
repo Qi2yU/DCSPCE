@@ -52,7 +52,7 @@
  <script>
 import navtop from "@/components/components-pro/nav-top.vue";
 import leftNav from "@/components/components-pro/nav.vue";
-import check from "@/pages/pages-pro/data_exam.vue"
+import check from "@/pages/pages-pro/data_exam copy.vue"
 export default {
   components: {
     navtop,
