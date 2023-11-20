@@ -33,6 +33,9 @@
        <!-- aside部分 -->
       <leftNav :userId="userId"></leftNav>
       <el-main>
+        <p v-if="show">欢迎使用市端企业就业管理系统</p>
+        <el-divider></el-divider>
+        <check v-if="show"></check>
          <!-- main部分 -->
         <router-view />
       </el-main>
@@ -44,17 +47,24 @@
  <script>
 import navtop from "@/components/components-city/nav-top.vue";
 import leftNav from "@/components/components-city/nav.vue";
+import check from "@/pages/pages-city/data_exam.vue"
 export default {
   components: {
     navtop,
-    leftNav
+    leftNav,
+    check,
   },
   data() {
     return { 
       userId:this.$route.query.userId,
+      show: true,
     };
   },
-  methods: {}
+  methods: {},
+  updated(){
+    console.log("update")
+    this.show = false 
+  }
 };
 </script>
 

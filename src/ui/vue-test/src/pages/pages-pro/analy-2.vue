@@ -6,6 +6,7 @@
 }
 .choice{
   text-align: center;
+  border-style:hidden;
 }
 .button-container{
   text-align: center;
@@ -13,13 +14,39 @@
 .button-container_down{
   text-align: center;
 }
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 
 
 </style>
 <template>
   <div id="pro">
-    <h1 class="title_main">对比分析</h1>
-
+    <h1 class="title_main" style="color: black; text-align: center; font-size: xx-large;">对比分析界面</h1>
+    <el-divider></el-divider>
   <div class="choice">
     <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
       <el-option
@@ -70,20 +97,30 @@
       </el-option>
     </el-select>
   </div>
-
+  
   
   <div class="button-container">
     <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
   </div>
-    
+
+  <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
+
     <div id="main" style="width: 1500px; height: 400px; text-align: center;"></div>
+    <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
 
   <el-table
-    :data="tableData"
-    class="Table"
-    border
-    height="250"
-    style="width: 100%">
+  :data="tableData"
+            :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
+            :cell-style="{ height: '44px', padding: '0px' }"
+            style="width: 60%; left: 20%;"
+            class="Table"
+            max-height="550"
+            border
+            small>
     <el-table-column
       prop="name"
       label="企业名"
@@ -94,24 +131,19 @@
       label="调查期A岗位变化数"
       width="180">
     </el-table-column>
-    <el-table-column
-      prop="a_less"
-      label="调查期A岗位减少数">
-    </el-table-column>
-    <el-table-column
-      prop="b_change_num"
-      label="调查期B岗位变化数"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="b_less"
-      label="调查期B岗位减少数">
-    </el-table-column>
+
     <el-table-column
       prop="a_change_precent"
       label="调查期A岗位变化占比"
       width="180">
     </el-table-column>
+    
+    <el-table-column
+      prop="b_change_num"
+      label="调查期B岗位变化数"
+      width="180">
+    </el-table-column>
+
     <el-table-column
       prop="b_change_precent"
       label="调查期B岗位变化占比">

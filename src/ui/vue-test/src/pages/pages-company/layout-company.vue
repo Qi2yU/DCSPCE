@@ -33,6 +33,9 @@
        <!-- aside部分 -->
       <leftNav></leftNav>
       <el-main>
+        <p v-if="show" style="font-size: large; text-align: center;">欢迎使用企业端就业填报系统</p>
+        <el-divider></el-divider>
+        <notice v-if = "show"></notice>
          <!-- main部分 -->
         <router-view />
       </el-main>
@@ -44,13 +47,17 @@
  <script>
 import navtop from "@/components/components-company/nav-top.vue";
 import leftNav from "@/components/components-company/nav-company.vue";
+import notice from "@/pages/pages-company/notice.vue"
 export default {
   components: {
     navtop,
-    leftNav
+    leftNav,
+    notice,
   },
   data() {
-    return {};
+    return {
+      show:true
+    };
   },created:function(){
       this.userid = this.$http.userid
       this.$http.get("/get_refused_info",{
@@ -67,7 +74,11 @@ export default {
       });
 
     },
-  methods: {}
+  methods: {},
+  updated(){
+    console.log("update")
+    this.show = false 
+  }
 };
 </script>
 

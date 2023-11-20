@@ -4,7 +4,7 @@
 
 <template>
   <div id="user">
-    <h1>取样分析</h1>
+    <h1 class="title_main" style="color: black; text-align: center; font-size: xx-large;">取样分析界面</h1>
 
     <el-select v-model="value" clearable @clear="delValue()" placeholder="地区选择">
       <el-option
@@ -17,13 +17,20 @@
     </el-select>
     <el-button type="success"  @click = "Query_fun()">查询</el-button>
 
+    <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
+  <div style="display: flex;">
+    
+  
     <el-table
     ref="multipleTable"
     :data="showData"
     class="Table"
     border
     tooltip-effect="dark"
-    style="width: 100%"
+    background-color:
+    style="width: 50%"
     @selection-change="handleSelectionChange">
     <el-table-column
       type="selection"
@@ -40,12 +47,12 @@
     </el-table-column>
 
   </el-table>
+  <div id="main" style="width: 600px; height: 400px;"></div>
+  </div>
 
-
-
-  <div id="main" style="width: 600px; height: 400px"></div>
-  <el-button type="primary"  @click = "download"  class = "download">导出饼图</el-button>
-  <el-button type="primary"  @click = "DownloadHandler"  class = "download">导出表格</el-button>
+  <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
   </div>
   
 </template>
@@ -55,6 +62,7 @@ import choice_button from '../../components/components-pro/analy3_components/ana
 import FileSaver from "file-saver"
 import XLSX from "xlsx"
 import html2canvas from 'html2canvas'
+import { color } from 'echarts'
 export default {
   data(){
     return{
@@ -239,6 +247,10 @@ export default {
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
     },
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
     drawChart(){
       // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
        this.myChart = this.$echarts.init(document.getElementById("main"));
@@ -258,7 +270,7 @@ export default {
             textStyle: {
               fontSize: 26,
               fontWeight: 'bolder',
-              color: '#000080'
+              color: 'black'
             },
             // 副标题文本样式设置
       
@@ -284,7 +296,7 @@ export default {
                     data: this.chartData
                 }
             ],
-            backgroundColor: 'black',
+            backgroundColor:'#909399' ,
         }
       // 使用刚指定的配置项和数据显示图表。
       document.getElementById("main").setAttribute('_echarts_instance_', '')

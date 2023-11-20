@@ -62,11 +62,14 @@
    <div id="main" style="width: 1500px; height: 400px"></div>
 
    <el-table
-    :data="tableData"
-    class="Table"
-    border
-    height="250"
-    style="width: 100%">
+            :data="tableData"
+            :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
+            :cell-style="{ height: '44px', padding: '0px' }"
+            style="width: 60%; left: 20%;"
+            class="Table"
+            max-height="550"
+            border
+            small>
     <el-table-column
       prop="name"
       label="企业名"
@@ -78,23 +81,19 @@
       width="180">
     </el-table-column>
     <el-table-column
-      prop="a_less"
-      label="调查期A岗位减少数">
+      prop="a_change_precent"
+      label="调查期A岗位变化占比"
+      width="180">
     </el-table-column>
+
+    
     <el-table-column
       prop="b_change_num"
       label="调查期B岗位变化数"
       width="180">
     </el-table-column>
-    <el-table-column
-      prop="b_less"
-      label="调查期B岗位减少数">
-    </el-table-column>
-    <el-table-column
-      prop="a_change_precent"
-      label="调查期A岗位变化占比"
-      width="180">
-    </el-table-column>
+
+
     <el-table-column
       prop="b_change_precent"
       label="调查期B岗位变化占比">
@@ -241,6 +240,20 @@ export default {
       await  this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{
         this.option = {
+          title:{
+        show:true,//false
+        text:"就业人数",//主标题文本
+
+
+        textAlign:'auto',//整体（包括 text 和 subtext）的水平对齐
+        textVerticalAlign:'auto',//整体（包括 text 和 subtext）的垂直对齐
+        padding:0,//[5,10] | [ 5,6, 7, 8] ,标题内边距
+        left:100,//'5' | '5%'，title 组件离容器左侧的距离
+        right:'auto',//'title 组件离容器右侧的距离
+        top:10,//title 组件离容器上侧的距离
+        bottom:'auto',//title 组件离容器下侧的距离
+
+        },
             xAxis: {
                type: 'category',
                data: ['建档期A', '调查期A', '建档期B', '调查期B']

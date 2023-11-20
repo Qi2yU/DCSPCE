@@ -63,14 +63,14 @@
     <div class="button-container">
       <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
    </div>
-    <div id="main" style="width: 1000px; height: 600px"></div>
+   <div id="main" style="width: 1500px; height: 600px; text-align: center;"></div>
     
     
     <el-table
             :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
             :cell-style="{ height: '44px', padding: '0px' }"
-            style="width: 100%"
+            style="width: 70%;left: 15%; "
             class="Table"
             max-height="550"
             border
@@ -207,7 +207,20 @@ export default {
         });
 
         let option = {
+          title:{
+        show:true,//false
+        text:"就业人数",//主标题文本
 
+
+        textAlign:'auto',//整体（包括 text 和 subtext）的水平对齐
+        textVerticalAlign:'auto',//整体（包括 text 和 subtext）的垂直对齐
+        padding:0,//[5,10] | [ 5,6, 7, 8] ,标题内边距
+        left:80,//'5' | '5%'，title 组件离容器左侧的距离
+        right:'auto',//'title 组件离容器右侧的距离
+        top:30,//title 组件离容器上侧的距离
+        bottom:'auto',//title 组件离容器下侧的距离
+
+          },
 
           dataZoom: [
           {
@@ -482,7 +495,8 @@ watch:{
   },
   start_time(){
       let cs 
-      if(this.start_time.length == 12){
+  
+      if(this.start_time.length == 13){
          cs = this.start_time.replace("年","0")
       }
       else{
@@ -495,18 +509,18 @@ watch:{
 
 
       let es
-      if(this.value_end.length == 13){
-         es = this.value_end.replace("年","0")
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
       }
       else{
-         es = this.value_end.replace("年","")
+         es = this.end_time.replace("年","")
       }
       es = es.replace("月第", "")
       es = es.replace("号调查期","") //2024011 2023111
       
       es = parseInt(es)
   
-
+ 
       if(cs >= es ){
         this.show = true
       }

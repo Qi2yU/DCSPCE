@@ -1,11 +1,8 @@
 <style>
-.title_main{
-  color: #409EFF;
-  font-size: 20px Extra large;
-  text-align: center;
-}
+
 .choice{
   text-align: center;
+  border: 1px solid blue;
 }
 .button-container{
   text-align: center;
@@ -13,13 +10,43 @@
 .button-container_down{
   text-align: center;
 }
+
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
 </style>
 <template>
   <div id="user">
-    <h1 class="title_main">趋势分析</h1>
+    <h1 class="title_main" style="color: black; text-align: center; font-size: xx-large;">趋势分析界面</h1>
 
+    <el-divider></el-divider>
   <div class="choice">
-    <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
+   
+    <el-select v-model="start_time" style="margin-left:10px" filterable clearable placeholder="起始调查期" >
       <el-option
         v-for="item in options_starttime"
         :key="item.value"
@@ -28,7 +55,7 @@
        >
       </el-option>
     </el-select>
-    <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
+    <el-select v-model="end_time" style="margin-left:10px" filterable clearable placeholder="结束调查期" >
       <el-option
         v-for="item in options_endtime"
         :key="item.value"
@@ -39,7 +66,7 @@
     </el-select>
 
 
-    <el-select v-model="value_city" clearable placeholder="地区" >
+    <el-select v-model="value_city" style="margin-left:10px" clearable placeholder="地区" >
       <el-option
         v-for="item in options_city"
         :key="item.value"
@@ -48,7 +75,7 @@
        >
       </el-option>
     </el-select>
-    <el-select v-model="value_char"  clearable placeholder="企业性质" >
+    <el-select v-model="value_char"  style="margin-left:10px" clearable placeholder="企业性质" >
       <el-option
         v-for="item in options_char"
         :key="item.value"
@@ -57,7 +84,7 @@
        >
       </el-option>
     </el-select>
-    <el-select v-model="value_indu" clearable placeholder="所属行业" >
+    <el-select v-model="value_indu"  style="margin-left:10px" clearable placeholder="所属行业" >
       <el-option
         v-for="item in options_indu"
         :key="item.value"
@@ -68,22 +95,33 @@
     </el-select>
   </div>
 
+
+  <el-divider></el-divider>
+
   <div class="button-container">
     <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
   </div>
 
+  <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
+
     <div id="main" style="width: 1500px; height: 600px; text-align: center;"></div>
-    
+    <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+    </el-row>
     
     <el-table
             :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
             :cell-style="{ height: '44px', padding: '0px' }"
-            style="width: 100%"
+            
+            style="width: 70%;left: 15%; "
             class="Table"
             max-height="550"
             border
             small
+            
           >
           <el-table-column
             prop="company_name"
@@ -191,7 +229,20 @@ export default {
         });
 
         let option = {
-          
+          title:{
+        show:true,//false
+        text:"就业人数",//主标题文本
+
+
+        textAlign:'auto',//整体（包括 text 和 subtext）的水平对齐
+        textVerticalAlign:'auto',//整体（包括 text 和 subtext）的垂直对齐
+        padding:0,//[5,10] | [ 5,6, 7, 8] ,标题内边距
+        left:80,//'5' | '5%'，title 组件离容器左侧的距离
+        right:'auto',//'title 组件离容器右侧的距离
+        top:30,//title 组件离容器上侧的距离
+        bottom:'auto',//title 组件离容器下侧的距离
+
+          },
 
 
           dataZoom: [
@@ -287,6 +338,7 @@ export default {
             
           },
           series:this.series,
+          
         }
         this.myChart.setOption(option)
     })
@@ -305,7 +357,7 @@ export default {
           }
           obj.company_name = element.company_name
           for(let i = 0; i < len; i++){
-            let time = element.time_list[i]
+            let time = element.time_list[i] 
             let data = element.table_percent_list[i]
             obj[time] = data
           }
@@ -324,8 +376,16 @@ export default {
         /* generate workbook object from table */
         //  .table要导出的是哪一个表格
 
+      let fix = document.querySelector('.el-table__fixed');
+      let wb;
+      if(fix){ //判断要导出的节点中是否有fixed的表格，如果有，转换excel时先将该dom移除，然后append回去
+        wb = XLSX.utils.table_to_book(document.querySelector('.Table').removeChild(fix));
+        document.querySelector('.Table').appendChild(fix);
+      }else{
+        wb = XLSX.utils.table_to_book(document.querySelector('.Table'));
+      }
 
-        var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
+
         /* get binary string as output */
         var wbout = XLSX.write(wb, {
           bookType: "xlsx",
