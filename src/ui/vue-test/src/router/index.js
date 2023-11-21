@@ -69,6 +69,7 @@ import FileBeChecked_City from '@/pages/pages-city/file_be_checked.vue'
 import Queryres2_City from '@/pages/pages-city/query_res2'
 //公司的界面
 import Record from "@/pages/pages-company/record"
+import Record_Modify from "@/pages/pages-company/record_modify"
 import Company from "@/pages/pages-company/layout-company"
 import Data_Collection from "@/pages/pages-company/data_collection"
 import Data_Collection_Modify from "@/pages/pages-company/data_collection_modify"
@@ -102,6 +103,10 @@ export default new Router({
         path: 'record',
         name: 'Record',
         component: Record
+      }, {
+        path: 'record_modify',
+        name: 'Record_Modify',
+        component: Record_Modify,
       }, {
         path: 'data_collection',
         name: 'Data_Collection',

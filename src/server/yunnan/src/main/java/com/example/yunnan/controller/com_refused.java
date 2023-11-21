@@ -1,5 +1,6 @@
 package com.example.yunnan.controller;
 
+import com.example.yunnan.entity.comInfoRefused;
 import com.example.yunnan.entity.empInfoRefused;
 import com.example.yunnan.entity.res_time;
 import com.example.yunnan.msg.UserID;
@@ -26,10 +27,22 @@ public class com_refused {
     private Refused_info_service refused_info_service;
     @RequestMapping(value="/get_refused_info",method= RequestMethod.GET)
     public Refused_info get_refused_info(UserID cid){
+
+        Refused_info ri = new Refused_info();
+        //默认没有驳回信息
+        ri.setIs_refused(0);
+
         System.out.println(cid.getUserid());
         // 还需补上备案审核的驳回信息
-        // todo!
-
+        List<comInfoRefused> cominfo = new ArrayList<>();
+        cominfo = refused_info_service.getComInfoRefused(cid.getUserid());
+        if(cominfo.toArray().length == 1){
+            ri.setComInfoRefused(cominfo.toArray()[0].toString());
+            if(!ri.getComInfoRefused().isEmpty()){
+                ri.setIs_refused(1);
+                return ri;
+            }
+        }
 
         // 获取当前的调查期表
         Date date = new Date();
@@ -38,9 +51,7 @@ public class com_refused {
         System.out.println(nowDate);
         List<res_time> list= dataQueryService.getTable(nowDate, nowDate);
 
-        Refused_info ri = new Refused_info();
-        //默认没有驳回信息
-        ri.setIs_refused(0);
+
         if (list.toArray().length == 1){
             // 对当前表进行修改，查询是否存在驳回信息，如果存在就加入
             String tableName= list.get(0).getTableName();

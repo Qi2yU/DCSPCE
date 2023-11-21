@@ -13,6 +13,7 @@
  
  .el-menu{
    border-right:none;
+  overflow:visible;
  }
  .el-aside{
    border-right: 1px solid #f5f1f1;
@@ -24,7 +25,7 @@
      <el-row class="tac">
        <el-col>
          <el-menu
-     
+        
            class="el-menu-vertical-demo"
            @open="handleOpen"
            @close="handleClose"

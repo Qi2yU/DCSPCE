@@ -93,6 +93,7 @@ public class company_infoController {
 //        System.out.println("here");
         user_accountsMapper.checkpass_record(id);
 //        System.out.println("here2");
+        company_infoMapper.clearbackedinfo(id);
     }
 
     //备案审核驳回

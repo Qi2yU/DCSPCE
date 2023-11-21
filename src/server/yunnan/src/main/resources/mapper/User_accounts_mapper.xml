@@ -8,7 +8,7 @@
     </insert>
 
     <insert id="insertTableSearch">
-        insert into research_schedule values (#{id}, #{rs}, #{re}, #{fs}, #{fe}, #{type}, #{is_finish}, #{index_table});
+        insert into research_schedule (id, r_time_start, r_time_end, f_time_start, f_time_end, type, is_finish, index_data_table) values (#{id}, #{rs}, #{re}, #{fs}, #{fe}, #{type}, #{is_finish}, #{index_table});
     </insert>
 
     <update id="createNewTable">
@@ -54,4 +54,8 @@
     <insert id="insertNum">
         insert into ${table} (user_id, last_people_num, state) values (#{user_id}, #{last_num}, #{state});
     </insert>
+    
+    <update id="dropTable">
+        DROP TABLE ${index_table};
+    </update>
 </mapper>

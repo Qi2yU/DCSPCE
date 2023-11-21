@@ -49,6 +49,10 @@ public interface company_infoMapper {
     @Update("update company_info set backed_info = #{reason} where user_id=#{id}")
     public void checkbackreason(String id,String reason);
 
+    //备案审核通过 清空backed_info
+    @Update("update company_info set backed_info = '' where user_id = #{id}")
+    public void clearbackedinfo(String id);
+
     //查询表名
     @Select("select index_data_table from research_schedule where r_time_start = #{time1} and r_time_end = #{time2}")
     String selecttablename(String time1,String time2);
