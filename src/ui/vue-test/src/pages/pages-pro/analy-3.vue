@@ -221,18 +221,21 @@ export default {
       }
     },
     delValue(){
-      this.showData = this.tableData
+      if(this.flag == false){
+        this.showData = this.tableData
       
-      this.chartData = this.tableData
+       this.chartData = this.tableData
 
 
-      this.defaultSelection()
-      this.chancle_arry = []
-      this.flag = true
-      this.flagfordata = false
-      this.query_flag = false
+       this.defaultSelection()
+       this.chancle_arry = []
+       this.flag = true
+       this.flagfordata = false
+       this.query_flag = false
       
-      this.value = "";
+       this.value = "";
+      }
+
   
     },
     DownloadHandler(){
