@@ -9,6 +9,7 @@
 <style>
 .el-main {
   background-color: #f5f7f9;
+  overflow:hidden
 }
 
 .el-header,

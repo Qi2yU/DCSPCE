@@ -34,7 +34,14 @@ public class committed_controller {
     @GetMapping("/detail")
     @ResponseBody
     public detaildata getDetail(String userID){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            detaildata empty= new detaildata();
+            return empty;
+        }
+        String tableName=table.getTableName();
+
         detaildata data=new detaildata();
         data=detailService.getDetailById(tableName,userID);
 
@@ -44,7 +51,13 @@ public class committed_controller {
     @GetMapping("/count")
     @ResponseBody
     public List<DataExam> getCount(){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<DataExam> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<DataExam> list=detailService.getCountByState(tableName);
         System.out.println(list);
         return list;
@@ -53,7 +66,13 @@ public class committed_controller {
     @GetMapping("/committed")
     @ResponseBody
     public List<CommittedTrans> getCommitted(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<CommittedTrans> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<Committed> originlist =detailService.getCommittedOnCity(tableName,city);
         System.out.println(originlist);
         List<CommittedTrans> newlist = new ArrayList<>();
@@ -85,7 +104,13 @@ public class committed_controller {
     @GetMapping("/retreat")
     @ResponseBody
     public List<Retreat> getRetreat(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<Retreat> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<Retreat> list =detailService.getRetreat(tableName,city);
         System.out.println(list);
         return list;
@@ -94,7 +119,13 @@ public class committed_controller {
     @GetMapping("/uncommitted")
     @ResponseBody
     public List<Uncommitted> getUncommitted(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<Uncommitted> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<Uncommitted> list=detailService.getUncommitted(tableName,city);
         System.out.println(list);
         return list;
@@ -133,7 +164,13 @@ public class committed_controller {
     @GetMapping("/getcount")
     @ResponseBody
     public List<DataExam> getCountOnCity(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<DataExam> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<DataExam> data =detailService.getCountOnCity(tableName,city);
         System.out.println(data);
         return data;
@@ -142,7 +179,13 @@ public class committed_controller {
     @GetMapping("/uncommittedoncity")
     @ResponseBody
     public List<Uncommitted> getUncommittedOnCity(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<Uncommitted> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<Uncommitted> list=detailService.getUncommittedOnCity(tableName,city);
         System.out.println(list);
         return list;
@@ -151,7 +194,13 @@ public class committed_controller {
     @GetMapping("/retreatoncity")
     @ResponseBody
     public List<Retreat> getRetreatOnCity(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<Retreat> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<Retreat> list =detailService.getRetreatOnCity(tableName,city);
         System.out.println(list);
         return list;
@@ -159,7 +208,13 @@ public class committed_controller {
     @GetMapping("/getcommittedoncity")
     @ResponseBody
     public List<CommittedTrans> getCommittedOnCity2(String city){
-        String tableName=detailService.getTable().getTableName();
+        res_time table=detailService.getTable();
+        if(table==null)
+        {
+            List<CommittedTrans> empty= new ArrayList<>();
+            return empty;
+        }
+        String tableName=table.getTableName();
         List<Committed> originlist =detailService.getCommittedOnCity2(tableName,city);
         System.out.println(originlist);
         List<CommittedTrans> newlist = new ArrayList<>();
