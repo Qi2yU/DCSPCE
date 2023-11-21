@@ -208,7 +208,6 @@ public class sum_databyTime_service {
         }
     }
 
-
     public void get_datafortimeCity(String st, String et, String city){
         String time = new String(st);//20xx0901
 
@@ -234,7 +233,6 @@ public class sum_databyTime_service {
             time = compute_TimewithPeriod(time, et,bc);
         }
     }
-
     public void get_dataforpro(String st, String et, int type){
         String time = new String(st);//20xx0901
 

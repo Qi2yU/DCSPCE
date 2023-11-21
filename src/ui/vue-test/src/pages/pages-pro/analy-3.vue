@@ -26,10 +26,14 @@
     <el-table
     ref="multipleTable"
     :data="showData"
-    class="Table"
-    border
-    tooltip-effect="dark"
-    background-color:
+    :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
+            :cell-style="{ height: '44px', padding: '0px' }"
+            
+         
+            class="Table"
+            max-height="550"
+            border
+            small
     style="width: 50%"
     @selection-change="handleSelectionChange">
     <el-table-column
@@ -76,12 +80,15 @@ export default {
       option:{},
 
       chancle_arry:[],
+      chancle_arry_query:[],
 
       flag:true,
       change_when:false,
       query_flag : false,
       query_change : true,
       flagfordata: true,
+      flag_whenquery:false,
+      if_query:'no',
     }
   },
   components:{
@@ -121,21 +128,33 @@ export default {
         let new_size = val.length
         const old_arry = this.multipleSelection.map(item=>item.name)
         const new_arry = val.map(item=>item.name)
-        console.log(val)
+       
         this.multipleSelection = val;
         if(this.flag){
           if(old_size > new_size && this.flagfordata){
             const result = old_arry.filter(item => !new_arry.includes(item))
-            this.chancle_arry.push(result)     
+       
+            if(result.length != 1){
+              for(let i = 0; i < result.length; i++){
+                this.chancle_arry.push(result.at(i))
+              }
+            }else{
+              this.chancle_arry.push(result.at(0))
+            }
+            
+      
           }else{
             let result = new_arry.filter(item => !old_arry.includes(item))
-            result = result.toString()
             this.flagfordata = true
-            for(let i = 0; i < this.chancle_arry.length;i++){
-              if(this.chancle_arry[i] == result){
-                this.chancle_arry.splice(i,1)
+            for(let i = 0; i < result.length;i++){
+              for(let j = 0; j < this.chancle_arry.length;j++){
+              if(this.chancle_arry[j] == result[i]){
+                this.chancle_arry.splice(j,1)
               }
-            }        
+            }
+            }
+          
+             
           }
           this.chartData = val  
           
@@ -158,14 +177,25 @@ export default {
       let flag_for_query_default = true
    
       let name = Object.values(this.showData.at(0))[0]
-  
-      if(this.chancle_arry.length){
-        for(let i = 0; i < this.chancle_arry.at(0).length;i++){
-          if(name == this.chancle_arry.at(0)[i]){
+      if(this.flag == true){
+        if(this.chancle_arry.length){
+        for(let i = 0; i < this.chancle_arry.length;i++){
+          if(name == this.chancle_arry[i]){
             flag_for_query_default = false
           }
+       }
       }
-      }   
+      }else{
+        if(this.chancle_arry_query.length){
+        for(let i = 0; i < this.chancle_arry_query.length;i++){
+          if(name == this.chancle_arry_query[i]){
+            flag_for_query_default = false
+          }
+        }
+       }
+      }
+
+
       if(flag_for_query_default){
         this.query_change = true
         this.defaultSelection()
@@ -173,8 +203,9 @@ export default {
       else{
         this.query_change = false
       }
-      
+      this.chancle_arry_query = this.chancle_arry
       this.flag = false
+
     },
     setOptions_city(){
 
@@ -306,7 +337,7 @@ export default {
   },
   watch:{
     multipleSelection(new_arry,old_arry){
-      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change == true ){
+      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change == true ){ 
         console.log("取消一个")
         let flag = true
         let name = Object.values(this.showData.at(0))[0]
@@ -321,6 +352,8 @@ export default {
         }
         if(flag){
           let index = this.chartData.indexOf(this.showData[0])
+          this.chancle_arry_query.push(name);
+          //console.log(this.chancle_arry_query)
           this.chartData.splice(index,1)
           this.query_change = false
           this.drawChart()
@@ -333,14 +366,17 @@ export default {
         this.query_change = true
         this.change_when = true
         this.chartData.push(this.showData[0])
+        let name = Object.values(this.showData.at(0))[0]
+        for(let j = 0; j < this.chancle_arry_query.length;j++){
+              if(this.chancle_arry_query[j] == name){
+                this.chancle_arry_query.splice(j,1)
+              }
+            }
+        console.log(this.chancle_arry_query)
         this.drawChart()
       }
     },
-    chancle_arry(new_arry,old_arry){
 
-
-
-    },
   }
 }
 </script>
