@@ -8,7 +8,11 @@ import com.example.yunnan.service.Government_set_service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -100,6 +104,36 @@ public class government_set {
             }
         }
         return "/government-pro/centre-1";
+    }
+
+    @GetMapping("/government-pro/getSystemInfo")
+    public List<SystemInfo> getSystemInfo() {
+        MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+        MemoryUsage memoryUsage = memoryMXBean.getHeapMemoryUsage();
+        MemoryUsage nonmemoryUsage = memoryMXBean.getNonHeapMemoryUsage();
+        SystemInfo systemInfo = new SystemInfo(String.valueOf(memoryUsage.getUsed()), String.valueOf(nonmemoryUsage.getUsed()));
+        List<SystemInfo> systemList = new ArrayList<>();
+        systemList.add(systemInfo);
+        return systemList;
+    }
+
+    private static class SystemInfo {
+        String memUse;
+
+        String nonmem;
+
+        public SystemInfo(String use, String nonuse) {
+            this.memUse=use;
+            this.nonmem=nonuse;
+        }
+
+        public String getMemUse() {
+            return memUse;
+        }
+
+        public String getNonmem() {
+            return nonmem;
+        }
     }
 
     private static class TableSearchInfo {

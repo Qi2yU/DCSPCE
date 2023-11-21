@@ -46,10 +46,10 @@ public class gov_notice {
     }
 
     @PostMapping ("/gov_notice/get_all")
-    public List<notice_show_entity> get_all_notice(@RequestBody UserId userId){
+    public List<notice_show_entity> get_all_notice(@RequestBody GetNotice_User getNoticeUser){
 
-        String id = userId.userId.substring(0, 4);
-        System.out.println(userId+"---"+id);
+        String id = getNoticeUser.userId.substring(0, 4);
+        System.out.println(getNoticeUser+"---"+id);
         List<notice_show_entity> resultlist;
         if(Objects.equals(id, "5300")) {
             resultlist = govNoticeService.fetchAllNotice();
@@ -113,6 +113,22 @@ public class gov_notice {
         @JsonCreator
         public UserId(@JsonProperty("userId") String id) {
             this.userId = id;
+        }
+
+        public String getUserId() {
+            return userId;
+        }
+    }
+
+    public static class GetNotice_User {
+        String userId;
+
+        public GetNotice_User() {
+
+        }
+
+        public GetNotice_User(String userId) {
+            this.userId=userId;
         }
 
         public String getUserId() {
