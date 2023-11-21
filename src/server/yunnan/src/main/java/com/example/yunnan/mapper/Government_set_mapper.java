@@ -29,4 +29,6 @@ public interface Government_set_mapper {
     Integer get_lastnum(String user_id, String table);
 
     void insertNum(String user_id, int last_num, int state, String table);
+
+    void dropTable(String index_table);
 }

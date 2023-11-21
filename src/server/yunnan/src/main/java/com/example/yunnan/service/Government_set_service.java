@@ -56,4 +56,9 @@ public class Government_set_service {
     public void insertNum(String id, int num, int state, String table) {
         Government_Set_Mapper.insertNum(id, num, state, table);
     }
+
+    public void dropTable(String index_table) {
+        System.out.println("删除相同表");
+        Government_Set_Mapper.dropTable(index_table);
+    }
 }

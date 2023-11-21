@@ -87,6 +87,8 @@ public class government_set {
         System.out.println(index_data_table);
 //        sql完成添加调查期然后创建一个表
         governmentSetService.insertNewTableSearch(id, r_time_s, r_time_e, f_time_s, f_time_e, type,  is_finish, index_data_table);
+//        无论如何为了保证程序的正确运行测试环境，直接先删表。
+        governmentSetService.dropTable(index_data_table);
         governmentSetService.createNewTable(index_data_table);
 //        现在得初始化这个调查期的表；先读取当前有什么企业用户在table1中；
 //        然后在上一个调查期中获取数据初始化能初始化的表；
