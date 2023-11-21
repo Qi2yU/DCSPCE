@@ -121,7 +121,7 @@
             max-height="550"
             border
             small
-            
+          
           >
           <el-table-column
             prop="company_name"

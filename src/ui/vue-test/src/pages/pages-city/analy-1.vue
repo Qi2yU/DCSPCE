@@ -13,11 +13,37 @@
 .button-container_down{
   text-align: center;
 }
+.el-row {
+    margin-bottom: 20px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  .el-col {
+    border-radius: 4px;
+  }
+  .bg-purple-dark {
+    background: #99a9bf;
+  }
+  .bg-purple {
+    background: #d3dce6;
+  }
+  .bg-purple-light {
+    background: #e5e9f2;
+  }
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
 </style>
 <template>
   <div id="user">
     <h1 class="title_main">趋势分析</h1>
-
+    <el-divider></el-divider>
     <div class="choice">
 
     <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
@@ -59,12 +85,19 @@
     </el-select>
 
     </div>
-
+    <el-divider></el-divider>
     <div class="button-container">
       <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
    </div>
+   
+  <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
    <div id="main" style="width: 1500px; height: 600px; text-align: center;"></div>
     
+  <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
     
     <el-table
             :data="tableData"
