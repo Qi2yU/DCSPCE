@@ -36,10 +36,11 @@
        <!-- aside部分 -->
       <leftNav></leftNav>
       <el-main>
-        
-        <p v-if="show">欢迎使用省端企业就业管理系统</p>
-        <el-divider></el-divider>
-        <check v-if="show"></check>
+        <div v-if="show">
+        <h1 style="font-size: xx-large;">欢迎使用省端省就业失业数据收集系统</h1>
+        <el-divider ></el-divider>
+        <check></check>
+      </div>
          <!-- main部分 -->
        <router-view />
        
@@ -66,9 +67,12 @@ export default {
   },
   methods: {},
   updated(){
-    console.log("update")
-    this.show = false 
-  }
+    if(this.$route.path != "/government-pro"){
+      console.log("others")
+      this.show = false
+    }
+  },
+  
 
 };
 </script>
