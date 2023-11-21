@@ -59,14 +59,14 @@ public class data_collection {
     @RequestMapping(value="/get_company_collection_data",method= RequestMethod.GET)
     public EmploymentDataEntry get_collection_data(UserID cid) throws JsonProcessingException, JSONException {
         // 企业获取当期上报的就业数据，get需要提供企业cid
-        System.out.println(cid.getUserid());
+//        System.out.println(cid.getUserid());
 
         // 获取当前时间
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         String nowDate = formatter.format(date);
 //        String nowDate = "2023-12-11";
-        System.out.println(nowDate);
+//        System.out.println(nowDate);
 
         List<res_time> list= dataQueryService.getTable(nowDate, nowDate);
 
@@ -98,6 +98,7 @@ public class data_collection {
                 ede.setSecondReason(res.getSecReason());
                 ede.setReasonDetail(res.getExplain());
                 ede.setStatus(res.getState());
+                System.out.println(ede.toString());
             }
             return ede;
         }else {

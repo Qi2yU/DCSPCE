@@ -15,7 +15,7 @@
       </el-row>
     </template>
     <template v-if="isrefused()">
-      <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
+      <el-row type="flex" class="row-bg row-two" justify="center" align="top">
         您提交的就业数据被驳回，请重新填报后上交。驳回的理由为：
       </el-row>
       <el-row width="50%" type="flex" class="row-bg row-two" justify="center" align="top">
@@ -31,6 +31,15 @@
             color=#b30e0e>
           </el-input>
         </el-col>
+      </el-row>
+    </template>
+    <template v-if="isincollection()">
+      <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
+        <template v-if="getstatus()==0" >当前就业信息上报状态为：未上报数据</template>
+        <template v-else-if="getstatus()==1" >当前就业信息上报状态为：已上报未审核</template>
+        <template v-else-if="getstatus()==2 || getstatus()==3" >当前就业信息上报状态为：市审核完毕</template>
+        <template v-else-if="getstatus()==4 || getstatus()==5" >当前就业信息上报状态为：省审核完毕</template>
+        <template v-else>当前就业信息上报状态为：被驳回未修改</template>
       </el-row>
     </template>
     <template v-if="isincollection()">
@@ -60,7 +69,6 @@
           </el-form-item>
           <template v-if="isdecreased()">
             <el-form-item 
-              v-show = false
               label="就业人数减少类型" 
               :rules="[{ required: true }]"
               class="reasonClass"
@@ -80,8 +88,6 @@
                 </el-select>
               </el-col>
             </el-form-item>
-          </template>
-          <template v-if="isdecreased()">
             <el-form-item 
               label="主要原因"
               :rules="[{ required: true }]"
@@ -152,8 +158,8 @@
           <el-form-item>
             <!-- <el-button type="primary" @click="addDomain">修改</el-button>
             <el-button @click="addDomain">确定</el-button> -->
-
-            <el-button type="primary" @click="modify_collection_data">修改</el-button>
+            <el-button v-if="!isable2Modify()" disabled type="primary">修改</el-button>
+            <el-button v-else type="primary" @click="modify_collection_data">修改</el-button>
             <el-button >确定</el-button>
             本期调查期持续时间：{{ collectionData.start_time }}-{{ collectionData.end_time }}
           </el-form-item>
@@ -178,6 +184,7 @@
           secondReason: '',
           reasonDetail: '',
           iscollected: '',
+          status: '',
         },
         refusedData: {
           isRefused: '',
@@ -207,14 +214,15 @@
         this.comCurData.secondReason = response.data.secondReason;
         this.comCurData.reasonDetail = response.data.reasonDetail;
         this.comCurData.iscollected = response.data.valid;
+        this.comCurData.status = response.data.status;
       });
       this.$http.get("/get_refused_info",{
         params: {
           userid: this.userid
         }
       }).then((response)=>{
-        console.log(response)
-        console.log(response.data)
+        // console.log(response)
+        // console.log(response.data)
         this.refusedData.isRefused = response.data.is_refused;
         this.refusedData.emplRefusedInfo = response.data.emplInfoRefused;
       });
@@ -232,6 +240,15 @@
       },  
       isincollection(){
         return (this.comCurData.iscollected == 0) 
+      },
+      isable2Modify(){
+        var status = this.comCurData.status;
+        var flag = (status == 0 || status == 1 || status == 6 || status == 7)
+        console.log(flag)
+        return flag
+      },
+      getstatus(){
+        return this.comCurData.status;
       },
       isrefused(){
         return (this.refusedData.isRefused == 1) 

@@ -2,6 +2,7 @@ package com.example.yunnan.controller;
 
 import com.example.yunnan.entity.company_info;
 import com.example.yunnan.mapper.company_infoMapper;
+import com.example.yunnan.mapper.user_accountsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +15,9 @@ public class company_infoController {
 
     @Autowired
     private company_infoMapper company_infoMapper;
+
+    @Autowired
+    private user_accountsMapper user_accountsMapper;
 
     public String idtovalue(String id)
     {
@@ -72,7 +76,7 @@ public class company_infoController {
     @RequestMapping("/company_info/single")
     public company_info search(@RequestBody String id)
     {
-        id = id.substring(0,10);
+        id = id.substring(0,11);
         System.out.println(id);
         company_info c_i = company_infoMapper.find_single(id);
         System.out.println("c_i:"+c_i);
@@ -83,16 +87,19 @@ public class company_infoController {
     @RequestMapping("/company_info/check_passed")
     public void checkpassed(@RequestBody String id)
     {
-        id = id.substring(0,10);
+        id = id.substring(0,11);
         System.out.println(id);
         company_infoMapper.checkpass(id);
+//        System.out.println("here");
+        user_accountsMapper.checkpass_record(id);
+//        System.out.println("here2");
     }
 
     //备案审核驳回
     @RequestMapping("/company_info/check_backed")
     public void checkbacked(@RequestBody String id)
     {
-        id = id.substring(0,10);
+        id = id.substring(0,11);
         System.out.println(id);
         company_infoMapper.checkback(id);
     }

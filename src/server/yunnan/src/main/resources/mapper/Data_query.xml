@@ -58,6 +58,7 @@
         d.main_reason,
         d.second_reason,
         d.explain_reason,
+        d.state,
         c.company_name,
         c.city,
         c.district,

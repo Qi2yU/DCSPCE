@@ -13,14 +13,14 @@
       <el-col :span="5"></el-col>
       <el-col :span="20">
         <el-form :model="comCurData" ref="comCurData" label-width="150px" class="demo-dynamic">
-          <el-form-item
+          <el-form-item 
             label="建档期就业人数"
             :rules="[
               { required: true, message: '请输入建档期就业人数', trigger: 'blur' }
             ]"
           >
             <el-col :span="15">
-            <el-input  v-model="comCurData.docEmploymentNumber"></el-input>
+            <el-input disabled v-model="comCurData.docEmploymentNumber"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item
@@ -35,7 +35,6 @@
           </el-form-item>
           <template v-if="isdecreased()">
             <el-form-item 
-              v-show = false
               label="就业人数减少类型" 
               :rules="[{ required: true }]"
               class="reasonClass"
@@ -55,8 +54,6 @@
                 </el-select>
               </el-col>
             </el-form-item>
-          </template>
-          <template v-if="isdecreased()">
             <el-form-item 
               label="主要原因"
               :rules="[{ required: true }]"
@@ -149,16 +146,18 @@
           numDecreasedReason: '',
           mainReason: '',
           secondReason: '',
-          reasonDetail: ''
+          reasonDetail: '',
+          iscollected: '',
+          status: '',
         }
       };
     },
     beforeCreate() {
       $this = this;
     },
-    created:function(){
+    async created(){
       this.userid = this.$http.userid
-      this.$http.get("/get_company_collection_data",{
+      await this.$http.get("/get_company_collection_data",{
         params: {
           userid: this.userid
         }
@@ -169,7 +168,15 @@
         this.comCurData.mainReason =  response.data.mainReason;
         this.comCurData.secondReason = response.data.secondReason;
         this.comCurData.reasonDetail = response.data.reasonDetail;
-        // console.log("初始化结束");
+        this.comCurData.iscollected = response.data.valid;
+        this.comCurData.status = response.data.status;
+        console.log("iscollected = " + this.comCurData.iscollected);
+        console.log("status = " + this.comCurData.status)
+        
+        if(!this.isincollection() || !this.isable2Modify()){
+          this.go_back_collection();
+        }
+        console.log("初始化结束");
       });
       // console.log("被创建");
     },
@@ -203,7 +210,6 @@
                         this.$message.success('上报就业数据成功')
                         this.go_back_collection()
                       });
-        this.go_back_collection();
       },
       go_back_collection(){
         $this.$router.push("/company/data_collection").catch(error => error);
@@ -214,6 +220,14 @@
             && this.comCurData.curEmploymentNumber != ''
             && this.comCurData.docEmploymentNumber > this.comCurData.curEmploymentNumber) return true;
         else return false;
+      },
+      isincollection(){
+        return (this.comCurData.iscollected == 0) 
+      },
+      isable2Modify(){
+        var status = this.comCurData.status;
+        var flag = (status == 0 || status == 1 || status == 6 || status == 7)
+        return flag
       },
       isnaturallyDecreased(){
         if(this.comCurData.mainReason == "自然减员") return true;

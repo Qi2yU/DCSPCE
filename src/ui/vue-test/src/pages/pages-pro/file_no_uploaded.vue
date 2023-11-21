@@ -122,7 +122,7 @@ export default{
      name: 'File_backed',
 
      created:function () {
-      axios.get("http://localhost:8090/user_accounts/multi").then((response)=>{
+      this.$http.get("/user_accounts/multi").then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;
       })
