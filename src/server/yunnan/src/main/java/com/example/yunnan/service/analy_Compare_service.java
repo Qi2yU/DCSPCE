@@ -84,6 +84,7 @@ public class analy_Compare_service {
             table_data.setName(start_data.get(i).getName());
             now_num = start_data.get(i).getNow_num();
             last_num = start_data.get(i).getLast_num();
+            table_data.setA_num(now_num);
             change_num = now_num - last_num;
             if(change_num < 0){
                 table_data.setA_less(String.valueOf(change_num));
@@ -92,7 +93,7 @@ public class analy_Compare_service {
                 table_data.setA_less(String.valueOf(0));
             }
             table_data.setA_change_num(String.valueOf((change_num)));
-            table_data.setA_change_precent(String.valueOf((change_num) * 100 / now_num)  +"%");
+            table_data.setA_change_precent(String.valueOf((change_num) * 100 / last_num)  +"%");
             table_data_list.add(table_data);
         }
         for(int i = 0; i < end_data.size();i++){
@@ -102,7 +103,7 @@ public class analy_Compare_service {
             change_num = now_num - last_num;
             for(Compare_tableEntity table_data : table_data_list){
                 if(table_data.getName().equals(name)){
-
+                    table_data.setB_num(now_num);
                     if(change_num < 0){
                         table_data.setB_less(String.valueOf(change_num));
                     }
@@ -110,9 +111,18 @@ public class analy_Compare_service {
                         table_data.setB_less(String.valueOf(0));
                     }
                     table_data.setB_change_num(String.valueOf((change_num)));
-                    table_data.setB_change_precent(String.valueOf((change_num) * 100 / now_num) +"%");
+                    table_data.setB_change_precent(String.valueOf((change_num) * 100 / last_num) +"%");
                     break;
                 }
+            }
+        }
+        for(Compare_tableEntity table_data : table_data_list){
+            table_data.setAB_change(String.valueOf(table_data.getB_num() - table_data.getA_num()));
+            if(table_data.getA_num() != 0){
+                table_data.setAB_percent(String.valueOf((table_data.getB_num() - table_data.getA_num()) * 100/table_data.getA_num()) + "%");
+            }
+            else {
+                table_data.setAB_percent("%0");
             }
         }
 

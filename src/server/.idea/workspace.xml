@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/sum_databyTime_service.java" afterDir="false" />
-    </list>
+    <list default="true" id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

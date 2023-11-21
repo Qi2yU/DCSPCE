@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .title_main{
   color: #409EFF;
   font-size: 20px Extra large;
@@ -62,10 +62,10 @@
    <div id="main" style="width: 1500px; height: 400px"></div>
 
    <el-table
-            :data="tableData"
+  :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
             :cell-style="{ height: '44px', padding: '0px' }"
-            style="width: 60%; left: 20%;"
+            style="width: 83%; left: 10%;"
             class="Table"
             max-height="550"
             border
@@ -80,12 +80,12 @@
       label="调查期A岗位变化数"
       width="180">
     </el-table-column>
+
     <el-table-column
       prop="a_change_precent"
       label="调查期A岗位变化占比"
       width="180">
     </el-table-column>
-
     
     <el-table-column
       prop="b_change_num"
@@ -93,12 +93,23 @@
       width="180">
     </el-table-column>
 
-
     <el-table-column
       prop="b_change_precent"
       label="调查期B岗位变化占比">
     </el-table-column>
-   </el-table>
+
+    <el-table-column
+      prop="ab_change"
+      label="调查期岗位同比变化">
+    </el-table-column>
+
+    <el-table-column
+      prop="ab_percent"
+      label="调查期岗位同比变化率">
+    </el-table-column>
+
+
+  </el-table>
     
    <div class="button-container_down">
     <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>

@@ -1,4 +1,4 @@
-<style>
+<style scoped> 
 .title_main{
   color: #409EFF;
   font-size: 20px Extra large;
@@ -116,7 +116,7 @@
   :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
             :cell-style="{ height: '44px', padding: '0px' }"
-            style="width: 60%; left: 20%;"
+            style="width: 83%; left: 10%;"
             class="Table"
             max-height="550"
             border
@@ -148,6 +148,18 @@
       prop="b_change_precent"
       label="调查期B岗位变化占比">
     </el-table-column>
+
+    <el-table-column
+      prop="ab_change"
+      label="调查期岗位同比变化">
+    </el-table-column>
+
+    <el-table-column
+      prop="ab_percent"
+      label="调查期岗位同比变化率">
+    </el-table-column>
+
+
   </el-table>
 
   
@@ -261,7 +273,8 @@ export default {
         }
       }
       ).then(res=>{
-        this.tableData = res.data      
+        this.tableData = res.data  
+        console.log(this.tableData)    
       })
       await  this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{

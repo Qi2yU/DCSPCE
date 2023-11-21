@@ -6,6 +6,42 @@ public class Compare_tableEntity {
     String B_change_num;
     String A_less;
 
+    public int getA_num() {
+        return A_num;
+    }
+
+    public void setA_num(int a_num) {
+        A_num = a_num;
+    }
+
+    public int getB_num() {
+        return B_num;
+    }
+
+    public void setB_num(int b_num) {
+        B_num = b_num;
+    }
+
+    int A_num, B_num;
+    public String getAB_change() {
+        return AB_change;
+    }
+
+    public void setAB_change(String AB_change) {
+        this.AB_change = AB_change;
+    }
+
+    public String getAB_percent() {
+        return AB_percent;
+    }
+
+    public void setAB_percent(String AB_percent) {
+        this.AB_percent = AB_percent;
+    }
+
+    String AB_change;
+    String AB_percent;
+
     public String getName() {
         return name;
     }
