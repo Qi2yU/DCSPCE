@@ -1,23 +1,43 @@
-<style>
+<style scoped>
+.title_main{
+  color: #409EFF;
+  font-size: 20px Extra large;
+  text-align: center;
+}
+.choice{
+  text-align: center;
+}
+.button-container{
+  text-align: center;
+}
+.button-container_down{
+  text-align: center;
+}
 </style>
 <template>
   <div id="user">
-    <h1>趋势分析</h1>
+    <h1 class="title_main">趋势分析</h1>
 
-    <el-date-picker
-      v-model="value_date"
-      type="datetimerange"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      align="right"
-      unlink-panels
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      >
-    </el-date-picker>
+    <div class="choice">
 
-
+    <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
+      <el-option
+        v-for="item in options_starttime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
+    <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
+      <el-option
+        v-for="item in options_endtime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+    </el-select>
 
     <el-select v-model="value_char"  clearable placeholder="企业性质" >
       <el-option
@@ -37,12 +57,20 @@
        >
       </el-option>
     </el-select>
-    <el-button type="primary"  @click = "get_data"  class = "download">查询</el-button>
+
+    </div>
+
+    <div class="button-container">
+      <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
+   </div>
+   <div id="main" style="width: 1500px; height: 600px; text-align: center;"></div>
+    
+    
     <el-table
             :data="tableData"
             :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
             :cell-style="{ height: '44px', padding: '0px' }"
-            style="width: 100%"
+            style="width: 70%;left: 15%; "
             class="Table"
             max-height="550"
             border
@@ -64,9 +92,10 @@
 
 
     
-    <div id="main" style="width: 600px; height: 400px"></div>
-    <el-button type="primary" @click = download class = "download">导出折线图</el-button>
-    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
+    
+    <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+    </div>
   </div>
 
 </template>
@@ -76,39 +105,39 @@
 import FileSaver from "file-saver"
 import XLSX from "xlsx"
 import html2canvas from 'html2canvas'
+import ExcelJS from 'exceljs'; 
 
 export default {
   name: 'User',
   data(){
     return{
-      value_city:"唐山",
       value_char:'',
       value_indu:'',
 
       option:{},
 
+      userId:this.$http.userid,
+
       myChart:null,
       xAxislist:[],
       legend:[],
-      // series:{
-      //   type:Array,
-      //   default(){
-      //     return [];
-      //   },
-      // },
+
       series:[],
       value_date:'',
       tableData:[],
       myChart:null,
-      start_time:'',
-      end_time:'',
+      city:'',
 
       options_char:[],
       options_indu:[],
-
-      userId:this.$route.query.userId,
-        cityMapping: {
-                '5301': '唐山',
+      options_starttime:[],
+      options_endtime:[],
+      start_time:'',
+      end_time:'',
+      
+      show:false,
+      cityMapping: {
+                '5301': '昆明市',
                 '5303':'曲靖市',
                 '5304':'玉溪市',
                 '5305':'保山市',
@@ -141,9 +170,7 @@ export default {
       this.city = this.cityMapping[prefix] || '未知城市';
       },
     async  get_data(){
-      this.start_time = this.value_date[0]
-      this.end_time = this.value_date[1]
-
+      await this.getCity()
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_time",{
         params:{
           start_time:this.start_time,
@@ -151,15 +178,14 @@ export default {
         }
       }).then(response=>{
         this.xAxislist = response.data
-  
-
       })
+      
 
       await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_data",{
         params:{
           start_time:this.start_time,
           end_time:this.end_time,
-          city:this.value_city,
+          city:this.city,
           character:this.value_char,
           industry:this.value_indu
         }
@@ -181,8 +207,64 @@ export default {
         });
 
         let option = {
+          title:{
+        show:true,//false
+        text:"就业人数",//主标题文本
+
+
+        textAlign:'auto',//整体（包括 text 和 subtext）的水平对齐
+        textVerticalAlign:'auto',//整体（包括 text 和 subtext）的垂直对齐
+        padding:0,//[5,10] | [ 5,6, 7, 8] ,标题内边距
+        left:80,//'5' | '5%'，title 组件离容器左侧的距离
+        right:'auto',//'title 组件离容器右侧的距离
+        top:30,//title 组件离容器上侧的距离
+        bottom:'auto',//title 组件离容器下侧的距离
+
+          },
+
+          dataZoom: [
+          {
+            type: "slider",
+            show: true,
+            xAxisIndex: [0],
+            start: 0,
+            end: 49,
+            textStyle:{
+              color:"#ccd7d7"
+            }
+          },
+          ],
+          
+          tooltip: {
+          trigger: 'axis',
+          formatter:function(params){
+            let res = params[0].axisValueLabel;
+
+            function getHtml(param){
+                let str = '<div style="float: left"><span style="background: '+param.color+'; width: 11px; height: 11px; border-radius: 11px;float: left; margin: 5px 3px;"></span>'+
+                param.seriesName+':'+param.data+'&emsp;&emsp;</div>';
+                return str;
+            }
+
+            let flag=false;
+            res += '<div style="clear: both">';
+            for (let i = 0; i < params.length; i++) {
+                res += getHtml(params[i]);
+                if (params.length>11 && i%2==1){
+                    res += '</div><div style="clear: both">';
+                }
+                if (params.length <=11){
+                    res += '</div><div style="clear: both">';
+                }
+            }
+            res += "</div>";
+            return res;
+        }
+          },
+
           legend: {//顶部每条折线的标识的配置项
            icon: "circle",   //    改变它的icon circle，rect ，roundRect，triangle
+           type: 'scroll',
            itemWidth:8,  // 设置它的宽度
            itemHeight:8, // 设置它的高度
            itemGap:20, // 设置它的间距
@@ -195,14 +277,13 @@ export default {
           // }
         },
           xAxis:{
+            name: "调查期",
             type:'category',
             data:this.xAxislist,
             axisLabel:{
               show: true,
               interval: 0,//使x轴文字显示全
-              textStyle: {
-               
-              },
+              textStyle: {},
               formatter: function(params) {
               var newParamsName = "";
               var paramsNameNumber = params.length;
@@ -225,8 +306,6 @@ export default {
               }
               return newParamsName;
             }
-
-
             }
           },
           yAxis:{
@@ -262,7 +341,6 @@ export default {
       })
     },
     DownloadHandler(){
-        
         let time = new Date();
         let year = time.getFullYear();
         let month = time.getMonth() + 1;
@@ -278,17 +356,40 @@ export default {
           bookSST: true,
           type: "array"
         });
-        try {
           //  name+'.xlsx'表示导出的excel表格名字
-          FileSaver.saveAs(
-            new Blob([wbout], { type: "application/octet-stream" }),
+        FileSaver.saveAs(
+            new Blob([wbout],  { type: "application/octet-stream" }),
             name + ".xlsx"
-          );
-        } catch (e) {
-          if (typeof console !== "undefined") console.log(e, wbout);
-        }
+        );
+    
         return wbout;
         },  
+
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
+    exportExcel() {
+      const workbook = new ExcelJS.Workbook(); // 创建工作簿
+      const worksheet = workbook.addWorksheet('Sheet1'); // 添加工作表
+
+      const chart = echarts.getInstanceByDom(this.$refs.myChart) // 获取图表实例
+      const base64Image = chart.getDataURL({
+        pixelRatio: 2, // 导出图片的分辨率比例，默认为1，即图片的分辨率为屏幕分辨率的一倍
+        backgroundColor: '#fff' // 导出图片的背景色
+      })
+      let image= workbook.addImage({ // 添加图片
+          base64: base64Image, // 图片的base64编码
+          extension: 'png'  // 图片的扩展名
+        });
+      worksheet.addImage(image, 'A1:J20'); // 将图片添加到工作表中
+      workbook.xlsx.writeBuffer().then(function (buffer) { // 生成excel文件的二进制数据
+      saveAs.saveAs(new Blob([buffer], {  // 生成Blob对象
+          type: 'application/octet-stream'  // 指定文件的MIME类型
+        }), 
+        'xchart.xlsx');  // 指定文件名
+      });
+    },
     download() {
       // 图表转换成canvas
       html2canvas(document.getElementById("main")).then(function (canvas) {
@@ -306,11 +407,10 @@ export default {
     },
   },
 
- async mounted() {
+ mounted() {
+    
       this.myChart = this.$echarts.init(document.getElementById("main"));
 
-      await this.getCity()
-      
     this.$http.get("http://localhost:8070/government-pro/analy_tend/char"
       ).then((response)=>{
       let result = response.data
@@ -321,6 +421,7 @@ export default {
 
     }
     )
+
     this.$http.get("http://localhost:8070/government-pro/analy_tend/indu"
       ).then((response)=>{
       let result = response.data
@@ -331,16 +432,111 @@ export default {
 
     }
     )
-    // this.$http.get("http://localhost:8070/government-pro/analy_tend/get_x"
-    //   ).then((response)=>{
-    //   let result = response.data
-    //   this.x_axis = []
-    //   result.forEach(element => {
-    //     this.x_axis.push(element)
-    //   });
 
-    // }
-    // )
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/start_time"
+      ).then((response)=>{
+      let result = response.data
+      console.log(result)
+      this.options_starttime = []
+      result.forEach(element => {
+        this.options_starttime.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+    
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/end_time"
+      ).then((response)=>{
+        let result = response.data
+        console.log(result)
+      this.options_endtime = []
+      result.forEach(element => {
+        this.options_endtime.push({label:element.name, value:element.name})
+      });
+    }
+    )
+
+},
+watch:{
+  end_time(){
+      
+      let cs
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
+
+      let es
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
+
+    
+      if(cs >= es ){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(!es || !cs){
+    
+        this.show = true
+      }
+   
+
+      
+  },
+  start_time(){
+      let cs 
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
+
+
+      let es 
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
+
+
+      if(cs >= es ){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+      if(!es || !cs){
+          this.show = true
+      }
+   
+
+  }
 },
 }
 </script>

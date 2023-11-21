@@ -208,7 +208,6 @@ public class sum_databyTime_service {
         }
     }
 
-
     public void get_datafortimeCity(String st, String et, String city){
         String time = new String(st);//20xx0901
 
@@ -234,7 +233,6 @@ public class sum_databyTime_service {
             time = compute_TimewithPeriod(time, et,bc);
         }
     }
-
     public void get_dataforpro(String st, String et, int type){
         String time = new String(st);//20xx0901
 
@@ -313,7 +311,18 @@ public class sum_databyTime_service {
 
         for(List<SumEntity> data_single : data_collection){
             SumResEntity sum_res = new SumResEntity();
-            sum_res.setKind_name(data_single.get(0).getKind_name());
+            String name = data_single.get(0).getKind_name();//20231000
+            StringBuffer sb = new StringBuffer(name);
+            int last = sb.charAt(7) - '0';
+            last += 1;
+            sb.replace(7,8,String.valueOf(last));//20231001
+            sb.replace(6,7,"第");
+            sb.insert(8,"号调查期");//202310第1号调查期
+            sb.insert(6,"月");
+            sb.insert(4,"年");
+            System.out.print(sb+"\n");
+
+            sum_res.setKind_name(String.valueOf(sb));
             int sum = 0;
             for (SumEntity data : data_single){
                 sum += data.getNum();
@@ -330,7 +339,8 @@ public class sum_databyTime_service {
 
             SumResEntity sum_res = new SumResEntity();
 
-            StringBuffer time_fmt = new StringBuffer(data_single.get(0).getKind_name());//data_20xx_09_1
+            StringBuffer time_fmt = new StringBuffer(data_single.get(0).getKind_name());// data_20xx_09_1
+
             time_fmt.replace(6,7,"_");//20xx09_1
             time_fmt.insert(4,"_");//20xx_09_1
             time_fmt.insert(0,"data_");//data_20xx_09_1
@@ -338,7 +348,7 @@ public class sum_databyTime_service {
             bound = bound - 1 ;
             char last_char =  (char) (bound + '0');
             if(data_single.get(0).getKind_name().charAt(7) == last_char ){//20xx09xx
-                sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,4)+"_"+data_single.get(0).getKind_name().substring(4,6));
+                sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,4)+"年"+data_single.get(0).getKind_name().substring(4,6)+"月");
                 int sum = 0;
                 for (SumEntity data : data_single){
                     sum += data.getNum();
@@ -346,7 +356,7 @@ public class sum_databyTime_service {
                 sum_res.setSum_num(sum);
             }
             else{
-                sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,4)+"_"+data_single.get(0).getKind_name().substring(4,6));
+                sum_res.setKind_name(data_single.get(0).getKind_name().substring(0,4)+"年"+data_single.get(0).getKind_name().substring(4,6)+"月");
                 int sum = 0;
                 for (SumEntity data : data_single){
                     sum += data.getNum();
@@ -370,15 +380,15 @@ public class sum_databyTime_service {
         sum_dataformonth();
         Iterator<SumResEntity> ite_quter = data_sum_res.iterator();
         while (ite_quter.hasNext()){
-            SumResEntity data_month = ite_quter.next();//20xx_xx
-            int month = Integer.valueOf(data_month.getKind_name().substring(5));
+            SumResEntity data_month = ite_quter.next();//20xx年xx月
+            int month = Integer.valueOf(data_month.getKind_name().substring(5,7));
 
             int sum = 0;
             String year = data_month.getKind_name().substring(0,4);
             SumResEntity sum_quter = new SumResEntity();
 
             if(month>=1 && month<=3){
-                sum_quter.setKind_name(year+"_01");
+                sum_quter.setKind_name(year+"第1季度");
                 sum += data_month.getSum_num();
                 for(int i = 0; i < 3 - month; i++){
                     if(!ite_quter.hasNext()){
@@ -390,7 +400,7 @@ public class sum_databyTime_service {
                 sum_quter.setSum_num(sum);
 
             }else if(month>=4 && month<=6 ){
-                sum_quter.setKind_name(year+"_02");
+                sum_quter.setKind_name(year+"第2季度");
                 sum += data_month.getSum_num();
                 for(int i = 0; i < 6 - month; i++){
                     if(!ite_quter.hasNext()){
@@ -403,7 +413,7 @@ public class sum_databyTime_service {
                 sum_quter.setSum_num(sum);
 
             }else if(month>=7 && month<=9 ){
-                sum_quter.setKind_name(year+"_03");
+                sum_quter.setKind_name(year+"第3季度");
                 sum += data_month.getSum_num();
                 for(int i = 0; i < 9 - month; i++){
                     if(!ite_quter.hasNext()){
@@ -416,7 +426,7 @@ public class sum_databyTime_service {
                 sum_quter.setSum_num(sum);
 
             }else if(month>=10 && month<=12 ){
-                sum_quter.setKind_name(year+"_04");
+                sum_quter.setKind_name(year+"第4季度");
                 sum += data_month.getSum_num();
                 for(int i = 0; i < 12 - month; i++){
                     if(!ite_quter.hasNext()){
@@ -437,11 +447,11 @@ public class sum_databyTime_service {
         Iterator<SumResEntity> ite = data_sum_res_quter.iterator();
         while (ite.hasNext()){
             int sum = 0;
-           SumResEntity sum_year = ite.next();
+           SumResEntity sum_year = ite.next();//2023第3季度
            String name = sum_year.getKind_name();
-           sum_year.setKind_name(name.substring(0,4));
+           sum_year.setKind_name(name.substring(0,4)+"年");
            System.out.print(name);
-           int quter = Integer.valueOf(name.charAt(6)) - '0';
+           int quter = Integer.valueOf(name.charAt(5)) - '0';
            System.out.print(quter);
            sum += sum_year.getSum_num();
            for(int i = 0; i < 4 - quter; i++){
@@ -527,6 +537,7 @@ public class sum_databyTime_service {
         start_year_list =   sum_databyTime_mapper.get_mounted_start();//data_2023_07_0
         Iterator<TimeidEntity> ite = start_year_list.iterator();
         while (ite.hasNext()){
+
             CompareMountedEntity entity = new CompareMountedEntity();
             TimeidEntity time = ite.next();
             int step = time.getType();
@@ -540,16 +551,18 @@ public class sum_databyTime_service {
                  month = sb.charAt(6) - '0' + 10;
             }
             sb.delete(4,9);
-
+            System.out.print(month+"\n");
             entity.setName(String.valueOf(sb));
             entity.setNum(String.valueOf(step));
+
             for(int j = 0; j < step - 1; j++){
                 if(!ite.hasNext()){
                     break;
                 }
                 ite.next();
             }
-            for(int i = 0; i < 12 - month; i++){
+
+            for(int i = 0; i < 12 - month +1; i++){
                 if(!ite.hasNext()){
                     break;
                 }
@@ -584,7 +597,7 @@ public class sum_databyTime_service {
                 }
                 ite.next();
             }
-            for(int i = 0; i < 12 - month; i++){
+            for(int i = 0; i < 12 - month + 1; i++){
                 if(!ite.hasNext()){
                     break;
                 }

@@ -210,7 +210,7 @@ import XLSX from "xlsx"
         show_year:false,
 
         flag:0,
-        show:false,
+        show:true,
       }
     },
     watch:{
@@ -239,59 +239,95 @@ import XLSX from "xlsx"
       },
       value_end(){
       
-      let cs = this.value_start.replace("年","")
+        let cs
+      if(this.value_start.length == 13){
+         cs = this.value_start.replace("年","0")
+      }
+      else{
+         cs = this.value_start.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
 
-      let es = this.value_end.replace("年","")
+      let es
+      if(this.value_end.length == 13){
+         es = this.value_end.replace("年","0")
+      }
+      else{
+         es = this.value_end.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","")
-    
-      if(cs > es || cs.length > es.length){
+      es = es.replace("号调查期","") //2024011 2023111
+      
+      es = parseInt(es)
+  
+      if(cs > es ){
         this.show = true
       }
       else{
         this.show = false
       }
-           
-      if(cs.length < es.length){
-        this.show = false
+      if(!es || !cs){
+          this.show = true
       }
       },
+
       value_start(){
-    let cs = this.value_start.replace("年","")
+        let cs
+      if(this.value_start.length == 13){
+         cs = this.value_start.replace("年","0")
+      }
+      else{
+         cs = this.value_start.replace("年","")
+      }
+      
       cs = cs.replace("月第", "")
       cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
 
-      let es = this.value_end.replace("年","")
+      let es
+      if(this.value_end.length == 13){
+         es = this.value_end.replace("年","0")
+      }
+      else{
+         es = this.value_end.replace("年","")
+      }
       es = es.replace("月第", "")
-      es = es.replace("号调查期","")
-
-      if(cs > es || cs.length > es.length){
+      es = es.replace("号调查期","") //2024011 2023111
+      
+      es = parseInt(es)
+  
+      if(cs > es ){
         this.show = true
       }
       else{
         this.show = false
       }
-
-      if(cs.length < es.length){
-        this.show = false
+      if(!es || !cs){
+          this.show = true
       }
       },
+
+
+
+
       value_startyear(){
     let cs = this.value_startyear
 
       let es = this.value_endyear
 
-      if(cs > es){
+      cs = parseInt(cs)
+      es = parseInt(es)
+      if(cs > es ){
         this.show = true
       }
       else{
         this.show = false
       }
-
-      if(cs.length < es.length){
-        this.show = false
+      if(!es || !cs){
+          this.show = true
       }
       },
       value_endyear(){
@@ -299,31 +335,32 @@ import XLSX from "xlsx"
 
       let es = this.value_endyear
 
-      if(cs > es){
+      cs = parseInt(cs)
+      es = parseInt(es)
+      if(cs > es ){
         this.show = true
       }
       else{
         this.show = false
       }
-
-      if(cs.length < es.length){
-        this.show = false
+      if(!es || !cs){
+          this.show = true
       }
       },
       value_startmonth(){//2023_08
     let cs = this.value_startmonth.replace("_","")
 
       let es = this.value_endmonth.replace("_","")
-
-      if(cs > es || cs.length > es.length){
+      cs = parseInt(cs)
+      es = parseInt(es)
+      if(cs > es ){
         this.show = true
       }
       else{
         this.show = false
       }
-
-      if(cs.length < es.length){
-        this.show = false
+      if(!es || !cs){
+          this.show = true
       }
       },
       value_endmonth(){//2023_08
@@ -331,15 +368,16 @@ import XLSX from "xlsx"
 
       let es = this.value_endmonth.replace("_","")
 
-      if(cs > es || cs.length > es.length){
+      cs = parseInt(cs)
+      es = parseInt(es)
+      if(cs > es ){
         this.show = true
       }
       else{
         this.show = false
       }
-
-      if(cs.length < es.length){
-        this.show = false
+      if(!es || !cs){
+          this.show = true
       }
       },
 
@@ -458,8 +496,20 @@ import XLSX from "xlsx"
           else if(this.show_year){
             let month = this.options_endmonth[this.options_endmonth.length - 1].label.substring(5,7)
             let month1 = this.options_endmonth[0].label.substring(5,7)
-            this.start_time = this.value_startyear + month1
-            this.end_time = this.value_endyear + month
+            if(this.value_startyear == this.options_endmonth[0].label.substring(0,4)){
+              this.start_time = this.value_startyear + month1
+            }else{
+              this.start_time = this.value_startyear + "01"
+            }
+
+            if(this.value_endyear == this.options_endmonth[this.options_endmonth.length - 1].label.substring(0,4)){
+              this.end_time = this.value_endyear + month
+            }else{
+              this.end_time = this.value_endyear + "12"
+            }
+
+            
+            
             console.log(this.end_time)
             console.log(this.start_time)
           }

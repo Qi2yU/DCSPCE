@@ -7,40 +7,35 @@
     ref="multipleTable"
     :data="tableData"
     tooltip-effect="dark"
-    @selection-change="handleSelectionChange"
     row-class-name="tableRowClassName"
     style="width: 100%"
     height="500">
     <el-table-column
-      type="selection"
-      width="100">
-    </el-table-column>
-    <el-table-column
       fixed
-      prop="date"
-      label="日期"
-      width="150">
-      <template slot-scope="scope">{{ scope.row.time }}</template>
+      prop="gov_which"
+      label="发布机构"
+      width="200">
+      <template slot-scope="scope">{{ scope.row.gov_which }}</template>
     </el-table-column>
     <el-table-column
-      prop="name"
-      label="发布用户"
-      width="150">
-    </el-table-column>
-    <el-table-column
-      prop="province"
+      prop="msg_title"
       label="标题"
-      width="300">
+      width="250">
     </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          type="primary"
-          size="mini"
-          @click="handleLook(scope.$index, scope.row)">查看</el-button>
-      </template>
+    <el-table-column
+      prop="msg_content"
+      label="发布内容"
+      width="450">
     </el-table-column>
+    <el-table-column
+      prop="msg_time"
+      label="发布时间"
+      width="150">
+    </el-table-column>
+  
   </el-table>
+  
+    
   </div>
 </template>
 
@@ -50,20 +45,32 @@
     data() {
       return {
         tableData: [],
-        multipleSelection: []
+        multipleSelection: [],
+        id: '',
       }
     },
-    created(){
-
-      this.$http.get("/gov_notice/get_all").then((response)=>{
-        console.log(response);
-        console.log("notice 页面 初始化结束");
-      });
-    },
-    methods: {
-      handleLook($index, row){
-        this.$router.push("/company/readNotice");
-      }
+  mounted() {
+    this.fetchAllNotice();
+  },
+  methods: {
+      fetchAllNotice() {
+        this.$http({
+          url: '/gov_notice/get_all',
+          method: 'post',
+          data:JSON.stringify({
+            userId: this.$http.userid,
+          }),
+          headers:
+          {
+            'Content-Type': 'application/json'
+          }
+        }).then(response => {
+          const return_value = response.data;
+          this.tableData = return_value;
+          console.log(this.tableData);
+          console.log(return_value);
+        });
+      },
     }
   }
 </script>

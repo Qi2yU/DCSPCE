@@ -24,7 +24,7 @@
      <el-row class="tac">
        <el-col>
          <el-menu
-           default-active="0"
+       
            class="el-menu-vertical-demo"
            @open="handleOpen"
            @close="handleClose"
@@ -66,14 +66,14 @@
            </el-submenu>
            
            <el-menu-item index="6" @click="goPage('notice')">
-             <i class="el-icon-s-order"></i>
+             <i class="el-icon-message"></i>
              <span slot="title">通知界面</span>
            </el-menu-item>
 
 
            <el-submenu index="1">
              <template slot="title">
-               <i class="el-icon-location"></i>
+               <i class="el-icon-setting"></i>
                <span>系统管理</span>
              </template>
              <el-menu-item-group>

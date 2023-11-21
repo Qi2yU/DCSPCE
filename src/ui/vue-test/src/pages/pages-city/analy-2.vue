@@ -1,29 +1,43 @@
-<style>
+<style scoped>
+.title_main{
+  color: #409EFF;
+  font-size: 20px Extra large;
+  text-align: center;
+}
+.choice{
+  text-align: center;
+}
+.button-container{
+  text-align: center;
+}
+.button-container_down{
+  text-align: center;
+}
 </style>
+
 <template>
-  <div id="user">
-    <h1>对比分析</h1>
-
-    <el-date-picker
-      v-model="value_date1"
-      type="datetime"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期时间">
-    </el-date-picker>
-
-    <el-date-picker
-      v-model="value_date2"
-      type="datetime"
-      format="yyyy-MM-dd "
-      value-format="yyyy_MM_dd"
-      placeholder="选择日期时间">
-    </el-date-picker>
-  
-  
-
-
-    <el-select v-model="value_char"  clearable placeholder="企业性质" >
+  <div id="coty">
+    <h1 class="title_main">对比分析</h1>
+    <div class="choice">
+      <el-select v-model="start_time" filterable clearable placeholder="起始调查期" >
+      <el-option
+        v-for="item in options_starttime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+      </el-select>
+      <el-select v-model="end_time" filterable clearable placeholder="结束调查期" >
+      <el-option
+        v-for="item in options_endtime"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value"
+       >
+      </el-option>
+      </el-select>
+      <el-select v-model="value_char"  clearable placeholder="企业性质" >
       <el-option
         v-for="item in options_char"
         :key="item.value"
@@ -31,8 +45,8 @@
         :value="item.value"
        >
       </el-option>
-    </el-select>
-    <el-select v-model="value_indu" clearable placeholder="所属行业" >
+      </el-select>
+      <el-select v-model="value_indu" clearable placeholder="所属行业" >
       <el-option
         v-for="item in options_indu"
         :key="item.value"
@@ -40,16 +54,22 @@
         :value="item.value"
        >
       </el-option>
-    </el-select>
-  
-    <el-button type="primary" @click="get_data"  class = "query" >查询</el-button>
- 
+      </el-select>
+   </div>
+   <div class="button-container">
+      <el-button type="primary" @click="get_data" :disabled="show" class = "query" >查询</el-button>
+   </div>
+   <div id="main" style="width: 1500px; height: 400px"></div>
 
-  <el-table
-    :data="tableData"
-    class="Table"
-    border
-    style="width: 100%">
+   <el-table
+  :data="tableData"
+            :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
+            :cell-style="{ height: '44px', padding: '0px' }"
+            style="width: 83%; left: 10%;"
+            class="Table"
+            max-height="550"
+            border
+            small>
     <el-table-column
       prop="name"
       label="企业名"
@@ -60,35 +80,40 @@
       label="调查期A岗位变化数"
       width="180">
     </el-table-column>
-    <el-table-column
-      prop="a_less"
-      label="调查期A岗位减少数">
-    </el-table-column>
-    <el-table-column
-      prop="b_change_num"
-      label="调查期B岗位变化数"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="b_less"
-      label="调查期B岗位减少数">
-    </el-table-column>
+
     <el-table-column
       prop="a_change_precent"
       label="调查期A岗位变化占比"
       width="180">
     </el-table-column>
+    
+    <el-table-column
+      prop="b_change_num"
+      label="调查期B岗位变化数"
+      width="180">
+    </el-table-column>
+
     <el-table-column
       prop="b_change_precent"
       label="调查期B岗位变化占比">
     </el-table-column>
+
+    <el-table-column
+      prop="ab_change"
+      label="调查期岗位同比变化">
+    </el-table-column>
+
+    <el-table-column
+      prop="ab_percent"
+      label="调查期岗位同比变化率">
+    </el-table-column>
+
+
   </el-table>
-
-  <div id="main" style="width: 600px; height: 400px"></div>
-
     
-    <el-button type="primary" @click = download class = "download">导出折线图</el-button>
-    <el-button type="primary" @click = DownloadHandler class = "download">导出表格</el-button>
+   <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
   </div>
 </template>
 
@@ -102,24 +127,25 @@ export default {
     return{
       chartData:[],
       tableData:[],
-
+      userId:this.$http.userid,
       options_char:[],
-      options_city:[],
+   
       options_indu:[],
-      
+      options_starttime:[],
+      options_endtime:[],
+      start_time:'',
+      end_time:'',
+      city:'',
 
-      value_date1:'',
-      value_date2:'',
      
-      value_city:"唐山",
+     
       value_char:'',
       value_indu:'',
       option:{},
       myChart:null,
-
-      userId:this.$route.query.userId,
-        cityMapping: {
-                '5301': '唐山',
+      show:true,
+      cityMapping: {
+                '5301': '昆明市',
                 '5303':'曲靖市',
                 '5304':'玉溪市',
                 '5305':'保山市',
@@ -141,10 +167,44 @@ export default {
     }
   },
 
-async  mounted() {
-      await this.getCity()
-      this.myChart = this.$echarts.init(document.getElementById("main"));
+  mounted() {
+       this.myChart = this.$echarts.init(document.getElementById("main"));
 
+
+       this.$http.get("http://localhost:8070/government-pro/analy_tend/start_time"
+      ).then((response)=>{
+      let result = response.data
+      console.log(result)
+      this.options_starttime = []
+      result.forEach(element => {
+        this.options_starttime.push({label:element.name, value:element.name})
+      });
+
+    }
+    )
+    
+    this.$http.get("http://localhost:8070/government-pro/analy_tend/end_time"
+      ).then((response)=>{
+        let result = response.data
+        console.log(result)
+      this.options_endtime = []
+      result.forEach(element => {
+        this.options_endtime.push({label:element.name, value:element.name})
+      });
+    }
+    )
+
+
+      this.$http.get("http://localhost:8070/government-pro/analy_compare/city"
+      ).then((response)=>{
+      let result = response.data
+      this.options_city = []
+      result.forEach(element => {
+        this.options_city.push({label:element.name, value:element.name})
+      });
+  
+    }
+    )
     this.$http.get("http://localhost:8070/government-pro/analy_compare/char"
       ).then((response)=>{
       let result = response.data
@@ -174,12 +234,13 @@ async  mounted() {
       // 查找对照表中的映射
       this.city = this.cityMapping[prefix] || '未知城市';
       },
-   async get_data(){      
+   async get_data(){   
+    await this.getCity()   
      await this.$http.get("http://localhost:8070/government-pro/analy_compare/get_data",{
         params:{
-          start_time:this.value_date1,
-          end_time:this.value_date2,
-          city:this.value_city,
+          start_time:this.start_time,
+          end_time:this.end_time,
+          city:this.city,
           character:this.value_char,
           industry:this.value_indu
         }
@@ -190,6 +251,20 @@ async  mounted() {
       await  this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{
         this.option = {
+          title:{
+        show:true,//false
+        text:"就业人数",//主标题文本
+
+
+        textAlign:'auto',//整体（包括 text 和 subtext）的水平对齐
+        textVerticalAlign:'auto',//整体（包括 text 和 subtext）的垂直对齐
+        padding:0,//[5,10] | [ 5,6, 7, 8] ,标题内边距
+        left:100,//'5' | '5%'，title 组件离容器左侧的距离
+        right:'auto',//'title 组件离容器右侧的距离
+        top:10,//title 组件离容器上侧的距离
+        bottom:'auto',//title 组件离容器下侧的距离
+
+        },
             xAxis: {
                type: 'category',
                data: ['建档期A', '调查期A', '建档期B', '调查期B']
@@ -235,6 +310,10 @@ async  mounted() {
         }
         return wbout;
         },  
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
     download() {
       // 图表转换成canvas
       html2canvas(document.getElementById("main")).then(function (canvas) {
@@ -250,7 +329,89 @@ async  mounted() {
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
     },
+   
+},
+watch:{
+  end_time(){
+      
+      let cs
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
+
+      let es
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
+
+    
+      if(cs >= es ){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+
+      if(!es || !cs){
+    
+        this.show = true
+      }
+   
+
+      
   },
+  start_time(){
+      let cs 
+      if(this.start_time.length == 13){
+         cs = this.start_time.replace("年","0")
+      }
+      else{
+         cs = this.start_time.replace("年","")
+      }
+      
+      cs = cs.replace("月第", "")
+      cs = cs.replace("号调查期","")
+      cs = parseInt(cs)
+
+
+      let es 
+      if(this.end_time.length == 13){
+         es = this.end_time.replace("年","0")
+      }
+      else{
+         es = this.end_time.replace("年","")
+      }
+      es = es.replace("月第", "")
+      es = es.replace("号调查期","") //2024011 2023111
+      es = parseInt(es)
+
+
+      if(cs >= es ){
+        this.show = true
+      }
+      else{
+        this.show = false
+      }
+      if(!es || !cs){
+          this.show = true
+      }
+   
+
+  }
+},
 
 }
 </script>

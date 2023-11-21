@@ -33,7 +33,11 @@
        <!-- aside部分 -->
       <leftNav></leftNav>
       <el-main>
-         <!-- main部分 -->
+        <div v-if = "show">
+        <p  style="font-size: large; text-align: center;">欢迎使用省就业失业数据上报系统</p>
+        <el-divider></el-divider>
+        <notice ></notice>
+      </div><!-- main部分 -->
         <router-view />
       </el-main>
     </el-container>
@@ -44,15 +48,38 @@
  <script>
 import navtop from "@/components/components-company/nav-top.vue";
 import leftNav from "@/components/components-company/nav-company.vue";
+import notice from "@/pages/pages-company/notice.vue"
 export default {
   components: {
     navtop,
-    leftNav
+    leftNav,
+    notice,
   },
   data() {
-    return {};
-  },
-  methods: {}
+    return {
+      show:true
+    };
+  },created:function(){
+      this.userid = this.$http.userid
+      this.$http.get("/get_refused_info",{
+        params: {
+          userid: this.userid
+        }
+      }).then((response)=>{
+        console.log(response)
+        console.log(response.data)
+        if(! response.data.is_refused) return ;
+        if(response.data.comInfoRefused != null) this.$message.error("您的审核备案已被驳回，请及时查看。(附驳回理由：" + response.data.comInfoRefused +")");
+        else this.$message.error("您当期上报的数据已被驳回，请及时查看。(附驳回理由：" + response.data.emplInfoRefused +")");
+        
+      });
+
+    },
+  methods: {},
+  updated(){
+    console.log("update")
+    this.show = false 
+  }
 };
 </script>
 

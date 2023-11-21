@@ -4,7 +4,7 @@
 
 <template>
   <div id="user">
-    <h1>取样分析</h1>
+    <h1 class="title_main" style="color: black; text-align: center; font-size: xx-large;">取样分析界面</h1>
 
     <el-select v-model="value" clearable @clear="delValue()" placeholder="地区选择">
       <el-option
@@ -17,13 +17,24 @@
     </el-select>
     <el-button type="success"  @click = "Query_fun()">查询</el-button>
 
+    <el-row>
+  <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
+  </el-row>
+  <div style="display: flex;">
+    
+  
     <el-table
     ref="multipleTable"
     :data="showData"
-    class="Table"
-    border
-    tooltip-effect="dark"
-    style="width: 100%"
+    :header-cell-style="{ 'font-size': '16px', color: '#1192ac' }"
+            :cell-style="{ height: '44px', padding: '0px' }"
+            
+         
+            class="Table"
+            max-height="550"
+            border
+            small
+    style="width: 50%"
     @selection-change="handleSelectionChange">
     <el-table-column
       type="selection"
@@ -40,12 +51,12 @@
     </el-table-column>
 
   </el-table>
+  <div id="main" style="width: 600px; height: 400px;"></div>
+  </div>
 
-
-
-  <div id="main" style="width: 600px; height: 400px"></div>
-  <el-button type="primary"  @click = "download"  class = "download">导出饼图</el-button>
-  <el-button type="primary"  @click = "DownloadHandler"  class = "download">导出表格</el-button>
+  <div class="button-container_down">
+    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+  </div>
   </div>
   
 </template>
@@ -55,6 +66,7 @@ import choice_button from '../../components/components-pro/analy3_components/ana
 import FileSaver from "file-saver"
 import XLSX from "xlsx"
 import html2canvas from 'html2canvas'
+import { color } from 'echarts'
 export default {
   data(){
     return{
@@ -68,12 +80,15 @@ export default {
       option:{},
 
       chancle_arry:[],
+      chancle_arry_query:[],
 
       flag:true,
       change_when:false,
       query_flag : false,
       query_change : true,
       flagfordata: true,
+      flag_whenquery:false,
+      if_query:'no',
     }
   },
   components:{
@@ -113,26 +128,33 @@ export default {
         let new_size = val.length
         const old_arry = this.multipleSelection.map(item=>item.name)
         const new_arry = val.map(item=>item.name)
-
+       
         this.multipleSelection = val;
         if(this.flag){
-          console.log(old_size)
-          console.log(new_size)
           if(old_size > new_size && this.flagfordata){
             const result = old_arry.filter(item => !new_arry.includes(item))
-            this.chancle_arry.push(result)
-            console.log(this.chancle_arry)
+       
+            if(result.length != 1){
+              for(let i = 0; i < result.length; i++){
+                this.chancle_arry.push(result.at(i))
+              }
+            }else{
+              this.chancle_arry.push(result.at(0))
+            }
             
+      
           }else{
             let result = new_arry.filter(item => !old_arry.includes(item))
-            result = result.toString()
             this.flagfordata = true
-            for(let i = 0; i < this.chancle_arry.length;i++){
-              if(this.chancle_arry[i] == result){
-                this.chancle_arry.splice(i,1)
+            for(let i = 0; i < result.length;i++){
+              for(let j = 0; j < this.chancle_arry.length;j++){
+              if(this.chancle_arry[j] == result[i]){
+                this.chancle_arry.splice(j,1)
               }
-            }        
-            
+            }
+            }
+          
+             
           }
           this.chartData = val  
           
@@ -140,6 +162,8 @@ export default {
         }
     },
     Query_fun(){
+     
+      var len = this.showData.length
       if(this.value == ""){
         return
       }
@@ -147,27 +171,41 @@ export default {
         let name = Object.values(this.options_city.at(this.value - 1))[0]
         let obj = this.tableData.filter((data_single)=>Object.values(data_single)[0]  == name)
         this.showData = obj
+
       }
 
-      let flag = true
-      let name = Object.values(this.showData.at(0))[0]      
-      for(let i = 0; i < this.chancle_arry.length;i++){
+      let flag_for_query_default = true
+   
+      let name = Object.values(this.showData.at(0))[0]
+      if(this.flag == true){
+        if(this.chancle_arry.length){
+        for(let i = 0; i < this.chancle_arry.length;i++){
           if(name == this.chancle_arry[i]){
-            flag = false
+            flag_for_query_default = false
           }
-      } 
-      if(flag){
+       }
+      }
+      }else{
+        if(this.chancle_arry_query.length){
+        for(let i = 0; i < this.chancle_arry_query.length;i++){
+          if(name == this.chancle_arry_query[i]){
+            flag_for_query_default = false
+          }
+        }
+       }
+      }
+
+
+      if(flag_for_query_default){
         this.query_change = true
         this.defaultSelection()
        }
       else{
         this.query_change = false
       }
-      
+      this.chancle_arry_query = this.chancle_arry
       this.flag = false
-      
-   
-     
+
     },
     setOptions_city(){
 
@@ -183,18 +221,21 @@ export default {
       }
     },
     delValue(){
-      this.showData = this.tableData
+      if(this.flag == false){
+        this.showData = this.tableData
       
-      this.chartData = this.tableData
+       this.chartData = this.tableData
 
 
-      this.defaultSelection()
-      this.chancle_arry = []
-      this.flag = true
-      this.flagfordata = false
-      this.query_flag = false
+       this.defaultSelection()
+       this.chancle_arry = []
+       this.flag = true
+       this.flagfordata = false
+       this.query_flag = false
       
-      this.value = "";
+       this.value = "";
+      }
+
   
     },
     DownloadHandler(){
@@ -240,17 +281,56 @@ export default {
         creatIMg.remove(); // 下载之后把创建的元素删除
       });
     },
+    downloadall(){
+      this.download()
+      this.DownloadHandler()
+    },
     drawChart(){
       // 基于准备好的dom，初始化echarts实例  这个和上面的main对应
        this.myChart = this.$echarts.init(document.getElementById("main"));
       // 指定图表的配置项和数据  
       this.option = {
+        title: {
+            text: '各市企业数量分布图',
+        
+            // x 设置水平安放位置，默认左对齐，可选值：'center' ¦ 'left' ¦ 'right' ¦ {number}（x坐标，单位px）
+            x: 'center',
+            // y 设置垂直安放位置，默认全图顶端，可选值：'top' ¦ 'bottom' ¦ 'center' ¦ {number}（y坐标，单位px）
+            y: 'top',
+            // itemGap设置主副标题纵向间隔，单位px，默认为10，
+            itemGap: 30,
+            backgroundColor: '#EEE',
+            // 主标题文本样式设置
+            textStyle: {
+              fontSize: 26,
+              fontWeight: 'bolder',
+              color: 'black'
+            },
+            // 副标题文本样式设置
+      
+          },
+        tooltip: {
+            // trigger 设置触发类型，默认数据触发，可选值：'item' ¦ 'axis'
+            trigger: 'item',
+            showDelay: 20,   // 显示延迟，添加显示延迟可以避免频繁切换，单位ms
+            hideDelay: 20,   // 隐藏延迟，单位ms
+            backgroundColor: 'rgba(255,0,0,0.7)',  // 提示框背景颜色
+            textStyle: {
+              fontSize: '16px',
+              color: '#000'  // 设置文本颜色 默认#FFF
+            },
+            // formatter设置提示框显示内容
+            // {a}指series.name  {b}指series.data的name
+            // {c}指series.data的value  {d}%指这一部分占总数的百分比
+            formatter: '{b} : {c}个 ({d}%)'
+          },
             series: [
                 {
                     type: 'pie',
                     data: this.chartData
                 }
-            ]
+            ],
+            backgroundColor:'#909399' ,
         }
       // 使用刚指定的配置项和数据显示图表。
       document.getElementById("main").setAttribute('_echarts_instance_', '')
@@ -260,7 +340,7 @@ export default {
   },
   watch:{
     multipleSelection(new_arry,old_arry){
-      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change == true ){
+      if(new_arry.length == 0 && old_arry.length == 1 && this.flag == false && this.query_change == true ){ 
         console.log("取消一个")
         let flag = true
         let name = Object.values(this.showData.at(0))[0]
@@ -275,6 +355,8 @@ export default {
         }
         if(flag){
           let index = this.chartData.indexOf(this.showData[0])
+          this.chancle_arry_query.push(name);
+          //console.log(this.chancle_arry_query)
           this.chartData.splice(index,1)
           this.query_change = false
           this.drawChart()
@@ -287,14 +369,17 @@ export default {
         this.query_change = true
         this.change_when = true
         this.chartData.push(this.showData[0])
+        let name = Object.values(this.showData.at(0))[0]
+        for(let j = 0; j < this.chancle_arry_query.length;j++){
+              if(this.chancle_arry_query[j] == name){
+                this.chancle_arry_query.splice(j,1)
+              }
+            }
+        console.log(this.chancle_arry_query)
         this.drawChart()
       }
     },
-    chancle_arry(new_arry,old_arry){
 
-  
-
-    },
   }
 }
 </script>

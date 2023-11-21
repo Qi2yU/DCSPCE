@@ -21,6 +21,9 @@
 .el-container {
   height: 100%;
 }
+.p{
+  
+}
 </style>
 
  <template>
@@ -33,8 +36,14 @@
        <!-- aside部分 -->
       <leftNav></leftNav>
       <el-main>
+        <div v-if="show">
+        <h1 style="font-size: xx-large;">欢迎使用省端省就业失业数据收集系统</h1>
+        <el-divider ></el-divider>
+        <check></check>
+      </div>
          <!-- main部分 -->
-        <router-view />
+       <router-view />
+       
       </el-main>
     </el-container>
   </el-container>
@@ -44,15 +53,27 @@
  <script>
 import navtop from "@/components/components-pro/nav-top.vue";
 import leftNav from "@/components/components-pro/nav.vue";
+import check from "@/pages/pages-pro/data_exam copy.vue"
 export default {
   components: {
     navtop,
-    leftNav
+    leftNav,
+    check,
   },
   data() {
-    return {};
+    return {
+      show:true,
+    };
   },
-  methods: {}
+  methods: {},
+  updated(){
+    if(this.$route.path != "/government-pro"){
+      console.log("others")
+      this.show = false
+    }
+  },
+  
+
 };
 </script>
 

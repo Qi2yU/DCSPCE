@@ -33,6 +33,11 @@
        <!-- aside部分 -->
       <leftNav :userId="userId"></leftNav>
       <el-main>
+        <div v-if="show">
+        <h1 style="font-size: xx-large;">欢迎使用市端省就业失业数据收集系统</h1>
+        <el-divider></el-divider>
+        <check ></check>
+        </div>
          <!-- main部分 -->
         <router-view />
       </el-main>
@@ -44,17 +49,24 @@
  <script>
 import navtop from "@/components/components-city/nav-top.vue";
 import leftNav from "@/components/components-city/nav.vue";
+import check from "@/pages/pages-city/data_exam copy.vue"
 export default {
   components: {
     navtop,
-    leftNav
+    leftNav,
+    check,
   },
   data() {
     return { 
       userId:this.$route.query.userId,
+      show: true,
     };
   },
-  methods: {}
+  methods: {},
+  updated(){
+    console.log("update")
+    this.show = false 
+  }
 };
 </script>
 
