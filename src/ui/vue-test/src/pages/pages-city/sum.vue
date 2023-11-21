@@ -288,6 +288,9 @@ import XLSX from "xlsx"
       else{
         this.show = false
       }
+      if(!es || !cs){
+          this.show = true
+      }
       },
 
       value_start(){
@@ -321,6 +324,9 @@ import XLSX from "xlsx"
       else{
         this.show = false
       }
+      if(!es || !cs){
+          this.show = true
+      }
       },
 
 
@@ -339,6 +345,9 @@ import XLSX from "xlsx"
       else{
         this.show = false
       }
+      if(!es || !cs){
+          this.show = true
+      }
       },
       value_endyear(){
     let cs = this.value_startyear
@@ -353,6 +362,9 @@ import XLSX from "xlsx"
       else{
         this.show = false
       }
+      if(!es || !cs){
+          this.show = true
+      }
       },
       value_startmonth(){//2023_08
     let cs = this.value_startmonth.replace("_","")
@@ -365,6 +377,9 @@ import XLSX from "xlsx"
       }
       else{
         this.show = false
+      }
+      if(!es || !cs){
+          this.show = true
       }
       },
       value_endmonth(){//2023_08
@@ -379,6 +394,9 @@ import XLSX from "xlsx"
       }
       else{
         this.show = false
+      }
+      if(!es || !cs){
+          this.show = true
       }
       },
 
