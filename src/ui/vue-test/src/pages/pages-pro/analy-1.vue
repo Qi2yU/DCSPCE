@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 
 .choice{
   text-align: center;

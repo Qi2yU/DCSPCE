@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .title_main{
   color: #409EFF;
   font-size: 20px Extra large;
