@@ -33,7 +33,7 @@
         </el-col>
       </el-row>
     </template>
-    <template v-if="!isable2Modify()">
+    <template v-if="isincollection()">
       <el-row  type="flex" class="row-bg row-two" justify="center" align="top">
         <template v-if="getstatus()==0" >当前就业信息上报状态为：未上报数据</template>
         <template v-else-if="getstatus()==1" >当前就业信息上报状态为：已上报未审核</template>
@@ -69,7 +69,6 @@
           </el-form-item>
           <template v-if="isdecreased()">
             <el-form-item 
-              v-show = false
               label="就业人数减少类型" 
               :rules="[{ required: true }]"
               class="reasonClass"
@@ -89,8 +88,6 @@
                 </el-select>
               </el-col>
             </el-form-item>
-          </template>
-          <template v-if="isdecreased()">
             <el-form-item 
               label="主要原因"
               :rules="[{ required: true }]"
@@ -209,7 +206,7 @@
           userid: this.userid
         }
       }).then((response)=>{
-        // console.log(response.data)
+        console.log(response.data)
         this.comCurData.docEmploymentNumber = response.data.docEmploymentNumber;
         this.comCurData.curEmploymentNumber = response.data.curEmploymentNumber > 0? response.data.curEmploymentNumber: '';
         this.comCurData.numDecreasedReason =  response.data.numDecreasedReason;
@@ -245,7 +242,9 @@
         return (this.comCurData.iscollected == 0) 
       },
       isable2Modify(){
-        var flag = this.status == 0 || this.status == 1 || this.status == 6 || this.status == 7
+        var status = this.comCurData.status;
+        var flag = (status == 0 || status == 1 || status == 6 || status == 7)
+        console.log(flag)
         return flag
       },
       getstatus(){

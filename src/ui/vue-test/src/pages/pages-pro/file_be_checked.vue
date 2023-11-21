@@ -128,7 +128,7 @@ export default{
      name: 'File_be_checked',
 
      created:function () {
-      axios.get("http://localhost:8090/company_info/be_checked").then((response)=>{
+      this.$http.get("/company_info/be_checked").then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;
       })
@@ -180,7 +180,7 @@ methods:{
           this.values="0";
           console.log(this.values);
         }
-        axios.post("http://localhost:8090/company_info/selectbycity_bechecked",
+        this.$http.post("/company_info/selectbycity_bechecked",
       this.values,{'Content-Type': 'text/plain'}).then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;})

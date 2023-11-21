@@ -61,7 +61,7 @@ export default{
 
     created:function(){
         console.log("调用axios");
-      axios.post("http://localhost:8090/company_info/single",
+        this.$http.post("/company_info/single",
       this.$route.query.id,{'Content-Type':'text/plain'}).then((response)=>{
         this.item = response.data;})
     },
@@ -70,7 +70,7 @@ export default{
         pass(){
             this.flag='已通过';
             console.log(this.flag);
-            axios.post("http://localhost:8090/company_info/check_passed",
+            this.$http.post("/company_info/check_passed",
                 this.item.user_id,{'Content-Type': 'text/plain'}).then()
             console.log("审核通过!")
             this.$router.back();
@@ -79,14 +79,14 @@ export default{
             this.flag3=true;
             this.flag==='被驳回';
             console.log(this.flag);
-            axios.post("http://localhost:8090/company_info/check_backed",
+            this.$http.post("/company_info/check_backed",
                 this.item.user_id,{'Content-Type': 'text/plain'}).then()
             console.log("请填写驳回原因!")
 
         },
         advise(){
             console.log(this.textarea);
-            axios.post("http://localhost:8090/company_info/check_backed_reason",
+            this.$http.post("/company_info/check_backed_reason",
                 {param1:this.item.user_id,param2:this.textarea},{'Content-Type': 'text/plain'}).then()
             console.log("已驳回!")
             this.$router.back();

@@ -130,7 +130,7 @@ export default{
     name: 'File_backed',
 
     created:function () {
-      axios.get("http://localhost:8090/company_info/passed").then((response)=>{
+      this.$http.get("/company_info/passed").then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;
       })
@@ -194,7 +194,7 @@ methods:{
           this.values="0";
           console.log(this.values);
         }
-        axios.post("http://localhost:8090/company_info/selectbycity_passed",
+        this.$http.post("/company_info/selectbycity_passed",
       this.values,{'Content-Type': 'text/plain'}).then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;

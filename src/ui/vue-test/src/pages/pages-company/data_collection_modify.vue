@@ -35,7 +35,6 @@
           </el-form-item>
           <template v-if="isdecreased()">
             <el-form-item 
-              v-show = false
               label="就业人数减少类型" 
               :rules="[{ required: true }]"
               class="reasonClass"
@@ -55,8 +54,6 @@
                 </el-select>
               </el-col>
             </el-form-item>
-          </template>
-          <template v-if="isdecreased()">
             <el-form-item 
               label="主要原因"
               :rules="[{ required: true }]"
@@ -158,9 +155,9 @@
     beforeCreate() {
       $this = this;
     },
-    created:function(){
+    async created(){
       this.userid = this.$http.userid
-      this.$http.get("/get_company_collection_data",{
+      await this.$http.get("/get_company_collection_data",{
         params: {
           userid: this.userid
         }
@@ -173,10 +170,13 @@
         this.comCurData.reasonDetail = response.data.reasonDetail;
         this.comCurData.iscollected = response.data.valid;
         this.comCurData.status = response.data.status;
+        console.log("iscollected = " + this.comCurData.iscollected);
+        console.log("status = " + this.comCurData.status)
+        
         if(!this.isincollection() || !this.isable2Modify()){
           this.go_back_collection();
         }
-        // console.log("初始化结束");
+        console.log("初始化结束");
       });
       // console.log("被创建");
     },
@@ -210,7 +210,6 @@
                         this.$message.success('上报就业数据成功')
                         this.go_back_collection()
                       });
-        this.go_back_collection();
       },
       go_back_collection(){
         $this.$router.push("/company/data_collection").catch(error => error);
@@ -226,7 +225,8 @@
         return (this.comCurData.iscollected == 0) 
       },
       isable2Modify(){
-        var flag = this.status == 0 || this.status == 1 || this.status == 6 || this.status == 7
+        var status = this.comCurData.status;
+        var flag = (status == 0 || status == 1 || status == 6 || status == 7)
         return flag
       },
       isnaturallyDecreased(){

@@ -29,13 +29,6 @@
            @open="handleOpen"
            @close="handleClose"
          >
-
-           <el-menu-item index="0" @click="goPage('file_check')">
-             <i class="el-icon-menu"></i>
-             <span slot="title">备案审核</span>
-           </el-menu-item>
-
-           
            
            <el-menu-item index="5" @click="goPage('dataexam')">
              <i class="el-icon-menu"></i>
@@ -70,25 +63,6 @@
              <span slot="title">通知界面</span>
            </el-menu-item>
 
-
-           <el-submenu index="1">
-             <template slot="title">
-               <i class="el-icon-setting"></i>
-               <span>系统管理</span>
-             </template>
-             <el-menu-item-group>
-               <el-menu-item index="1-1"  @click="goPage('centre-1')">调查期管理</el-menu-item>
-             </el-menu-item-group>
-             <el-menu-item-group>
-               <el-menu-item index="1-2"  @click="goPage('centre-2')">用户管理</el-menu-item>
-             </el-menu-item-group>
-             <el-menu-item-group>
-               <el-menu-item index="1-3"  @click="goPage('centre-3')">角色管理</el-menu-item>
-             </el-menu-item-group>
-             <el-menu-item-group>
-              <el-menu-item index="1-4"   @click="goPage('centre-4')">系统状态监测</el-menu-item>
-             </el-menu-item-group>
-           </el-submenu>
          </el-menu>
        </el-col>
      </el-row>

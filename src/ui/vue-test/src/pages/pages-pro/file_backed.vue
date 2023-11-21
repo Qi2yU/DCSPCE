@@ -122,7 +122,6 @@
 </style>
 
 <script>
-import axios from 'axios';
 
 var $this = {};
 
@@ -130,7 +129,7 @@ export default{
      name: 'File_backed',
 
      created:function () {
-      axios.get("http://localhost:8090/company_info/backed").then((response)=>{
+      this.$http.get("/company_info/backed").then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;
       })
@@ -181,7 +180,7 @@ methods:{
           this.values="0";
           console.log(this.values);
         }
-        axios.post("http://localhost:8090/company_info/selectbycity_backed",
+        this.$http.post("/company_info/selectbycity_backed",
       this.values,{'Content-Type': 'text/plain'}).then((response)=>{
         this.tableData = response.data;
         this.exportData = response.data;})
