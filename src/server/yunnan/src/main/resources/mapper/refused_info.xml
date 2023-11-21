@@ -17,4 +17,17 @@
         </where>
     </select>
 
+    <resultMap id="comMap" type="com.example.yunnan.entity.comInfoRefused">
+        <result column="backed_info" property="info"/>
+    </resultMap>
+
+    <select id="getComInfoRefused" resultMap="comMap">
+        select
+        d.backed_info
+        from company_info d
+        <where>
+            d.user_id = #{userId}
+        </where>
+    </select>
+
 </mapper>

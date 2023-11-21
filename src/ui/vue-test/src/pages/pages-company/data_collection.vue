@@ -251,7 +251,7 @@
         return this.comCurData.status;
       },
       isrefused(){
-        return (this.refusedData.isRefused == 1) 
+        return (this.refusedData.emplRefusedInfo != null) 
       },
       isdecreased(){
         if(this.comCurData.docEmploymentNumber != ''  

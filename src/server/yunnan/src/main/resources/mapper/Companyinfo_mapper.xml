@@ -7,4 +7,65 @@
         insert into company_info (user_id, company_name, company_id, city, district, phone, company_character, company_industry, company_business, linksman, linaddress, post_num, fax_num, email)
         VALUES (#{user_id}, #{company_name}, #{company_id}, #{city}, #{district}, #{phone}, #{company_character}, #{company_industry}, #{company_business}, #{linksman}, #{linaddress}, #{post_num}, #{fax_num}, #{email})
     </insert>
+
+    <update id="cpinfo_update">
+        update company_info SET
+        company_name = #{company_name},
+        company_id = #{company_id},
+        city = #{city},
+        district = #{district},
+        phone = #{phone},
+        company_character = #{company_character},
+        company_industry = #{company_industry},
+        company_business = #{company_business},
+        linksman = #{linksman},
+        linaddress = #{linaddress},
+        post_num = #{post_num},
+        fax_num = #{fax_num},
+        email = #{email},
+        is_valid = 2
+        WHERE user_id = #{user_id}
+    </update>
+
+    <resultMap id="CMap" type="com.example.yunnan.entity.CompanyInfo">
+        <result column="user_id" property="user_id"/>
+        <result column="company_name" property="company_name"/>
+        <result column="company_id" property="company_id"/>
+        <result column="city" property="city"/>
+        <result column="district" property="district"/>
+        <result column="phone" property="phone"/>
+        <result column="company_character" property="company_character"/>
+        <result column="company_industry" property="company_industry"/>
+        <result column="company_business" property="company_business"/>
+        <result column="linksman" property="linksman"/>
+        <result column="linaddress" property="linaddress"/>
+        <result column="post_num" property="post_num"/>
+        <result column="fax_num" property="fax_num"/>
+        <result column="email" property="email"/>
+        <result column="is_valid" property="is_valid"/>
+    </resultMap>
+
+    <select id="get_com_info_com" resultMap="CMap">
+        select
+        d.user_id,
+        d.company_name,
+        d.company_id,
+        d.city,
+        d.district,
+        d.phone,
+        d.company_character,
+        d.company_industry,
+        d.company_business,
+        d.linksman,
+        d.linaddress,
+        d.post_num,
+        d.fax_num,
+        d.email,
+        d.is_valid
+        from company_info d
+        <where>
+            d.user_id = #{uid}
+        </where>
+
+    </select>
 </mapper>
