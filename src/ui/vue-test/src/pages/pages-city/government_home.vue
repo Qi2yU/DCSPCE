@@ -33,9 +33,11 @@
        <!-- aside部分 -->
       <leftNav :userId="userId"></leftNav>
       <el-main>
-        <p v-if="show">欢迎使用市端企业就业管理系统</p>
+        <div v-if="show">
+        <h1 style="font-size: xx-large;">欢迎使用市端省就业失业数据收集系统</h1>
         <el-divider></el-divider>
-        <check v-if="show"></check>
+        <check ></check>
+        </div>
          <!-- main部分 -->
         <router-view />
       </el-main>

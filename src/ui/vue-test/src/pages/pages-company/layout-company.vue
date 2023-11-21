@@ -33,10 +33,11 @@
        <!-- aside部分 -->
       <leftNav></leftNav>
       <el-main>
-        <p v-if="show" style="font-size: large; text-align: center;">欢迎使用企业端就业填报系统</p>
+        <div v-if = "show">
+        <p  style="font-size: large; text-align: center;">欢迎使用省就业失业数据上报系统</p>
         <el-divider></el-divider>
-        <notice v-if = "show"></notice>
-         <!-- main部分 -->
+        <notice ></notice>
+      </div><!-- main部分 -->
         <router-view />
       </el-main>
     </el-container>

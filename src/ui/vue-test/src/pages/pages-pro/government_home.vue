@@ -37,7 +37,7 @@
       <leftNav></leftNav>
       <el-main>
         <div v-if="show">
-        <p>欢迎使用省端企业就业管理系统</p>
+        <h1 style="font-size: xx-large;">欢迎使用省端省就业失业数据收集系统</h1>
         <el-divider ></el-divider>
         <check></check>
       </div>
