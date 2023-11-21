@@ -142,7 +142,7 @@
 <!--  省审核通过更新状态  -->
     <update id="passByPro">
         UPDATE ${tableName} d
-        SET d.state = 4
+        SET d.state = 4, d.modify_info= null
         where d.user_id =#{userId}
     </update>
 
@@ -232,7 +232,7 @@
 <!--  市审核通过  -->
     <update id="passByCity">
         UPDATE ${tableName} d
-        SET d.state = 2
+        SET d.state = 2, d.modify_info= null
         where d.user_id =#{userId}
     </update>
 
