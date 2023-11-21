@@ -431,6 +431,9 @@ watch:{
       else{
         this.show = false
       }
+      if(!es || !cs){
+          this.show = true
+      }
    
 
       
@@ -465,6 +468,9 @@ watch:{
       }
       else{
         this.show = false
+      }
+      if(!es || !cs){
+          this.show = true
       }
    
 

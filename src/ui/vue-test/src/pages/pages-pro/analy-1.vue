@@ -2,7 +2,7 @@
 
 .choice{
   text-align: center;
-  border: 1px solid blue;
+ 
 }
 .button-container{
   text-align: center;
@@ -213,6 +213,7 @@ export default {
         }
       }
       ).then((response)=>{
+        console.log(response)
         this.myChart.clear()
         let result = response.data
         let ob = {
@@ -222,8 +223,6 @@ export default {
         }
         this.series = []
         result.forEach(element => {
-   
-
           this.series.push({name:element.company_name, data:element.now_num_list, type:'line'})
           this.legend.push(element.company_name)
         });
@@ -347,7 +346,7 @@ export default {
     await this.$http.get("http://localhost:8070/government-pro/analy_tend/get_table",{
 
       }).then(response=>{
-        console.log(response)
+        console.log(response.status)
         let result = response.data
         this.tableData = []
         let len = this.xAxislist.length
@@ -361,7 +360,7 @@ export default {
             let data = element.table_percent_list[i]
             obj[time] = data
           }
-          console.log(obj)
+    
         this.tableData.push(obj)
       });
       })
@@ -504,6 +503,7 @@ export default {
 },
 watch:{
   end_time(){
+      
       let cs
       if(this.start_time.length == 13){
          cs = this.start_time.replace("年","0")
@@ -533,6 +533,11 @@ watch:{
       }
       else{
         this.show = false
+      }
+
+      if(!es || !cs){
+    
+        this.show = true
       }
    
 
@@ -569,6 +574,9 @@ watch:{
       }
       else{
         this.show = false
+      }
+      if(!es || !cs){
+          this.show = true
       }
    
 

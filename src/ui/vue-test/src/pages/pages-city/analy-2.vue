@@ -333,6 +333,7 @@ export default {
 },
 watch:{
   end_time(){
+      
       let cs
       if(this.start_time.length == 13){
          cs = this.start_time.replace("年","0")
@@ -354,14 +355,19 @@ watch:{
       }
       es = es.replace("月第", "")
       es = es.replace("号调查期","") //2024011 2023111
-      
       es = parseInt(es)
-  
+
+    
       if(cs >= es ){
         this.show = true
       }
       else{
         this.show = false
+      }
+
+      if(!es || !cs){
+    
+        this.show = true
       }
    
 
@@ -392,15 +398,20 @@ watch:{
       es = es.replace("号调查期","") //2024011 2023111
       es = parseInt(es)
 
+
       if(cs >= es ){
         this.show = true
       }
       else{
         this.show = false
       }
+      if(!es || !cs){
+          this.show = true
+      }
+   
 
   }
-    },
+},
 
 }
 </script>
