@@ -13,15 +13,19 @@
  
  .el-menu{
    border-right:none;
-  overflow:visible;
  }
  .el-aside{
    border-right: 1px solid #f5f1f1;
+   display: block;
+    position: absolute;
+    left: 0;
+    top: 60px;
+    bottom: 0;
  }
  </style>
  
  <template>
-   <el-aside width="200px">
+   <el-aside width="200px" >
      <el-row class="tac">
        <el-col>
          <el-menu
