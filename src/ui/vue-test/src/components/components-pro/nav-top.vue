@@ -4,7 +4,6 @@
     justify-content: center;
     align-items: center;
 }
-
 section{
   height: 100%;
   display: flex;
@@ -29,6 +28,7 @@ section{
     <el-aside width="auto" class="header-logo tap" >
       <img class="logo" src="@/assets/imgs/logo.png" alt="Logo" />
     </el-aside>
+    <p></p>
     <el-aside width="auto" class="header-logo tap" >
       <el-avatar icon="el-icon-user-solid" class="headerLogo"></el-avatar>
     </el-aside>

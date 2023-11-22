@@ -9,10 +9,23 @@
 <style>
 .el-main {
   background-color: #f5f7f9;
-  /* overflow:hidden */
+
+  position: absolute;
+
+  left: 200px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
+
+
 }
 
-.el-header,
+.el-header{
+  position: relative;
+  width: 100%;
+  height: 60px; 
+}
 .el-footer {
   background-color: white;
   box-sizing: border-box;
@@ -33,18 +46,18 @@
     <el-header>
       <navtop></navtop>
     </el-header>
+
     <el-container>
        <!-- aside部分 -->
       <leftNav></leftNav>
+
       <el-main>
         <div v-if="show">
-        <h1 style="font-size: xx-large;">欢迎使用省端省就业失业数据收集系统</h1>
-        <el-divider ></el-divider>
-        <check></check>
-      </div>
-         <!-- main部分 -->
-       <router-view />
-       
+          <h1 style="font-size: xx-large;">欢迎使用省端省就业失业数据收集系统</h1>
+          <el-divider ></el-divider>
+          <check></check>
+        </div>
+        <router-view /> 
       </el-main>
     </el-container>
   </el-container>
@@ -69,7 +82,6 @@ export default {
   methods: {},
   updated(){
     if(this.$route.path != "/government-pro"){
-      console.log("others")
       this.show = false
     }
   },
