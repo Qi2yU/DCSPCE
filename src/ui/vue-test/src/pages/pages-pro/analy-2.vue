@@ -165,7 +165,7 @@
   
 
   <div class="button-container_down">
-    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+    <el-button type="primary" @click = downloadall class = "download" :disabled="load_dis" >导出图表</el-button>
   </div>
   </div>
 </template>
@@ -197,6 +197,7 @@ export default {
       option:{},
       myChart:null,
       show:true,
+      load_dis:true,
 
     }
   },
@@ -273,8 +274,16 @@ export default {
         }
       }
       ).then(res=>{
+        
         this.tableData = res.data  
-        console.log(this.tableData)    
+        if(this.tableData.length == 0){
+          console.log("无数据")
+          this.$message.warning('未获取数据！请重新选择您的条件');
+          this.load_dis = true
+        }else{
+          this.load_dis = false
+        }
+  
       })
       await  this.$http.get("http://localhost:8070/government-pro/analy_compare/get_line"
       ).then(res=>{

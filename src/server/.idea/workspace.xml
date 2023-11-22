@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="f8a4f741-edb9-4104-afba-5e54ebe6f33c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Compare_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Compare_service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" beforeDir="false" afterPath="$PROJECT_DIR$/yunnan/src/main/java/com/example/yunnan/service/analy_Tend_service.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-city/government_home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-city/government_home.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +77,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f8a4f741-edb9-4104-afba-5e54ebe6f33c" name="Changes" comment="" />
+      <changelist id="83d0f8c3-c9b6-4ab6-9a4f-979ed9013854" name="Changes" comment="" />
       <created>1698897052107</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
