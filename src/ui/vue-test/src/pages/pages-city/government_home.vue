@@ -9,16 +9,12 @@
 <style>
 .el-main {
   background-color: #f5f7f9;
-
   position: absolute;
-
   left: 200px;
   right: 0;
   top: 60px;
   bottom: 0;
   overflow-y: scroll;
-
-
 }
 
 .el-header{

@@ -141,7 +141,7 @@
     
    
   <div class="button-container_down">
-    <el-button type="primary" @click = downloadall class = "download">导出图表</el-button>
+    <el-button type="primary" @click = downloadall class = "download" :disabled="load_dis">导出图表</el-button>
   </div>
  
   </div>
@@ -183,6 +183,7 @@ export default {
       start_time:'',
       end_time:'',
       show:true,
+      load_dis:true,
       
 
 
@@ -214,6 +215,12 @@ export default {
       }
       ).then((response)=>{
         console.log(response)
+        if(response.data.length == 0){
+          this.$message.warning('未获取数据！请重新选择您的条件');
+          this.load_dis = true
+        }else{
+          this.load_dis = false
+        }
         this.myChart.clear()
         let result = response.data
         let ob = {
