@@ -13,4 +13,11 @@
             explain_reason = #{reasonDetail},
             state = #{status} WHERE user_id = #{companyID}
     </update>
+
+    <insert id="insert_companydata">
+        insert into ${tableName} (user_id, last_people_num, now_people_num, decrease_reason, main_reason, second_reason
+            , explain_reason, modify_info, state)
+        VALUES (#{companyID}, #{docEmploymentNumber}, #{curEmploymentNumber}, #{numDecreasedReason}, #{mainReason},
+            #{secondReason}, #{reasonDetail}, '', #{status})
+    </insert>
 </mapper>

@@ -20,7 +20,8 @@
             ]"
           >
             <el-col :span="15">
-            <el-input disabled v-model="comCurData.docEmploymentNumber"></el-input>
+            <el-input v-if="isFirst()" disabled v-model="comCurData.curEmploymentNumber"></el-input>
+            <el-input v-else disabled v-model="comCurData.docEmploymentNumber"></el-input>
             </el-col>
           </el-form-item>
           <el-form-item
@@ -184,7 +185,10 @@
       updateEmployData(){
         // 需要检测一下合不合法
         
-        // ... balabala
+        if(this.isFirst()){
+          console.log("first")
+          this.comCurData.docEmploymentNumber = this.comCurData.curEmploymentNumber;
+        }
         console.log(this.comCurData);
         // 再提交到后端
         // this.$http.post("/data_collection").then((response)=>{});
@@ -222,7 +226,7 @@
         else return false;
       },
       isincollection(){
-        return (this.comCurData.iscollected == 0) 
+        return (this.comCurData.iscollected >= 0) 
       },
       isable2Modify(){
         var status = this.comCurData.status;
@@ -236,6 +240,9 @@
       isOthers(){
         if(this.comCurData.mainReason == "其他") return true;
         return false;
+      },
+      isFirst(){
+        return (this.comCurData.iscollected == 1)
       }
     }
   }

@@ -43,15 +43,34 @@ public class data_collection {
         List<res_time> list= dataQueryService.getTable(nowDate, nowDate);
         String tableName= list.get(0).getTableName();
 
-        dataCollectionService.test_companydata(tableName,
-                ede.getCompanyID(),
-                ede.getDocEmploymentNumber(),
-                ede.getCurEmploymentNumber(),
-                ede.getNumDecreasedReason(),
-                ede.getMainReason(),
-                ede.getSecondReason(),
-                ede.getReasonDetail(),
-                1);
+        List<QueryDetail> currentColRec = new ArrayList<>();
+        currentColRec = dataQueryService.getRes1(tableName,"all",ede.getCompanyID(),"all",
+                "all","all","all");
+
+        if(currentColRec.toArray().length == 0){
+            // 此时应该是用户第一次提交调查期，改成 insert
+            dataCollectionService.insert_companydata(tableName,
+                    ede.getCompanyID(),
+                    ede.getDocEmploymentNumber(),
+                    ede.getCurEmploymentNumber(),
+                    ede.getNumDecreasedReason(),
+                    ede.getMainReason(),
+                    ede.getSecondReason(),
+                    ede.getReasonDetail(),
+                    1);
+        } else {
+            // update
+            dataCollectionService.test_companydata(tableName,
+                    ede.getCompanyID(),
+                    ede.getDocEmploymentNumber(),
+                    ede.getCurEmploymentNumber(),
+                    ede.getNumDecreasedReason(),
+                    ede.getMainReason(),
+                    ede.getSecondReason(),
+                    ede.getReasonDetail(),
+                    1);
+        }
+
 
         return "Hello SpringBoot!";
     }
@@ -87,7 +106,8 @@ public class data_collection {
 
             if(currentColRec.toArray().length == 0){
                 // 此时应该是用户第一次进入报备系统，并且调查期创建时，并没有完成企业基本信息审核
-
+                ede.setValid(1);
+                ede.setStatus(0);
             } else {
                 QueryDetail res = (QueryDetail) currentColRec.toArray()[0];
                 ede.setCompanyID(res.getUserId());

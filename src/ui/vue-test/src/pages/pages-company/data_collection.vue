@@ -240,7 +240,7 @@
         // console.log("go to data_collection_modify");
       },  
       isincollection(){
-        return (this.comCurData.iscollected == 0) 
+        return (this.comCurData.iscollected >= 0) 
       },
       isable2Modify(){
         var status = this.comCurData.status;
@@ -252,7 +252,7 @@
         return this.comCurData.status;
       },
       isrefused(){
-        return (this.refusedData.emplRefusedInfo != null) 
+        return (this.refusedData.isRefused==1 && this.refusedData.emplRefusedInfo != '') 
       },
       isdecreased(){
         if(this.comCurData.docEmploymentNumber != ''  
