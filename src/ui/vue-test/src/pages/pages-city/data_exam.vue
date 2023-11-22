@@ -34,7 +34,9 @@
       
       <script>
         export default {
-          created(){
+          created:function(){
+            
+            
             this.getCity();
             this.$http.get("/getcount",{
               params:{
@@ -52,6 +54,7 @@
           data() {
             return {
               userId:this.$route.query.userId,
+              // userId:'',
               city:'',
               start_time:'',
               end_time:'',

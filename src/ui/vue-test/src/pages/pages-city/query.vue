@@ -354,7 +354,7 @@
           this.district=this.defaultval;
           if(this.cas_val.length==0)
           this.district=this.defaultval;
-          this.$router.push({path:'/government-pro/queryres',
+          this.$router.push({path:'/government-city/queryres',
           query:{
             companyName:this.companyName,
             userId:this.userId,

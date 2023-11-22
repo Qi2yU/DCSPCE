@@ -193,7 +193,7 @@ XLSX.writeFile(wb, 'exported_data.xlsx');
     handleClick(row) {
       console.log(row);
       this.$router.push(
-        {path:'/government-pro/queryres2',
+        {path:'/government-city/queryres2',
       query:{
           tableName:row.tableName,
           userId:row.userId,

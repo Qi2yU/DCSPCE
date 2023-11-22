@@ -201,6 +201,7 @@
     },
     created:function(){
       this.userid = this.$http.userid
+      console.log(this.userid);
       this.$http.get("/get_company_collection_data",{
         params: {
           userid: this.userid
