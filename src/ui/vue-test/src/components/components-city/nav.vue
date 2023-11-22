@@ -67,7 +67,7 @@
              <i class="el-icon-message"></i>
              <span slot="title">通知界面</span>
            </el-menu-item>
-``
+
          </el-menu>
        </el-col>
      </el-row>

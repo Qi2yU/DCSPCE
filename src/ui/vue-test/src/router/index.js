@@ -86,19 +86,25 @@ import ReadNotice from "@/pages/pages-company/readNotice"
 
 Vue.use(Router)
 
-export default new Router({
+const router =  new Router({
   routes: [
 
     {
       path: '/',
       name: 'login',
-      component: Login
+      component: Login,
+      meta:{
+        title:"登录页面"
+      }
     },
 
     {
       path: '/company',
       name: 'Company',
       component: Company,
+      meta:{
+        title:"公司页面"
+      },
       children: [{
         path: 'record',
         name: 'Record',
@@ -139,6 +145,9 @@ export default new Router({
       path: '/government-pro',
       name: 'GovermentPro',
       component: Government_Pro,
+      meta:{
+        title:"省页面"
+      },
       children: [{
         path: 'file_check',
         name: 'File_check',
@@ -240,6 +249,9 @@ export default new Router({
       path: '/government-city',
       name: 'Goverment_City',
       component: Government_City,
+      meta:{
+        title:"市页面"
+      },
       children: [{
         path: 'file_check',
         name: 'File_check_City',
@@ -334,3 +346,14 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  to.meta.title && (document.title = to.meta.title);
+  next();
+});
+
+
+export default router
+
+
+
