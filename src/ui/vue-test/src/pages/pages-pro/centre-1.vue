@@ -173,6 +173,7 @@
           }
         }).then(response => {
           const return_value = response.data;
+          this.$message.success("添加成功！");
           console.log(return_value);
           this.fetchSearchList();
         });
