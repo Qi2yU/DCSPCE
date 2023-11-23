@@ -348,8 +348,15 @@ const router =  new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  if(to.path === "/"){
+    to.meta.title && (document.title = to.meta.title);
+    return next();
+  } 
+  const tokenStr= window.sessionStorage.getItem('token')
+  console.log(tokenStr)
+  if(!tokenStr) return next('/')
   to.meta.title && (document.title = to.meta.title);
-  next();
+  next()
 });
 
 

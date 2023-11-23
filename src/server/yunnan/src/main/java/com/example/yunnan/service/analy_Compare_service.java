@@ -150,6 +150,10 @@ public class analy_Compare_service {
             else {
                 table_data.setAB_percent("100%");
             }
+            if(table_data.getB_num() == 0 || table_data.getA_num() == 0){
+                table_data.setAB_percent("无法对比");
+                table_data.setAB_change("无法对比");
+            }
             if(table_data.getB_change_precent() == null){
                 table_data.setB_change_precent("-0%");
                 table_data.setB_change_num("无数据");

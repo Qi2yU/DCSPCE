@@ -57,7 +57,7 @@
           <el-divider ></el-divider>
           <check></check>
         </div>
-        <router-view /> 
+        <router-view v-wechat-title='$route.meta.title' /> 
       </el-main>
     </el-container>
   </el-container>
