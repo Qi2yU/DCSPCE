@@ -95,10 +95,10 @@
     },
     methods: {
       // 提交表单
-      submitForm() {
+    async  submitForm() {
         console.log(this.loginForm);
 
-        this.$http({
+      await  this.$http({
           url: '/login',
           method: 'post',
           data: JSON.stringify({
@@ -120,7 +120,7 @@
 
           // 全局变量userId的赋值！！！
           const return_router = return_value.nextRouter;
-          
+          window.sessionStorage.setItem("token",return_router)
           if(return_router !== "/login") {
             this.$message.success('登录成功！')
             this.$router.push({path:return_router,
@@ -128,6 +128,8 @@
           } else {
             this.$message.error('登录失败！');
           }
+          
+          
           
         });
       },

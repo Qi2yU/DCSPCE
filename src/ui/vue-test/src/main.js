@@ -6,6 +6,11 @@ import router from './router'
 import * as echarts from 'echarts';
 import axios from 'axios'
 import JsonExcel from 'vue-json-excel'
+import VueWechatTitle from 'vue-wechat-title'
+
+Vue.use(VueWechatTitle)
+
+
 Vue.component('downloadExcel', JsonExcel)
 
 Vue.prototype.$http = axios

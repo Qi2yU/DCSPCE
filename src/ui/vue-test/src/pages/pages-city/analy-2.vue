@@ -92,7 +92,7 @@
   <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
   </el-row>
 
-   <div id="main" style="width: 1500px; height: 400px" margin: 0 auto;></div>
+   <div id="main" style="width: 1500px; height: 400px ;margin: 0 auto;" ></div>
    <el-row>
   <el-col :span="24"><div class="grid-content bg-purple-dark"></div></el-col>
   </el-row>

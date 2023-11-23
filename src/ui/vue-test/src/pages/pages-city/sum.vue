@@ -570,7 +570,7 @@ import XLSX from "xlsx"
       console.log(name)
       /* generate workbook object from table */
       //  .table要导出的是哪一个表格
-      var wb = XLSX.utils.table_to_book(document.querySelector(".Table"));
+      var wb = XLSX.utils.table_to_book(document.querySelector(".SumTable"));
       /* get binary string as output */
       var wbout = XLSX.write(wb, {
         bookType: "xlsx",
