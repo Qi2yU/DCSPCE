@@ -1,4 +1,17 @@
-### 审核备案业务
+#### 重新初始化数据库
+
+```mysql
+drop database yunnan_data_test;
+create database yunnan_data_test;
+use yunnan_data_test;
+set names utf8;
+source D:\文档\WeChat Files\wxid_ci2mcoy6bt7f22\FileStorage\File\2023-11\create_dataset(1).sql
+source D:\文档\WeChat Files\wxid_ci2mcoy6bt7f22\FileStorage\File\2023-11\create_data(1).sql
+```
+
+
+
+### 企业备案业务
 
 + 省端创建企业用户
 + 企业用户首次登入系统
@@ -80,4 +93,5 @@ linshi@qq.com
 
 + 省市端 数据汇总和数据查询
 + 省市端 数据分析
-+ 
++ 通知管理
+

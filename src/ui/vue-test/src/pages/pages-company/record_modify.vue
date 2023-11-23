@@ -396,10 +396,7 @@
             if(this.form.region.length < 2) return;
             this.form.city = this.form.region[0];
             this.form.district = this.form.region[1];
-  
-            console.log(this.form.region)
-            console.log(this.form.city);
-            console.log(this.form.district);
+
             this.$http
               .post('/companyinfo_submit', {
                 user_id: this.userid,
@@ -423,7 +420,7 @@
                 }
               })
               .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 // handle the response data here
               })
               .catch((error) => {
@@ -436,6 +433,7 @@
               message: '提交成功，正在审核中',
               type: 'success',
             });
+            this.gobacktoRecord();
           } else {
             console.log('表单验证失败');
             this.$message({
