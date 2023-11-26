@@ -318,9 +318,7 @@
     
     methods: {
       Submit(){
-          console.log(this.date1);
-          console.log(this.date2);
-          if(this.companyName=='')
+        if(this.companyName=='')
         this.companyName=this.defaultval;
         if(this.userId=='')
         this.userId=this.defaultval;

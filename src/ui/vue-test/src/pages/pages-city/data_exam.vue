@@ -101,11 +101,10 @@
           },
           methods:{
             getCity() {
-      // 截取前4位
-      const prefix = this.userId.substring(0, 4);
-
-      // 查找对照表中的映射
-      this.city = this.cityMapping[prefix] || '未知城市';
+            // 截取前4位
+            const prefix = this.userId.substring(0, 4);
+            // 查找对照表中的映射
+            this.city = this.cityMapping[prefix] || '未知城市';
     },
             show(val,data){
                 console.log(val);
