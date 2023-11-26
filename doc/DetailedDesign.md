@@ -59,6 +59,77 @@
 
 
 
+##### 数据汇总`sum_data.java`
+
+- 页面渲染时数据获取（函数输入值均为空）
+
+  - /government-pro/sum/years
+
+    描述:获取年份选项框数据
+
+    返回类型和返回值：
+
+    | 返回类型名称 | 返回类型                   | 说明     |
+    | ------------ | -------------------------- | -------- |
+    | years        | List<CompareMountedEntity> | 年份list |
+
+  - /government-pro/sum/months
+
+    描述:获取月份选项框数据
+
+    返回类型和返回值：
+
+    | 返回类型名称 | 返回类型                   | 说明     |
+    | ------------ | -------------------------- | -------- |
+    | months       | List<CompareMountedEntity> | 年份list |
+
+  - /government-pro/sum/mounted
+
+    描述:获取当前调查期就业数据
+
+    返回类型和返回值：
+
+    | 返回类型名称 | 返回类型               | 说明               |
+    | ------------ | ---------------------- | ------------------ |
+    | data_mounted | List<SumMountedEntity> | 当前调查期数据list |
+
+- 省市数据汇总
+
+  - /government-pro/sum
+
+    输入类型和输入值：
+
+    | 参数名称   | 参数类型 | 参数说明           |
+    | ---------- | -------- | ------------------ |
+    | sum_id     | String   | 汇总字段           |
+    | start_time | String   | 开始时间           |
+    | end_time   | String   | 结束时间           |
+    | flag_front | String   | 前端时间选项框类型 |
+
+    返回类型和返回值：
+
+    | 返回类型名称 | 返回类型           | 说明         |
+    | ------------ | ------------------ | ------------ |
+    | sum_res      | List<SumResEntity> | 汇总数据列表 |
+
+  - /government-city/sum
+
+    输入类型和输入值：
+
+    | 参数名称   | 参数类型 | 参数说明           |
+    | ---------- | -------- | ------------------ |
+    | sum_id     | String   | 汇总字段           |
+    | start_time | String   | 开始时间           |
+    | end_time   | String   | 结束时间           |
+    | city       | String   | 所在市区           |
+    | flag_front | String   | 前端时间选项框类型 |
+
+    返回类型和返回值：
+
+    | 返回类型名称 | 返回类型           | 说明         |
+    | ------------ | ------------------ | ------------ |
+    | sum_res      | List<SumResEntity> | 汇总数据列表 |
+
 ##### 企业备案 `companyinfo_submit.java`
 
 + 提交企业备案信息
@@ -174,17 +245,17 @@
 
 
 
-
-
 ##### 数据查询
 
 
 
-##### 数据汇总
+##### 取样分析
 
 
 
-##### 数据分析
+##### 图表分析
+
+
 
 
 
@@ -263,7 +334,7 @@
 
 
 
-##### 修改某企业当期调查期的数据 Modify_company_cedata_service.java`
+##### 修改某企业当期调查期的数据 `Modify_company_cedata_service.java`
 
 - 方法一 modify_company_cedata_by_cid
 
@@ -289,7 +360,53 @@
 
     + 调用Mapper `Cedata_Operating_Mapper`
 
+##### 数据汇总服务`sum_databyTime_service.java`
 
+- 方法一`compute_TimewithPeriod`
+
+  描述：实现时间段自增的效果
+
+  - 输入参数表: 
+
+    | 参数名称 | 参数类型 | 参数说明                                               |
+    | -------- | -------- | ------------------------------------------------------ |
+    | time     | String   | 进行自增的时间，数据格式20xx0x0x（年，月，第几调查期） |
+    | et       | String   | 终止时间，增加的时间不能超过终止时间                   |
+    | bound    | char     | 调查期界限，用于判断最后一位的增加                     |
+
+  - 返回类型和返回值
+
+    | 返回类型名称 | 返回类型 | 说明           |
+    | ------------ | -------- | -------------- |
+    | time         | String   | 时间自增的结果 |
+
+- 方法二`get_mounted_data`
+
+  描述：获取当前调查期的数据
+
+  - 输入参数表: void
+
+  - 返回类型和返回值
+
+    | 返回类型名称 | 返回类型               | 说明           |
+    | ------------ | ---------------------- | -------------- |
+    | data_mounted | List<SumMountedEntity> | 调查期数据list |
+
+- 方法三`get_datafortime`
+
+  描述：当汇总字段与时间相关时获取数据
+
+- 方法四`get_dataforpro`
+
+  描述：当汇总字段与时间相关时获取数据
+
+##### 取样分析服务
+
+趋势分析服务
+
+对比分析服务
+
+​	
 
 
 
