@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.yunnan.mapper.Companyinfo_mapper">
     <insert id="cpinfo_submit">
-        insert into company_info (user_id, company_name, company_id, city, district, phone, company_character, company_industry, company_business, linksman, linaddress, post_num, fax_num, email)
-        VALUES (#{user_id}, #{company_name}, #{company_id}, #{city}, #{district}, #{phone}, #{company_character}, #{company_industry}, #{company_business}, #{linksman}, #{linaddress}, #{post_num}, #{fax_num}, #{email})
+        insert into company_info (user_id, company_name, company_id, city, district, phone, company_character, company_industry, company_business, linksman, linaddress, post_num, fax_num, email, backed_info, is_valid)
+        VALUES (#{user_id}, #{company_name}, #{company_id}, #{city}, #{district}, #{phone}, #{company_character}, #{company_industry}, #{company_business}, #{linksman}, #{linaddress}, #{post_num}, #{fax_num}, #{email}, '', 2)
     </insert>
 
     <update id="cpinfo_update">

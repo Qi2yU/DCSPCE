@@ -9,8 +9,8 @@ import java.util.List;
 public interface user_accountsMapper {
 
     //查询未上报数据
-    @Select("select user_id,user_name from user_accounts where user_id not in " +
-            "(select user_id from company_info)")
+    @Select("select user_id,user_name from user_accounts where (user_id not in " +
+            "(select user_id from company_info)) and is_record <> -1")
     List<user_accounts> selectfromtwo();
 
     @Update("update user_accounts set is_record=1 where user_id=#{id}")

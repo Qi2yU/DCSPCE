@@ -14,4 +14,14 @@ public interface Data_collection_mapper {
                           String secondReason,
                           String reasonDetail,
                           int status);
+
+    public void insert_companydata(String tableName,
+                                   String companyID,
+                                   int docEmploymentNumber,
+                                   int curEmploymentNumber,
+                                   String numDecreasedReason,
+                                   String mainReason,
+                                   String secondReason,
+                                   String reasonDetail,
+                                   int status);
 }

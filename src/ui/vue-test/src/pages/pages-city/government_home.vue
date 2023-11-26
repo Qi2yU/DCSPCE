@@ -9,10 +9,19 @@
 <style>
 .el-main {
   background-color: #f5f7f9;
-  /* overflow:hidden */
+  position: absolute;
+  left: 200px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
 }
 
-.el-header,
+.el-header{
+  position: relative;
+  width: 100%;
+  height: 60px; 
+}
 .el-footer {
   background-color: white;
   box-sizing: border-box;
@@ -40,7 +49,7 @@
         <check ></check>
         </div>
          <!-- main部分 -->
-        <router-view />
+        <router-view v-wechat-title='$route.meta.title' />
       </el-main>
     </el-container>
   </el-container>

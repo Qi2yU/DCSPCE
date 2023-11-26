@@ -93,37 +93,72 @@ public class analy_Compare_service {
                 table_data.setA_less(String.valueOf(0));
             }
             table_data.setA_change_num(String.valueOf((change_num)));
-            table_data.setA_change_precent(String.valueOf((change_num) * 100 / last_num)  +"%");
+            if(last_num == 0){
+                table_data.setA_change_precent("100%");
+            }else {
+                table_data.setA_change_precent(String.valueOf((change_num) * 100 / last_num)  +"%");
+            }
+
             table_data_list.add(table_data);
         }
+
         for(int i = 0; i < end_data.size();i++){
             name = end_data.get(i).getName();
             now_num = end_data.get(i).getNow_num();
             last_num = end_data.get(i).getLast_num();
             change_num = now_num - last_num;
+            boolean flag = false;
             for(Compare_tableEntity table_data : table_data_list){
                 if(table_data.getName().equals(name)){
+                    flag = true;
                     table_data.setB_num(now_num);
-                    if(change_num < 0){
-                        table_data.setB_less(String.valueOf(change_num));
+
+                    table_data.setB_change_num(String.valueOf((change_num)));
+                    if(last_num == 0){
+                        table_data.setB_change_precent("100%");
                     }
                     else {
-                        table_data.setB_less(String.valueOf(0));
+                        table_data.setB_change_precent(String.valueOf((change_num) * 100 / last_num) +"%");
                     }
-                    table_data.setB_change_num(String.valueOf((change_num)));
-                    table_data.setB_change_precent(String.valueOf((change_num) * 100 / last_num) +"%");
+
                     break;
                 }
             }
+            if(flag == false){
+                Compare_tableEntity table_data = new Compare_tableEntity();
+                table_data.setB_num(now_num);
+                table_data.setName(name);
+                table_data.setA_num(0);
+                table_data.setA_change_num("无数据");
+                table_data.setA_change_precent("-0%");
+                table_data.setB_change_num(String.valueOf((change_num)));
+                if(last_num == 0){
+                    table_data.setB_change_precent("100%");
+                }
+                else {
+                    table_data.setB_change_precent(String.valueOf((change_num) * 100 / last_num) +"%");
+                }
+                table_data_list.add(table_data);
+            }
         }
+
         for(Compare_tableEntity table_data : table_data_list){
             table_data.setAB_change(String.valueOf(table_data.getB_num() - table_data.getA_num()));
             if(table_data.getA_num() != 0){
                 table_data.setAB_percent(String.valueOf((table_data.getB_num() - table_data.getA_num()) * 100/table_data.getA_num()) + "%");
             }
             else {
-                table_data.setAB_percent("%0");
+                table_data.setAB_percent("100%");
             }
+            if(table_data.getB_num() == 0 || table_data.getA_num() == 0){
+                table_data.setAB_percent("无法对比");
+                table_data.setAB_change("无法对比");
+            }
+            if(table_data.getB_change_precent() == null){
+                table_data.setB_change_precent("-0%");
+                table_data.setB_change_num("无数据");
+            }
+
         }
 
     }

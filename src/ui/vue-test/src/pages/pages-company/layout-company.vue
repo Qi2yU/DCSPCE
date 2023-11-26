@@ -9,10 +9,23 @@
 <style>
 .el-main {
   background-color: #f5f7f9;
-  /* overflow:hidden */
+
+  position: absolute;
+
+  left: 200px;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  overflow-y: scroll;
+
+
 }
 
-.el-header,
+.el-header{
+  position: relative;
+  width: 100%;
+  height: 60px; 
+}
 .el-footer {
   background-color: white;
   box-sizing: border-box;
@@ -39,7 +52,7 @@
         <el-divider></el-divider>
         <notice ></notice>
       </div><!-- main部分 -->
-        <router-view />
+        <router-view v-wechat-title='$route.meta.title'/>
       </el-main>
     </el-container>
   </el-container>
@@ -69,8 +82,8 @@ export default {
       }).then((response)=>{
         console.log(response)
         console.log(response.data)
-        if(! response.data.is_refused) return ;
-        if(response.data.comInfoRefused != null) this.$message.error("您的审核备案已被驳回，请及时查看。(附驳回理由：" + response.data.comInfoRefused +")");
+        if(! response.data.is_refused ) return ;
+        if(response.data.comInfoRefused != '') this.$message.error("您的审核备案已被驳回，请及时查看。(附驳回理由：" + response.data.comInfoRefused +")");
         else this.$message.error("您当期上报的数据已被驳回，请及时查看。(附驳回理由：" + response.data.emplInfoRefused +")");
         
       });

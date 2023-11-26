@@ -139,8 +139,8 @@ export default {
         //   { pattern: /^[a-zA-Z0-9]{1,9}$/, message: '组织机构代码由字母和数字组成，不超过9位', trigger: 'blur' },
         // ],
         companyName: [{ required: true, message: '请输入企业名称', trigger: 'blur' }],
-        companyType: [{ required: true, message: '请选择企业性质', trigger: 'change' }],
-        industry: [{ required: true, message: '请选择所属行业', trigger: 'change' }],
+        // companyType: [{ required: true, message: '请选择企业性质', trigger: 'change' }],
+        // industry: [{ required: true, message: '请选择所属行业', trigger: 'change' }],
         mainBusiness: [{ required: true, message: '请输入主要经营业务', trigger: 'blur' }],
         contactPerson: [{ required: true, message: '请输入联系人', trigger: 'blur' }],
         contactAddress: [{ required: true, message: '请输入联系地址', trigger: 'blur' }],
@@ -403,7 +403,7 @@ export default {
         }
       }).then((response)=>{
         // console.log(response)
-        // console.log(response.data)
+        console.log(response.data)
         this.refusedData.comRefusedInfo = response.data.comInfoRefused;
         this.refusedData.isRefused = response.data.is_refused;
         
@@ -418,7 +418,7 @@ export default {
       $this.$router.push("/company/record_modify").catch(error => error);
     },
     isrefused(){
-      return this.refusedData.comRefusedInfo != null
+      return this.refusedData.isRefused==1 && this.refusedData.comRefusedInfo != ''
     }
   },
 };

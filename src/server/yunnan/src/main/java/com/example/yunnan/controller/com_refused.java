@@ -36,8 +36,11 @@ public class com_refused {
         // 还需补上备案审核的驳回信息
         List<comInfoRefused> cominfo = new ArrayList<>();
         cominfo = refused_info_service.getComInfoRefused(cid.getUserid());
+
         if(cominfo.toArray().length == 1){
-            ri.setComInfoRefused(cominfo.toArray()[0].toString());
+            System.out.println(cominfo.toArray()[0]);
+            if(cominfo.toArray()[0]!=null) ri.setComInfoRefused(cominfo.toArray()[0].toString());
+            else ri.setComInfoRefused("");
             if(!ri.getComInfoRefused().isEmpty()){
                 ri.setIs_refused(1);
                 return ri;
@@ -58,8 +61,9 @@ public class com_refused {
             List<empInfoRefused> empinfo = new ArrayList<>();
             empinfo = refused_info_service.getEmpInfoRefused(tableName, cid.getUserid());
             if(empinfo.toArray().length == 1){
+                if(empinfo.toArray()[0]!=null) ri.setEmplInfoRefused(empinfo.toArray()[0].toString());
+                else ri.setEmplInfoRefused("");
 
-                ri.setEmplInfoRefused(empinfo.toArray()[0].toString());
                 if(!ri.getEmplInfoRefused().isEmpty()) ri.setIs_refused(1);
             }
         }

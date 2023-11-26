@@ -16,6 +16,11 @@
  }
  .el-aside{
    border-right: 1px solid #f5f1f1;
+   display: block;
+    position: absolute;
+    left: 0;
+    top: 60px;
+    bottom: 0;
  }
  </style>
  
@@ -62,7 +67,7 @@
              <i class="el-icon-message"></i>
              <span slot="title">通知界面</span>
            </el-menu-item>
-``
+
          </el-menu>
        </el-col>
      </el-row>
