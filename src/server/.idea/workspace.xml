@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f8a4f741-edb9-4104-afba-5e54ebe6f33c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-city/committed.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-city/committed.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-city/data_exam.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-city/data_exam.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/committed.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/committed.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/query.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../ui/vue-test/src/pages/pages-pro/query.vue" afterDir="false" />
-    </list>
+    <list default="true" id="f8a4f741-edb9-4104-afba-5e54ebe6f33c" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
