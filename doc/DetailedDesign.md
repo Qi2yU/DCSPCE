@@ -104,11 +104,11 @@
 
   - **接口设计**
 
-    ![](D:\DCSPCE\doc\asset\sample_inter.png)
+    ![](D:/DCSPCE/doc/asset/sample_inter.png)
 
   - ##### 状态转换图
 
-    ![](D:\DCSPCE\doc\asset\sample_change.png)
+    ![](D:/DCSPCE/doc/asset/sample_change.png)
 
 - #### 图表分析界面
 
@@ -136,15 +136,15 @@
 
     公用接口
 
-    ​	![](D:\DCSPCE\doc\asset\public_inter.png)
+    ​	![](D:/DCSPCE/doc/asset/public_inter.png)
 
     趋势分析接口
 
-    ![](D:\DCSPCE\doc\asset\analy_inter.png)
+    ![](D:/DCSPCE/doc/asset/analy_inter.png)
 
     对比分析接口
 
-    ![](D:\DCSPCE\doc\asset\compare_inter.png)
+    ![](D:/DCSPCE/doc/asset/compare_inter.png)
 
 - ​               		
 
