@@ -50,7 +50,7 @@
 - 路由守护：
 
         1. 通过路由守护防止恶意用户通过url直接进入用户界面，保证页面的进入只能通过输入密码实现，提升系统的安全性
-           2. 实现页面标题的切换，不同的界面具有不同的标题，方便用户区分界面，提升用户体验
+        2. 实现页面标题的切换，不同的界面具有不同的标题，方便用户区分界面，提升用户体验
 
 #####    布局设计
 
@@ -104,11 +104,11 @@
 
   - **接口设计**
 
-    ![](D:/DCSPCE/doc/asset/sample_inter.png)
+    ![](./asset/sample_inter.png)
 
   - ##### 状态转换图
 
-    ![](D:/DCSPCE/doc/asset/sample_change.png)
+    ![](./asset/sample_change.png)
 
 - #### 图表分析界面
 
@@ -136,15 +136,15 @@
 
     公用接口
 
-    ​	![](D:/DCSPCE/doc/asset/public_inter.png)
+    ​	![](./asset/public_inter.png)
 
     趋势分析接口
 
-    ![](D:/DCSPCE/doc/asset/analy_inter.png)
+    ![](./asset/analy_inter.png)
 
     对比分析接口
 
-    ![](D:/DCSPCE/doc/asset/compare_inter.png)
+    ![](./asset/compare_inter.png)
 
 - ​               		
 
