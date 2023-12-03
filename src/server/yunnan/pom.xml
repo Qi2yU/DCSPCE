@@ -11,6 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>yunnan</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>war</packaging>
     <name>yunnan</name>
     <description>yunnan</description>
     <properties>
